@@ -1,39 +1,65 @@
 import { TeamMember, Project, Service } from './types';
+import AchrafImage from "/src/assets/teams/Achraf.JPG";
+
 
 
 export const teamMembers: TeamMember[] = [
   {
-    id: 1,
-    name: "John Smith",
-    nameAr: "جون سميث",
-    role: "Full Stack Developer",
-    roleAr: "مطور الويب المتكامل",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop"
+    id: "1",
+    name: "Larbi Mohammed Achraf",
+    nameAr: "العربي محمد أشرف" ,
+    role: "Full-Stack Web Developer",
+    roleAr: "مطور ويب متكامل",
+    bio: "Full-stack developer with 3+ years of experience specializing in React and Node.js et pyhthon and django",
+    bioAr: "مطور متكامل مع أكثر من 3 سنوات من الخبرة متخصص في React و Node.js و pyhthon و django.",
+    image: AchrafImage,
+    github: "https://github.com/AchrafLarbi",
+    instagram: "https://www.instagram.com/mohamedachraf123/",
+    linkedin: "https://www.linkedin.com/in/larbi-achraf-01902a283/",
+    email: "larbiachraf03@gmail.com",
   },
   {
-    id: 2,
-    name: "Sarah Johnson",
-    nameAr: "سارة جونسون",
-    role: "UI/UX Designer",
-    roleAr: "مصمم واجهات المستخدم",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop"
-  },
-  {
-    id: 3,
+    id: "2",
     name: "Ahmed Hassan",
     nameAr: "أحمد حسن",
-    role: "Mobile Developer",
-    roleAr: "مطور تطبيقات الموبايل",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
+    role: "UI/UX Designer",
+    roleAr: "مصمم واجهة المستخدم",
+    bio: "Creative designer with a passion for creating intuitive and beautiful user experiences.",
+    bioAr: "مصمم مبدع مع شغف لإنشاء تجارب مستخدم بديهية وجميلة.",
+    image: "/placeholder.svg?height=400&width=400",
+    github: "https://github.com",
+    instagram: "https://instagram.com",
+    linkedin: "https://linkedin.com",
+    email: "ahmed@example.com",
   },
   {
-    id: 4,
-    name: "Lina Khalil",
-    nameAr: "لينا خليل",
-    role: "Project Manager",
-    roleAr: "مدير المشاريع",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop"
-  }
+    id: "3",
+    name: "Layla Karim",
+    nameAr: "ليلى كريم",
+    role: "Mobile Developer",
+    roleAr: "مطور تطبيقات جوال",
+    bio: "Specialized in cross-platform mobile development with React Native and Flutter.",
+    bioAr: "متخصصة في تطوير تطبيقات الجوال متعددة المنصات باستخدام React Native و Flutter.",
+    image: "/placeholder.svg?height=400&width=400",
+    github: "https://github.com",
+    instagram: "https://instagram.com",
+    linkedin: "https://linkedin.com",
+    email: "layla@example.com",
+  },
+  {
+    id: "4",
+    name: "Michael Chen",
+    nameAr: "مايكل تشن",
+    role: "Backend Engineer",
+    roleAr: "مهندس الخلفية",
+    bio: "Expert in scalable architecture, cloud infrastructure, and database optimization.",
+    bioAr: "خبير في الهندسة المعمارية القابلة للتوسع، والبنية التحتية السحابية، وتحسين قواعد البيانات.",
+    image: "/placeholder.svg?height=400&width=400",
+    github: "https://github.com",
+    instagram: "https://instagram.com",
+    linkedin: "https://linkedin.com",
+    email: "michael@example.com",
+  },
 ];
 
 export const projects: Project[] = [

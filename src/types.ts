@@ -1,10 +1,17 @@
 export interface TeamMember {
-  id: number;
+  id: string;
   name: string;
   nameAr: string;
   role: string;
   roleAr: string;
   image: string;
+  bio: string;
+  bioAr: string;
+  linkedin: string;
+  github: string;
+  instagram: string;
+  email: string;
+
 }
 
 export interface Project {

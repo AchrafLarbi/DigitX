@@ -1,59 +1,307 @@
+"use client";
+
+import type React from "react";
+import { useState, useRef } from "react";
+import { motion } from "framer-motion";
+import { Send, CheckCircle, AlertCircle } from "lucide-react";
+import emailjs from "@emailjs/browser";
+
 interface ContactProps {
   isArabic: boolean;
 }
 
 export function Contact({ isArabic }: ContactProps) {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [formState, setFormState] = useState({
+    user_name: "",
+    user_email: "",
+    subject: "",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormState((prev) => ({ ...prev, [name]: value }));
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formState.user_name.trim()) {
+      newErrors.user_name = isArabic ? "الاسم مطلوب" : "Name is required";
+    }
+
+    if (!formState.user_email.trim()) {
+      newErrors.user_email = isArabic
+        ? "البريد الإلكتروني مطلوب"
+        : "Email is required";
+    } else if (!/^\S+@\S+\.\S+$/.test(formState.user_email)) {
+      newErrors.user_email = isArabic
+        ? "البريد الإلكتروني غير صالح"
+        : "Invalid email address";
+    }
+
+    if (!formState.message.trim()) {
+      newErrors.message = isArabic ? "الرسالة مطلوبة" : "Message is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // EmailJS configuration
+      // Replace these with your actual EmailJS credentials
+      const serviceId = "YOUR_SERVICE_ID";
+      const templateId = "YOUR_TEMPLATE_ID";
+      const publicKey = "YOUR_PUBLIC_KEY";
+
+      // Send email using EmailJS
+      const result = await emailjs.sendForm(
+        serviceId,
+        templateId,
+        formRef.current!,
+        publicKey
+      );
+
+      console.log("Email sent successfully:", result.text);
+      setSubmitStatus("success");
+
+      // Reset form
+      setFormState({
+        user_name: "",
+        user_email: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Error sending email:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+
+      // Reset status after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus("idle");
+      }, 5000);
+    }
+  };
+
   return (
     <section
       id="contact"
-      className="py-20 bg-gradient-to-b from-blue-50 to-white"
+      className="py-20 relative overflow-hidden bg-gradient-to-b from-blue-50 to-white"
     >
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl font-bold text-center text-blue-900 mb-16 animate-fade-in">
-          {isArabic ? "اتصل بنا" : "Contact Us"}
-        </h2>
-        <form className="bg-white rounded-xl shadow-lg p-8 transform hover:shadow-2xl transition-all duration-300">
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              {isArabic ? "الاسم" : "Name"}
-            </label>
-            <input
-              type="text"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
-              placeholder={isArabic ? "أدخل اسمك" : "Enter your name"}
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              {isArabic ? "البريد الإلكتروني" : "Email"}
-            </label>
-            <input
-              type="email"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
-              placeholder={
-                isArabic ? "أدخل بريدك الإلكتروني" : "Enter your email"
-              }
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              {isArabic ? "الرسالة" : "Message"}
-            </label>
-            <textarea
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
-              rows={4}
-              placeholder={
-                isArabic ? "اكتب رسالتك هنا" : "Write your message here"
-              }
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-100 rounded-full opacity-50 transform translate-x-1/3 -translate-y-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-100 rounded-full opacity-50 transform -translate-x-1/3 translate-y-1/3"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-5xl font-bold text-blue-900 mb-4 relative inline-block">
+            {isArabic ? "اتصل بنا" : "Contact Us"}
+            <span className="absolute -bottom-2 left-1/4 right-1/4 h-1 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"></span>
+          </h2>
+          <p className="text-xl text-blue-700 max-w-2xl mx-auto">
+            {isArabic
+              ? "نحن هنا للإجابة على أسئلتك ومساعدتك في تحقيق رؤيتك الرقمية"
+              : "We're here to answer your questions and help you achieve your digital vision"}
+          </p>
+        </motion.div>
+
+        <div className="flex flex-col items-center w-full gap-8">
+          {/* Contact form */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
           >
-            {isArabic ? "إرسال" : "Send"}
-          </button>
-        </form>
+            <div className="bg-white rounded-2xl w-full shadow-lg p-8">
+              <h3 className="text-2xl font-bold text-blue-900 mb-6">
+                {isArabic ? "أرسل لنا رسالة" : "Send Us a Message"}
+              </h3>
+
+              {submitStatus === "success" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3 text-green-700"
+                >
+                  <CheckCircle className="w-5 h-5 text-green-500" />
+                  <p>
+                    {isArabic
+                      ? "تم إرسال رسالتك بنجاح!"
+                      : "Your message has been sent successfully!"}
+                  </p>
+                </motion.div>
+              )}
+
+              {submitStatus === "error" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3 text-red-700"
+                >
+                  <AlertCircle className="w-5 h-5 text-red-500" />
+                  <p>
+                    {isArabic
+                      ? "حدث خطأ أثناء إرسال رسالتك. يرجى المحاولة مرة أخرى."
+                      : "An error occurred while sending your message. Please try again."}
+                  </p>
+                </motion.div>
+              )}
+
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-gray-700 text-sm font-medium mb-2">
+                      {isArabic ? "الاسم" : "Name"}*
+                    </label>
+                    <input
+                      type="text"
+                      name="user_name"
+                      value={formState.user_name}
+                      onChange={handleChange}
+                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${
+                        errors.user_name
+                          ? "border-red-300 focus:border-red-500 focus:ring-red-200"
+                          : "border-gray-300 focus:border-blue-500 focus:ring-blue-200"
+                      }`}
+                      placeholder={isArabic ? "أدخل اسمك" : "Enter your name"}
+                    />
+                    {errors.user_name && (
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.user_name}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-gray-700 text-sm font-medium mb-2">
+                      {isArabic ? "البريد الإلكتروني" : "Email"}*
+                    </label>
+                    <input
+                      type="email"
+                      name="user_email"
+                      value={formState.user_email}
+                      onChange={handleChange}
+                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${
+                        errors.user_email
+                          ? "border-red-300 focus:border-red-500 focus:ring-red-200"
+                          : "border-gray-300 focus:border-blue-500 focus:ring-blue-200"
+                      }`}
+                      placeholder={
+                        isArabic ? "أدخل بريدك الإلكتروني" : "Enter your email"
+                      }
+                    />
+                    {errors.user_email && (
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.user_email}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 text-sm font-medium mb-2">
+                    {isArabic ? "الموضوع" : "Subject"}
+                  </label>
+                  <input
+                    type="text"
+                    name="subject"
+                    value={formState.subject}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+                    placeholder={
+                      isArabic ? "موضوع رسالتك" : "Subject of your message"
+                    }
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 text-sm font-medium mb-2">
+                    {isArabic ? "الرسالة" : "Message"}*
+                  </label>
+                  <textarea
+                    name="message"
+                    value={formState.message}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 min-h-[150px] ${
+                      errors.message
+                        ? "border-red-300 focus:border-red-500 focus:ring-red-200"
+                        : "border-gray-300 focus:border-blue-500 focus:ring-blue-200"
+                    }`}
+                    placeholder={
+                      isArabic ? "اكتب رسالتك هنا" : "Write your message here"
+                    }
+                  ></textarea>
+                  {errors.message && (
+                    <p className="mt-1 text-sm text-red-600">
+                      {errors.message}
+                    </p>
+                  )}
+                </div>
+
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 ${
+                    isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+                  }`}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>{isArabic ? "جاري الإرسال..." : "Sending..."}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5" />
+                      <span>{isArabic ? "إرسال الرسالة" : "Send Message"}</span>
+                    </>
+                  )}
+                </motion.button>
+              </form>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
