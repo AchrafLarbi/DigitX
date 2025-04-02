@@ -17,6 +17,7 @@ export function Projects({ isArabic }: ProjectsProps) {
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [featuredProject, setFeaturedProject] = useState(projects[0]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showAllProjects, setShowAllProjects] = useState(false);
 
   // Filter projects based on selected category
   const filteredProjects =
@@ -39,6 +40,15 @@ export function Projects({ isArabic }: ProjectsProps) {
       setFeaturedProject(filteredProjects[0]);
     }
   }, [selectedCategory]);
+
+  useEffect(() => {
+    // Smooth scroll to top of projects section when toggling view
+    if (!showAllProjects) {
+      document
+        .getElementById("projects")
+        ?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [showAllProjects]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -81,7 +91,7 @@ export function Projects({ isArabic }: ProjectsProps) {
         >
           <h2 className="text-5xl font-bold text-blue-900 mb-10 relative inline-block">
             {isArabic ? "مشاريعنا" : "Our Projects"}
-            <span className="absolute -bottom-2 left-0  h-1 w-full bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"></span>
+            <span className="absolute -bottom-3 left-0 right-0 h-1.5 bg-gradient-to-r from-teal-400 via-purple-500 to-pink-500 rounded-full"></span>
           </h2>
           <p className="text-xl text-blue-700 max-w-2xl mx-auto">
             {isArabic
@@ -122,8 +132,10 @@ export function Projects({ isArabic }: ProjectsProps) {
                 <div className="relative overflow-hidden h-64 md:h-auto">
                   <img
                     src={
+                      // eslint-disable-next-line no-constant-binary-expression
                       featuredProject.image ||
-                      "/placeholder.svg?height=600&width=800"
+                      "/placeholder.svg?height=600&width=800" ||
+                      "/placeholder.svg"
                     }
                     alt={featuredProject.title}
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -186,84 +198,94 @@ export function Projects({ isArabic }: ProjectsProps) {
           animate={isLoaded ? "visible" : "hidden"}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {filteredProjects.slice(0, 6).map((project) => (
-            <motion.div
-              key={project.id}
-              variants={itemVariants}
-              onHoverStart={() => setHoveredProject(String(project.id))}
-              onHoverEnd={() => setHoveredProject(null)}
-              className="relative bg-white rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
-            >
-              <div className="relative overflow-hidden h-56">
-                <img
-                  src={project.image || "/placeholder.svg?height=400&width=600"}
-                  alt={project.title}
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          {filteredProjects
+            .slice(0, showAllProjects ? filteredProjects.length : 6)
+            .map((project) => (
+              <motion.div
+                key={project.id}
+                variants={itemVariants}
+                onHoverStart={() => setHoveredProject(String(project.id))}
+                onHoverEnd={() => setHoveredProject(null)}
+                className="relative bg-white rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+              >
+                <div className="relative overflow-hidden h-56">
+                  <img
+                    src={
+                      project.image || "/placeholder.svg?height=400&width=600"
+                    }
+                    alt={project.title}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                {/* Hover overlay with buttons */}
-                <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <motion.a
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    href={project.link || "#"}
-                    className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-blue-600 hover:text-blue-800 transition-colors"
-                  >
-                    <ExternalLink className="w-5 h-5" />
-                  </motion.a>
-                  {project.github && (
+                  {/* Hover overlay with buttons */}
+                  <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     <motion.a
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      href={project.github}
+                      href={project.link || "#"}
                       className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-blue-600 hover:text-blue-800 transition-colors"
                     >
-                      <Github className="w-5 h-5" />
+                      <ExternalLink className="w-5 h-5" />
                     </motion.a>
-                  )}
+                    {project.github && (
+                      <motion.a
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        href={project.github}
+                        className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <Github className="w-5 h-5" />
+                      </motion.a>
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-bold text-blue-900 group-hover:text-blue-600 transition-colors">
-                    {isArabic ? project.titleAr : project.title}
-                  </h3>
-                  <span className="text-xs font-medium px-2 py-1 bg-blue-100 text-blue-700 rounded-full">
-                    {project.category || "Web"}
-                  </span>
-                </div>
-                <p className="text-blue-700 mb-4 line-clamp-2">
-                  {isArabic ? project.descriptionAr : project.description}
-                </p>
-
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  {project.technologies?.slice(0, 3).map((tech, i) => (
-                    <span
-                      key={i}
-                      className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full"
-                    >
-                      {tech}
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-xl font-bold text-blue-900 group-hover:text-blue-600 transition-colors">
+                      {isArabic ? project.titleAr : project.title}
+                    </h3>
+                    <span className="text-xs font-medium px-2 py-1 bg-blue-100 text-blue-700 rounded-full">
+                      {project.category || "Web"}
                     </span>
-                  ))}
-                  {(project.technologies?.length || 0) > 3 && (
-                    <span className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full">
-                      +{(project.technologies?.length || 0) - 3}
-                    </span>
-                  )}
-                </div>
-              </div>
+                  </div>
+                  <p
+                    className={`text-blue-700 mb-4 ${
+                      showAllProjects ? "" : "line-clamp-2"
+                    }`}
+                  >
+                    {isArabic ? project.descriptionAr : project.description}
+                  </p>
 
-              {/* Animated border on hover */}
-              <div
-                className={`absolute inset-0 border-2 border-transparent rounded-xl transition-all duration-500 pointer-events-none ${
-                  hoveredProject === String(project.id) ? "border-blue-400" : ""
-                }`}
-              ></div>
-            </motion.div>
-          ))}
+                  {/* Technologies */}
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {project.technologies?.slice(0, 3).map((tech, i) => (
+                      <span
+                        key={i}
+                        className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {(project.technologies?.length || 0) > 3 && (
+                      <span className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full">
+                        +{(project.technologies?.length || 0) - 3}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Animated border on hover */}
+                <div
+                  className={`absolute inset-0 border-2 border-transparent rounded-xl transition-all duration-500 pointer-events-none ${
+                    hoveredProject === String(project.id)
+                      ? "border-blue-400"
+                      : ""
+                  }`}
+                ></div>
+              </motion.div>
+            ))}
         </motion.div>
 
         {/* View more button */}
@@ -274,15 +296,21 @@ export function Projects({ isArabic }: ProjectsProps) {
             transition={{ delay: 0.8 }}
             className="mt-12 text-center"
           >
-            <motion.a
+            <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              href="#all-projects"
+              onClick={() => setShowAllProjects(!showAllProjects)}
               className="inline-flex items-center gap-2 bg-white border border-blue-200 hover:border-blue-300 text-blue-700 px-6 py-3 rounded-full font-medium transition-all duration-300 shadow-sm hover:shadow"
             >
-              {isArabic ? "عرض المزيد من المشاريع" : "View More Projects"}
+              {isArabic
+                ? showAllProjects
+                  ? "عرض أقل"
+                  : "عرض المزيد من المشاريع"
+                : showAllProjects
+                ? "Show Less"
+                : "View More Projects"}
               <ChevronRight className="w-4 h-4" />
-            </motion.a>
+            </motion.button>
           </motion.div>
         )}
       </div>
