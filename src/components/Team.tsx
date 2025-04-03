@@ -200,15 +200,42 @@ export function Team({ isArabic }: TeamProps) {
                           .map(([platform, url]) => (
                             <motion.a
                               key={platform}
-                              href={url as string}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              whileHover={{ y: -2 }}
+                              href={
+                                member.name === "Ourred Islem Charaf Eddine" &&
+                                platform === "github"
+                                  ? undefined
+                                  : (url as string)
+                              }
+                              target={
+                                member.name === "Ourred Islem Charaf Eddine" &&
+                                platform === "github"
+                                  ? undefined
+                                  : "_blank"
+                              }
+                              rel={
+                                member.name === "Ourred Islem Charaf Eddine" &&
+                                platform === "github"
+                                  ? undefined
+                                  : "noopener noreferrer"
+                              }
+                              whileHover={{
+                                y:
+                                  member.name ===
+                                    "Ourred Islem Charaf Eddine" &&
+                                  platform === "github"
+                                    ? 0
+                                    : -2,
+                              }}
                               className={`w-8 h-8 rounded-full flex items-center justify-center ${
                                 hoveredMember === member.id
                                   ? "bg-blue-600 text-white"
                                   : "bg-blue-100 text-blue-600"
-                              } transition-colors duration-300`}
+                              } transition-colors duration-300 ${
+                                member.name === "Ourred Islem Charaf Eddine" &&
+                                platform === "github"
+                                  ? "cursor-not-allowed"
+                                  : ""
+                              }`}
                             >
                               {getSocialIcon(platform)}
                             </motion.a>
