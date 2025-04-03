@@ -9,7 +9,6 @@ export interface TeamMember {
   bioAr: string;
   linkedin: string;
   github: string;
-  instagram: string;
   email: string;
 
 }

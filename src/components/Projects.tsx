@@ -10,7 +10,7 @@ interface ProjectsProps {
 }
 
 // Define categories for filtering
-const categories = ["All", "Web", "Mobile", "UI/UX", "Branding"];
+const categories = ["All", "Web", "Mobile", "UI/UX"];
 
 export function Projects({ isArabic }: ProjectsProps) {
   const [selectedCategory, setSelectedCategory] = useState("All");

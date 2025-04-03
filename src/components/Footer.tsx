@@ -1,9 +1,7 @@
 "use client";
 import {
   Facebook,
-  Twitter,
   Instagram,
-  Linkedin,
   Mail,
   Phone,
   MapPin,
@@ -41,29 +39,37 @@ export function Footer({ isArabic }: FooterProps) {
         </div>
       </div>
 
-      <div className="relative pt-16 pb-12">
+      <div className="relative pt-16 pb-12" dir={isArabic ? "rtl" : "ltr"}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
             {/* Company Info */}
-            <div
-              className={`flex flex-col ${
-                isArabic ? "items-end text-right" : "items-start text-left"
-              }`}
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-                  <Globe className="w-6 h-6 text-blue-600" />
-                </div>
+            <div className={isArabic ? "text-right" : "text-left"}>
+              <div
+                className={`flex items-center gap-2 mb-4 ${
+                  isArabic ? "justify-start" : "justify-start"
+                }`}
+              >
                 <h3 className="text-xl font-bold bg-gradient-to-r from-teal-400 to-blue-400 bg-clip-text text-transparent">
                   {isArabic ? "شركتنا" : "Digitx"}
                 </h3>
+                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                  <Globe className="w-6 h-6 text-blue-600" />
+                </div>
               </div>
-              <p className="text-gray-300 mb-6 max-w-xs">
+              <p
+                className={`text-gray-300 mb-6 ${
+                  isArabic ? "ml-auto" : "mr-auto"
+                } max-w-xs`}
+              >
                 {isArabic
                   ? "نحن شركة ناشئة مبتكرة تهدف إلى تغيير العالم من خلال التكنولوجيا المتطورة والأفكار الإبداعية."
                   : "We're an innovative startup aiming to change the world through cutting-edge technology and creative ideas."}
               </p>
-              <div className="flex gap-3">
+              <div
+                className={`flex gap-3 ${
+                  isArabic ? "justify-start" : "justify-start"
+                }`}
+              >
                 <a
                   href="#"
                   className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
@@ -74,37 +80,21 @@ export function Footer({ isArabic }: FooterProps) {
                   href="#"
                   className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
                 >
-                  <Twitter className="w-4 h-4" />
-                </a>
-                <a
-                  href="#"
-                  className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
-                >
                   <Instagram className="w-4 h-4" />
-                </a>
-                <a
-                  href="#"
-                  className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
-                >
-                  <Linkedin className="w-4 h-4" />
                 </a>
               </div>
             </div>
 
             {/* Quick Links */}
-            <div
-              className={`flex flex-col ${
-                isArabic ? "items-end text-right" : "items-start text-left"
-              }`}
-            >
-              <h3 className="text-lg font-semibold mb-6">
+            <div className={isArabic ? "text-right" : "text-left"}>
+              <h3 className="text-lg font-semibold mb-6 w-full">
                 {isArabic ? "روابط سريعة" : "Quick Links"}
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-3 w-full">
                 <li>
                   <a
                     href="#home"
-                    className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-2"
+                    className="text-gray-300 hover:text-white transition-colors duration-300 block"
                   >
                     {isArabic ? "الرئيسية" : "Home"}
                   </a>
@@ -112,7 +102,7 @@ export function Footer({ isArabic }: FooterProps) {
                 <li>
                   <a
                     href="#services"
-                    className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-2"
+                    className="text-gray-300 hover:text-white transition-colors duration-300 block"
                   >
                     {isArabic ? "خدماتنا" : "Services"}
                   </a>
@@ -120,7 +110,7 @@ export function Footer({ isArabic }: FooterProps) {
                 <li>
                   <a
                     href="#projects"
-                    className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-2"
+                    className="text-gray-300 hover:text-white transition-colors duration-300 block"
                   >
                     {isArabic ? "المشاريع" : "Projects"}
                   </a>
@@ -128,7 +118,7 @@ export function Footer({ isArabic }: FooterProps) {
                 <li>
                   <a
                     href="#team"
-                    className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-2"
+                    className="text-gray-300 hover:text-white transition-colors duration-300 block"
                   >
                     {isArabic ? "فريقنا" : "Teams"}
                   </a>
@@ -136,7 +126,7 @@ export function Footer({ isArabic }: FooterProps) {
                 <li>
                   <a
                     href="#contact"
-                    className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-2"
+                    className="text-gray-300 hover:text-white transition-colors duration-300 block"
                   >
                     {isArabic ? "اتصل بنا" : "Contact Us"}
                   </a>
@@ -145,68 +135,64 @@ export function Footer({ isArabic }: FooterProps) {
             </div>
 
             {/* Services */}
-            <div
-              className={`flex flex-col ${
-                isArabic ? "items-end text-right" : "items-start text-left"
-              }`}
-            >
-              <h3 className="text-lg font-semibold mb-6">
+            <div className={isArabic ? "text-right" : "text-left"}>
+              <h3 className="text-lg font-semibold mb-6 w-full">
                 {isArabic ? "خدماتنا" : "Our Services"}
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-3 w-full">
                 <li>
-                  <p className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-2">
+                  <p className="text-gray-300 hover:text-white transition-colors duration-300 block">
                     {isArabic ? "تطوير الويب" : "Web Development"}
                   </p>
                 </li>
                 <li>
-                  <p className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-2">
+                  <p className="text-gray-300 hover:text-white transition-colors duration-300 block">
                     {isArabic ? "تطوير التطبيقات" : "App Development"}
                   </p>
                 </li>
                 <li>
-                  <p className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-2">
+                  <p className="text-gray-300 hover:text-white transition-colors duration-300 block">
                     {isArabic ? "تصميم واجهة المستخدم" : "UI/UX Design"}
                   </p>
                 </li>
                 <li>
-                  <p className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-2">
+                  <p className="text-gray-300 hover:text-white transition-colors duration-300 block">
                     {isArabic ? "التسويق الرقمي" : "Digital Marketing"}
                   </p>
                 </li>
                 <li>
-                  <p className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-2">
-                    {isArabic ? " تقنية تحرير الفيديو " : "Video Editing"}
+                  <p className="text-gray-300 hover:text-white transition-colors duration-300 block">
+                    {isArabic ? "تقنية تحرير الفيديو" : "Video Editing"}
                   </p>
                 </li>
               </ul>
             </div>
 
             {/* Contact Info */}
-            <div
-              className={`flex flex-col ${
-                isArabic ? "items-end text-right" : "items-start text-left"
-              }`}
-            >
-              <h3 className="text-lg font-semibold mb-6">
+            <div className={isArabic ? "text-right" : "text-left"}>
+              <h3 className="text-lg font-semibold mb-6 w-full">
                 {isArabic ? "معلومات الاتصال" : "Contact Info"}
               </h3>
-              <ul className="space-y-4">
+              <ul className="space-y-4 w-full">
                 <li>
                   <a
-                    href="mailto:contact@example.com"
-                    className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-3"
+                    href="mailto:digitxcontact22@gmail.com"
+                    className={`text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-3 ${
+                      isArabic ? "flex-row-reverse justify-start" : ""
+                    }`}
                   >
                     <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
                       <Mail className="w-4 h-4" />
                     </div>
-                    <span>contact@example.com</span>
+                    <span>digitxcontact22@gmail.com</span>
                   </a>
                 </li>
                 <li>
                   <a
                     href="tel:+1234567890"
-                    className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-3"
+                    className={`text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-3 ${
+                      isArabic ? "flex-row-reverse justify-start" : ""
+                    }`}
                   >
                     <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
                       <Phone className="w-4 h-4" />
@@ -214,7 +200,11 @@ export function Footer({ isArabic }: FooterProps) {
                     <span>+213 542 5274 08</span>
                   </a>
                 </li>
-                <li className="flex items-center gap-3 text-gray-300">
+                <li
+                  className={`flex items-center gap-3 text-gray-300 ${
+                    isArabic ? "flex-row-reverse justify-start" : ""
+                  }`}
+                >
                   <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
                     <MapPin className="w-4 h-4" />
                   </div>
@@ -230,14 +220,20 @@ export function Footer({ isArabic }: FooterProps) {
 
           {/* Copyright */}
           <div className="border-t border-white/10 pt-8 mt-8 text-center">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div
+              className={`flex flex-col md:flex-row ${
+                isArabic ? "md:flex-row-reverse" : ""
+              } justify-between items-center gap-4`}
+            >
               <p className="text-gray-400 text-sm">
                 © {new Date().getFullYear()}{" "}
                 {isArabic
-                  ? "فريق التطوير. جميع الحقوق محفوظة"
-                  : "Dev Team. All rights reserved."}
+                  ? "فريق Digitx. جميع الحقوق محفوظة"
+                  : "Digitx Team. All rights reserved."}
               </p>
-              <div className="flex gap-6">
+              <div
+                className={`flex gap-6 ${isArabic ? "flex-row-reverse" : ""}`}
+              >
                 <p className="text-gray-400 hover:text-white text-sm transition-colors duration-300">
                   {isArabic ? "سياسة الخصوصية" : "Privacy Policy"}
                 </p>

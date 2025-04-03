@@ -21,8 +21,8 @@ interface ContactProps {
 export function Contact({ isArabic }: ContactProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [formState, setFormState] = useState({
-    user_name: "",
-    user_email: "",
+    name: "",
+    email: "",
     subject: "",
     message: "",
   });
@@ -54,16 +54,16 @@ export function Contact({ isArabic }: ContactProps) {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formState.user_name.trim()) {
-      newErrors.user_name = isArabic ? "الاسم مطلوب" : "Name is required";
+    if (!formState.name.trim()) {
+      newErrors.name = isArabic ? "الاسم مطلوب" : "Name is required";
     }
 
-    if (!formState.user_email.trim()) {
-      newErrors.user_email = isArabic
+    if (!formState.email.trim()) {
+      newErrors.email = isArabic
         ? "البريد الإلكتروني مطلوب"
         : "Email is required";
-    } else if (!/^\S+@\S+\.\S+$/.test(formState.user_email)) {
-      newErrors.user_email = isArabic
+    } else if (!/^\S+@\S+\.\S+$/.test(formState.email)) {
+      newErrors.email = isArabic
         ? "البريد الإلكتروني غير صالح"
         : "Invalid email address";
     }
@@ -87,10 +87,9 @@ export function Contact({ isArabic }: ContactProps) {
 
     try {
       // EmailJS configuration
-      // Replace these with your actual EmailJS credentials
-      const serviceId = "YOUR_SERVICE_ID";
-      const templateId = "YOUR_TEMPLATE_ID";
-      const publicKey = "YOUR_PUBLIC_KEY";
+      const serviceId = import.meta.env.VITE_EMAIL_SERVICE_ID!;
+      const templateId = import.meta.env.VITE_EMAIL_TEMPLATE_ID!;
+      const publicKey = import.meta.env.VITE_EMAIL_PUBLIC_KEY!;
 
       // Send email using EmailJS
       const result = await emailjs.sendForm(
@@ -105,8 +104,8 @@ export function Contact({ isArabic }: ContactProps) {
 
       // Reset form
       setFormState({
-        user_name: "",
-        user_email: "",
+        name: "",
+        email: "",
         subject: "",
         message: "",
       });
@@ -221,18 +220,18 @@ export function Contact({ isArabic }: ContactProps) {
                     </label>
                     <input
                       type="text"
-                      name="user_name"
-                      value={formState.user_name}
+                      name="name"
+                      value={formState.name}
                       onChange={handleChange}
                       className={`w-full px-4 py-3.5 border rounded-xl focus:outline-none focus:ring-2 transition-all duration-300 ${
-                        errors.user_name
+                        errors.name
                           ? "border-red-300 focus:border-red-500 focus:ring-red-200 bg-red-50"
                           : "border-gray-200 focus:border-teal-500 focus:ring-teal-200 bg-white/80"
                       }`}
                       placeholder={isArabic ? "أدخل اسمك" : "Enter your name"}
                     />
                     <AnimatePresence>
-                      {errors.user_name && (
+                      {errors.name && (
                         <motion.p
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
@@ -240,7 +239,7 @@ export function Contact({ isArabic }: ContactProps) {
                           className="mt-1.5 text-sm text-red-600 flex items-center gap-1"
                         >
                           <AlertCircle className="w-3.5 h-3.5" />
-                          {errors.user_name}
+                          {errors.name}
                         </motion.p>
                       )}
                     </AnimatePresence>
@@ -253,11 +252,11 @@ export function Contact({ isArabic }: ContactProps) {
                     </label>
                     <input
                       type="email"
-                      name="user_email"
-                      value={formState.user_email}
+                      name="email"
+                      value={formState.email}
                       onChange={handleChange}
                       className={`w-full px-4 py-3.5 border rounded-xl focus:outline-none focus:ring-2 transition-all duration-300 ${
-                        errors.user_email
+                        errors.email
                           ? "border-red-300 focus:border-red-500 focus:ring-red-200 bg-red-50"
                           : "border-gray-200 focus:border-teal-500 focus:ring-teal-200 bg-white/80"
                       }`}
@@ -266,7 +265,7 @@ export function Contact({ isArabic }: ContactProps) {
                       }
                     />
                     <AnimatePresence>
-                      {errors.user_email && (
+                      {errors.email && (
                         <motion.p
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
@@ -274,7 +273,7 @@ export function Contact({ isArabic }: ContactProps) {
                           className="mt-1.5 text-sm text-red-600 flex items-center gap-1"
                         >
                           <AlertCircle className="w-3.5 h-3.5" />
-                          {errors.user_email}
+                          {errors.email}
                         </motion.p>
                       )}
                     </AnimatePresence>

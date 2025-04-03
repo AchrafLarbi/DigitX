@@ -144,7 +144,7 @@ export function Team({ isArabic }: TeamProps) {
           {/* Team members carousel */}
           <div className="overflow-hidden mx-2 md:mx-4" ref={containerRef}>
             <motion.div
-              className="flex gap-4 md:gap-8"
+              className="flex md:gap-8"
               initial={false}
               animate={{
                 x: isArabic
@@ -195,7 +195,7 @@ export function Team({ isArabic }: TeamProps) {
                       <div className="flex items-center gap-2 md:gap-3 mt-auto">
                         {Object.entries(member)
                           .filter(([key]) =>
-                            ["github", "instagram", "linkedin"].includes(key)
+                            ["github", "linkedin"].includes(key)
                           )
                           .map(([platform, url]) => (
                             <motion.a
@@ -212,6 +212,35 @@ export function Team({ isArabic }: TeamProps) {
                             >
                               {getSocialIcon(platform)}
                             </motion.a>
+                          ))}
+                        {Object.entries(member)
+                          .filter(([key]) => ["email"].includes(key))
+                          .map(([platform, email]) => (
+                            <motion.div
+                              key={platform}
+                              className="flex items-center gap-2"
+                            >
+                              <motion.button
+                                whileHover={{ y: -2 }}
+                                onClick={() =>
+                                  setHoveredMember((prev) =>
+                                    prev === email ? null : email
+                                  )
+                                }
+                                className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                                  hoveredMember === email
+                                    ? "bg-blue-600 text-white"
+                                    : "bg-blue-100 text-blue-600"
+                                } transition-colors duration-300`}
+                              >
+                                {getSocialIcon(platform)}
+                              </motion.button>
+                              {hoveredMember === email && (
+                                <span className="text-sm md:text-base text-blue-600">
+                                  {email}
+                                </span>
+                              )}
+                            </motion.div>
                           ))}
                       </div>
                     </div>
