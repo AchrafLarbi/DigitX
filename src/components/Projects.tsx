@@ -74,7 +74,7 @@ export function Projects({ isArabic }: ProjectsProps) {
 
   // Function to determine which links to show based on project ID
   const shouldShowExternalLink = (projectId: number) => {
-    return projectId === 1 || projectId === 2;
+    return projectId === 1 || projectId === 2 || projectId === 6;
   };
 
   const shouldShowGithubLink = (projectId: number) => {
@@ -153,7 +153,7 @@ export function Projects({ isArabic }: ProjectsProps) {
                       project.image || "/placeholder.svg?height=400&width=600"
                     }
                     alt={project.title}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                    className="object-top transform group-hover:scale-110 transition-transform duration-700 ease-out"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 

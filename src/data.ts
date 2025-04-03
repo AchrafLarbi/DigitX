@@ -8,7 +8,8 @@ import Stockkeep from "./assets/projects/stock.png"
 import EsiCheck from "./assets/projects/esicheck.png"
 import Studio from "./assets/projects/Studio_houari.png"
 import Needy from "./assets/projects/Needy.png"
-import Gamesooq from "./assets/projects/gamesooq.png"
+import Gamesooq from "./assets/projects/gamesooq2.png"
+import CAC from "./assets/projects/CAC.png"
 
 
 
@@ -137,6 +138,19 @@ export const projects: Project[] = [
     link: "https://github.com/yousef391/needyapp",
     github: "https://github.com/yousef391/needyapp",
     date: "2023",
+  },
+  {
+    id: 6,
+    title: "CAC de Batna",
+    titleAr: "CAC de Batna",
+    description: "The Centre Anti-Cancer de Batna is a specialized medical facility providing advanced cancer diagnosis, treatment, and care in Algeria. It integrates cutting-edge technology and a multidisciplinary team to ensure comprehensive patient support.",
+    descriptionAr: "مركز مكافحة السرطان في باتنة هو منشأة طبية متخصصة تُقدم تشخيصًا وعلاجًا ورعايةً متقدمةً للسرطان في الجزائر. يجمع المركز بين أحدث التقنيات وفريق متعدد التخصصات لضمان دعم شامل للمرضى.",
+    image: CAC,
+    category: "UI/UX",
+    technologies: ["Figma", "Sketch", "Adobe XD","Canva"],
+    link: "https://www.figma.com/design/sCKL4k5BH6ggLQ0LXWkuOJ/Blog-anti-cancer?node-id=3-510&t=KWFOafgkQfEogpQm-0",
+    github: "https://www.figma.com/design/sCKL4k5BH6ggLQ0LXWkuOJ/Blog-anti-cancer?node-id=3-510&t=KWFOafgkQfEogpQm-0",
+    date: "2024",
   },
 ];
 
