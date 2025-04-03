@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ChevronRight, ExternalLink, Github, Star } from "lucide-react";
+import { ChevronRight, ExternalLink, Github } from "lucide-react";
 import { projects } from "../data";
 
 interface ProjectsProps {
@@ -15,9 +15,11 @@ const categories = ["All", "Web", "Mobile", "UI/UX"];
 export function Projects({ isArabic }: ProjectsProps) {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
-  const [featuredProject, setFeaturedProject] = useState(projects[0]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const [expandedProjects, setExpandedProjects] = useState<
+    Record<string, boolean>
+  >({});
 
   // Filter projects based on selected category
   const filteredProjects =
@@ -33,13 +35,6 @@ export function Projects({ isArabic }: ProjectsProps) {
 
     return () => clearTimeout(timer);
   }, []);
-
-  // Change featured project when category changes
-  useEffect(() => {
-    if (filteredProjects.length > 0) {
-      setFeaturedProject(filteredProjects[0]);
-    }
-  }, [selectedCategory]);
 
   useEffect(() => {
     // Smooth scroll to top of projects section when toggling view
@@ -68,6 +63,22 @@ export function Projects({ isArabic }: ProjectsProps) {
       opacity: 1,
       transition: { type: "spring", stiffness: 100 },
     },
+  };
+
+  const toggleExpanded = (projectId: string) => {
+    setExpandedProjects((prev) => ({
+      ...prev,
+      [projectId]: !prev[projectId],
+    }));
+  };
+
+  // Function to determine which links to show based on project ID
+  const shouldShowExternalLink = (projectId: number) => {
+    return projectId === 1 || projectId === 2;
+  };
+
+  const shouldShowGithubLink = (projectId: number) => {
+    return projectId === 3 || projectId === 4 || projectId === 5;
   };
 
   return (
@@ -119,78 +130,6 @@ export function Projects({ isArabic }: ProjectsProps) {
           ))}
         </div>
 
-        {/* Featured project */}
-        {featuredProject && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="mb-16"
-          >
-            <div className="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 group">
-              <div className="grid md:grid-cols-2 gap-0">
-                <div className="relative overflow-hidden h-64 md:h-auto">
-                  <img
-                    src={
-                      // eslint-disable-next-line no-constant-binary-expression
-                      featuredProject.image ||
-                      "/placeholder.svg?height=600&width=800" ||
-                      "/placeholder.svg"
-                    }
-                    alt={featuredProject.title}
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/70 to-purple-900/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute bottom-0 left-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Star className="w-5 h-5 text-yellow-300 fill-yellow-300" />
-                      <span className="font-medium">Featured Project</span>
-                    </div>
-                    <div className="flex gap-3">
-                      {featuredProject.technologies?.map((tech, i) => (
-                        <span
-                          key={i}
-                          className="text-xs px-2 py-1 bg-white/20 rounded-full backdrop-blur-sm"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="p-8 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-2xl font-bold text-blue-900 mb-4">
-                      {isArabic
-                        ? featuredProject.titleAr
-                        : featuredProject.title}
-                    </h3>
-                    <p className="text-blue-700 mb-6">
-                      {isArabic
-                        ? featuredProject.descriptionAr
-                        : featuredProject.description}
-                    </p>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-blue-500 font-medium">
-                      {featuredProject.date || "2023"}
-                    </span>
-                    <motion.a
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      href={featuredProject.link || "#"}
-                      className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition-colors duration-300"
-                    >
-                      {isArabic ? "عرض المشروع" : "View Project"}
-                      <ChevronRight className="w-4 h-4" />
-                    </motion.a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
         {/* Project grid */}
         <motion.div
           variants={containerVariants}
@@ -220,15 +159,17 @@ export function Projects({ isArabic }: ProjectsProps) {
 
                   {/* Hover overlay with buttons */}
                   <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <motion.a
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      href={project.link || "#"}
-                      className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-blue-600 hover:text-blue-800 transition-colors"
-                    >
-                      <ExternalLink className="w-5 h-5" />
-                    </motion.a>
-                    {project.github && (
+                    {shouldShowExternalLink(project.id) && (
+                      <motion.a
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        href={project.link || "#"}
+                        className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <ExternalLink className="w-5 h-5" />
+                      </motion.a>
+                    )}
+                    {shouldShowGithubLink(project.id) && project.github && (
                       <motion.a
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
@@ -247,20 +188,19 @@ export function Projects({ isArabic }: ProjectsProps) {
                       {isArabic ? project.titleAr : project.title}
                     </h3>
                     <span className="text-xs font-medium px-2 py-1 bg-blue-100 text-blue-700 rounded-full">
-                      {project.category || "Web"}
+                      {project.category}
                     </span>
                   </div>
-                  <p
-                    className={`text-blue-700 mb-4 ${
-                      showAllProjects ? "" : "line-clamp-2"
-                    }`}
-                  >
+                  <p className={`text-blue-700 mb-4`}>
                     {isArabic ? project.descriptionAr : project.description}
                   </p>
 
                   {/* Technologies */}
-                  <div className="flex flex-wrap gap-2 mt-auto">
-                    {project.technologies?.slice(0, 3).map((tech, i) => (
+                  <div className="flex flex-wrap gap-2 mt-auto mb-4">
+                    {(expandedProjects[String(project.id)]
+                      ? project.technologies
+                      : project.technologies?.slice(0, 3)
+                    )?.map((tech, i) => (
                       <span
                         key={i}
                         className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full"
@@ -268,12 +208,35 @@ export function Projects({ isArabic }: ProjectsProps) {
                         {tech}
                       </span>
                     ))}
-                    {(project.technologies?.length || 0) > 3 && (
-                      <span className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full">
-                        +{(project.technologies?.length || 0) - 3}
-                      </span>
-                    )}
+                    {!expandedProjects[String(project.id)] &&
+                      (project.technologies?.length || 0) > 3 && (
+                        <span className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full">
+                          +{(project.technologies?.length || 0) - 3}
+                        </span>
+                      )}
                   </div>
+
+                  {/* Expand/Collapse button */}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleExpanded(String(project.id));
+                    }}
+                    className="text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1 transition-colors"
+                  >
+                    {expandedProjects[String(project.id)]
+                      ? isArabic
+                        ? "عرض أقل"
+                        : "Show Less"
+                      : isArabic
+                      ? "عرض المزيد"
+                      : "Show More"}
+                    <ChevronRight
+                      className={`w-4 h-4 transition-transform ${
+                        expandedProjects[String(project.id)] ? "rotate-90" : ""
+                      }`}
+                    />
+                  </button>
                 </div>
 
                 {/* Animated border on hover */}
