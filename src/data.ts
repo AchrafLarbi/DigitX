@@ -87,8 +87,8 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    title: "Studio Houari Wahrani",
-    titleAr: "ستوديو هواري وهراني",
+    title: "Studio Houari ",
+    titleAr: "ستوديو هواري ",
     description: "professional photography portfolio that show its work and services to potential clients.",
     descriptionAr: "منصة تعريفية  لعميل متخصصة لعرض عملياته وخدماتها للعملاء القادمين.",
     image: Studio,
