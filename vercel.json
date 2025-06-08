@@ -1,0 +1,10 @@
+{
+  "routes": [
+    { "src": "/policy", "dest": "/" },
+    { "src": "/(.*)", "dest": "/" }
+  ],
+  "rewrites": [
+    { "source": "/policy", "destination": "/" },
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
