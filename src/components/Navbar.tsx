@@ -5,6 +5,7 @@ interface NavbarProps {
   setIsArabic: (value: boolean) => void;
   isMenuOpen: boolean;
   setIsMenuOpen: (value: boolean) => void;
+  setCurrentPage?: (page: string) => void;
 }
 
 export function Navbar({
@@ -12,13 +13,27 @@ export function Navbar({
   setIsArabic,
   isMenuOpen,
   setIsMenuOpen,
+  setCurrentPage,
 }: NavbarProps) {
+  const handleNavigation = (page: string) => {
+    if (setCurrentPage) {
+      if (page === "home") {
+        setCurrentPage("home");
+      } else if (page === "whatsapp-policy") {
+        setCurrentPage("whatsapp-policy");
+      }
+    }
+    setIsMenuOpen(false);
+  };
   return (
     <nav className="bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900  text-white fixed w-full z-50 transition-all duration-300 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <span className="text-xl font-bold hover:scale-105 transition-transform cursor-pointer">
+            <span
+              className="text-xl font-bold hover:scale-105 transition-transform cursor-pointer"
+              onClick={() => handleNavigation("home")}
+            >
               {isArabic ? "ديجيت اكس" : "DIGITX"}
             </span>
           </div>
@@ -30,6 +45,7 @@ export function Navbar({
                   key={item}
                   href={`#${item}`}
                   className="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-500 transition-colors duration-300 hover:scale-105 transform"
+                  onClick={() => handleNavigation("home")}
                 >
                   {isArabic
                     ? item === "services"
@@ -42,6 +58,7 @@ export function Navbar({
                     : item.charAt(0).toUpperCase() + item.slice(1)}
                 </a>
               ))}
+
               <button
                 onClick={() => setIsArabic(!isArabic)}
                 className="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-500 transition-all duration-300 hover:scale-105 transform"
@@ -79,7 +96,7 @@ export function Navbar({
               key={item}
               href={`#${item}`}
               className="block px-3 py-2 rounded-md text-base font-medium hover:bg-blue-500 transition-colors duration-300"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => handleNavigation("home")}
             >
               {isArabic
                 ? item === "services"
@@ -92,6 +109,7 @@ export function Navbar({
                 : item.charAt(0).toUpperCase() + item.slice(1)}
             </a>
           ))}
+
           <button
             onClick={() => {
               setIsArabic(!isArabic);
