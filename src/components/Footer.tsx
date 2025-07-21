@@ -71,13 +71,13 @@ export function Footer({ isArabic }: FooterProps) {
                 }`}
               >
                 <a
-                  href="#"
+                  href="https://www.facebook.com/anistyledz"
                   className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
                 >
                   <Facebook className="w-4 h-4" />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.instagram.com/digitx_dz?igsh=MXhicGkzdjJyZ3dsaw%3D%3D"
                   className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
                 >
                   <Instagram className="w-4 h-4" />
