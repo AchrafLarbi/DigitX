@@ -11,8 +11,11 @@ import {
   TrendingUp,
   ChevronRight,
   CheckCircle,
+  Brain,
+  Search,
 } from "lucide-react";
-import { services } from "../data";
+import { services as serviceData } from "../data";
+
 interface ServicesProps {
   isArabic: boolean;
 }
@@ -22,33 +25,26 @@ interface ServicesProps {
 export function Services({ isArabic }: ServicesProps) {
   const [activeService, setActiveService] = useState<string | null>(null);
 
-  const getIcon = (iconName: string, color = "blue") => {
-    const colorClasses: Record<string, string> = {
-      blue: "text-blue-500",
-      green: "text-emerald-500",
-      purple: "text-purple-500",
-      pink: "text-pink-500",
-      orange: "text-orange-500",
-      cyan: "text-cyan-500",
-    };
-
-    const iconClass = `w-12 h-12 ${colorClasses[color] || "text-blue-500"}`;
-
+  const getIcon = (iconName: string) => {
     switch (iconName) {
       case "Code2":
-        return <Code2 className={iconClass} />;
+        return Code2;
       case "Smartphone":
-        return <Smartphone className={iconClass} />;
+        return Smartphone;
       case "Globe":
-        return <Globe className={iconClass} />;
+        return Globe;
       case "Palette":
-        return <Palette className={iconClass} />;
+        return Palette;
       case "Video":
-        return <Video className={iconClass} />;
+        return Video;
       case "TrendingUp":
-        return <TrendingUp className={iconClass} />;
+        return TrendingUp;
+      case "Brain":
+        return Brain;
+      case "Search":
+        return Search;
       default:
-        return null;
+        return Code2;
     }
   };
 
@@ -80,6 +76,11 @@ export function Services({ isArabic }: ServicesProps) {
       cyan: {
         light: "bg-cyan-50",
         gradient: "bg-gradient-to-br from-cyan-50 to-cyan-100 border-cyan-200",
+      },
+      indigo: {
+        light: "bg-indigo-50",
+        gradient:
+          "bg-gradient-to-br from-indigo-50 to-indigo-100 border-indigo-200",
       },
     };
 
@@ -139,9 +140,17 @@ export function Services({ isArabic }: ServicesProps) {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
+          className="mb-16"
+        ></motion.div>
+
+        {/* Original grid view for feature details */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {services.map((service) => (
+          {serviceData.map((service) => (
             <motion.div
               key={service.id}
               variants={itemVariants}
@@ -162,7 +171,14 @@ export function Services({ isArabic }: ServicesProps) {
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   className={`p-4 rounded-2xl bg-white shadow-sm`}
                 >
-                  {getIcon(service.icon, service.color)}
+                  {(() => {
+                    const IconComponent = getIcon(service.icon);
+                    return (
+                      <IconComponent
+                        className={`w-12 h-12 text-${service.color}-500`}
+                      />
+                    );
+                  })()}
                 </motion.div>
               </div>
 

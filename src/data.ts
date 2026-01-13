@@ -2,7 +2,6 @@ import { TeamMember, Project, Service } from './types';
 import AchrafImage from "./assets/teams/Achraf.JPG";
 import IslemImage from "./assets/teams/Islem.jpg";
 import YoucefImage from "./assets/teams/Youcef.JPG";
-import AmineImage from "./assets/teams/Amine.JPG";
 
 import Stockkeep from "./assets/projects/stock.png"
 import EsiCheck from "./assets/projects/esicheck.png"
@@ -10,7 +9,11 @@ import Studio from "./assets/projects/Studio_houari.png"
 import Needy from "./assets/projects/Needy.png"
 import Gamesooq from "./assets/projects/gamesooq2.png"
 import CAC from "./assets/projects/CAC.png"
-
+import portfolioWork09 from "./assets/projects/SmartCity.png";
+import portfolioWork10 from "./assets/projects/Book(1).png";
+import portfolioWork11 from "./assets/projects/RAG.png";
+import portfolioWork12 from "./assets/projects/harfan.png";
+import portfolioWork13 from "./assets/projects/syra.png"
 
 
 export const teamMembers: TeamMember[] = [
@@ -26,19 +29,6 @@ export const teamMembers: TeamMember[] = [
     github: "https://github.com/AchrafLarbi",
     linkedin: "https://www.linkedin.com/in/larbi-achraf-01902a283/",
     email: "larbiachraf03@gmail.com",
-  },
-  {
-    id: "2",
-    name: "Benbakreti Mohammed El Amine",
-    nameAr: "بن بكريتي محمد الامين",
-    role: "Mobile Developer & Marketing Lead",
-    roleAr :" مطوّر تطبيقات جوال والمسؤول على التسويق",
-    bio: "Building high-performance mobile apps using Flutter, Django, and Firebase, while also leading marketing work.",
-    bioAr: "بناء تطبيقات جوال عالية الأداء باستخدام Flutter، Django، Firebase، مع قيادة أعمال التسويق أيضاً.",
-    image: AmineImage,
-    github: "https://github.com/Benbakreti0Amine",
-    linkedin: "https://www.linkedin.com/in/mohammed-el-amine-benbakreti-351b51280/",
-    email: "m.benbakreti@esi-sba.dz",
   },
   {
     id: "3",
@@ -72,6 +62,113 @@ export const teamMembers: TeamMember[] = [
 export const projects: Project[] = [
 
 
+  {
+    id: 7,
+    title: "Harfan",
+    titleAr: "حرفان",
+    description:
+      "Harfan is an interactive educational platform that combines Arabic language learning and Quran memorization with progress tracking and content management.",
+    descriptionAr:
+      "حرفان منصة تعليمية تفاعلية تجمع بين تعلم اللغة العربية وحفظ القرآن مع تتبع التقدم وإدارة المحتوى.",
+    image: portfolioWork12,
+    category: "Web",
+    technologies: ["Django", "Python", "SQLite", "React"],
+    link: "https://harfan-pi.vercel.app/",
+    github: "https://harfan-pi.vercel.app/",
+    date: "2024",
+  },
+
+  {
+    id: 8,
+    title: "Maison SYRA",
+    titleAr: "Maison SYRA",
+    description:
+      "Luxury full-stack e-commerce platform for artisan products with secure authentication, PayPal integration, and admin management.",
+    descriptionAr:
+      "منصة تجارة إلكترونية فاخرة متكاملة لمنتجات الحرفيين مع نظام دفع آمن ولوحة تحكم للإدارة.",
+    image: portfolioWork13,
+    category: "Web",
+    technologies: [
+      "React",
+      "Tailwind CSS",
+      "Django",
+      "Python",
+      "Django REST Framework",
+      "PayPal",
+    ],
+    link: "https://maisonsyra.vercel.app/",
+    github: "https://maisonsyra.vercel.app/",
+    date: "2024",
+  },
+
+  {
+    id: 9,
+    title: "RAG Chatbot",
+    titleAr: "روبوت محادثة ذكي",
+    description:
+      "Retrieval Augmented Generation (RAG) chatbot that answers questions from user documents using LLMs and vector databases.",
+    descriptionAr:
+      "روبوت محادثة ذكي يعتمد على RAG للإجابة عن الأسئلة انطلاقًا من مستندات المستخدم باستخدام نماذج لغوية متقدمة.",
+    image: portfolioWork11,
+    category: "AI",
+    technologies: [
+      "Python",
+      "Transformers",
+      "LangChain",
+      "Gradio",
+      "LLMs",
+      "ChromaDB",
+    ],
+    link: "https://huggingface.co/spaces/achraf2203/RAG-Chatbot",
+    github: "https://huggingface.co/spaces/achraf2203/RAG-Chatbot",
+    date: "2024",
+  },
+
+  {
+    id: 10,
+    title: "Book Recommender",
+    titleAr: "نظام توصية الكتب",
+    description:
+      "Semantic book recommendation system using LLMs with emotion-based filtering and natural language search.",
+    descriptionAr:
+      "نظام توصية كتب دلالي يعتمد على النماذج اللغوية مع بحث لغوي وتصفية حسب المشاعر.",
+    image: portfolioWork10,
+    category: "AI",
+    technologies: [
+      "Python",
+      "Transformers",
+      "LangChain",
+      "Gradio",
+      "Semantic Search",
+      "Sentiment Analysis",
+    ],
+    link: "https://huggingface.co/spaces/achraf2203/Book-recommonder",
+    github: "https://huggingface.co/spaces/achraf2203/Book-recommonder",
+    date: "2024",
+  },
+
+  {
+    id: 11,
+    title: "Smart City",
+    titleAr: "المدينة الذكية",
+    description:
+      "AI-powered smart city platform for traffic monitoring, vehicle detection, speed violation analysis, and intelligent dashboards.",
+    descriptionAr:
+      "منصة مدينة ذكية تعتمد على الذكاء الاصطناعي لمراقبة المرور، كشف المركبات، وتحليل مخالفات السرعة.",
+    image: portfolioWork09,
+    category: "AI",
+    technologies: [
+      "React",
+      "YOLO",
+      "OpenCV",
+      "TensorFlow",
+      "DQN",
+      "FastAPI",
+    ],
+    link: "https://github.com/AchrafLarbi/Project_2sc",
+    github: "https://github.com/AchrafLarbi/Project_2sc",
+    date: "2024",
+  },
 
   {
     id: 1,
@@ -200,14 +297,25 @@ export const services: Service[] = [
     color: "pink",
   },
   {
+    id: "5",
+    icon: "Brain",
+    title: "AI Solutions",
+    titleAr: "حلول الذكاء الاصطناعي",
+    description: "Intelligent AI-powered solutions that transform your business operations and decision-making.",
+    descriptionAr: "حلول ذكية مدعومة بالذكاء الاصطناعي تحول عمليات عملك وصنع القرار.",
+    features: ["Machine Learning", "Natural Language Processing", "Predictive Analytics", "Computer Vision"],
+    featuresAr: ["التعلم الآلي", "معالجة اللغة الطبيعية", "التحليلات التنبؤية", "رؤية الكمبيوتر"],
+    color: "indigo",
+  },
+  {
     id: "6",
-    icon: "TrendingUp",
-    title: "Marketing Solutions",
-    titleAr: "حلول تسويقية",
-    description: "Comprehensive marketing services to boost your brand’s presence across all platforms.",
-    descriptionAr: "خدمات تسويقية شاملة لتعزيز حضور علامتك التجارية عبر جميع المنصات.",
-    features: ["Graphic Design", "Video & Photo Editing", "Photography & Videography", "Content Creation & Strategy", "Social Media Marketing"],
-    featuresAr: ["تصميم جرافيك", " تحرير فيديو وصور", "تصوير فوتوغرافي وفيديو", "إنشاء محتوى واستراتيجية", "تسويق عبر وسائل التواصل الاجتماعي"],
-    color: "cyan",
+    icon: "Zap",
+    title: "AI Automation",
+    titleAr: "أتمتة الذكاء الاصطناعي",
+    description: "Automate repetitive tasks and workflows with intelligent AI-driven automation solutions.",
+    descriptionAr: "أتمتة المهام والعمليات المتكررة بحلول أتمتة ذكية مدفوعة بالذكاء الاصطناعي.",
+    features: ["Workflow Automation", "Chatbots & Virtual Assistants", "Document Processing", "Business Process Automation"],
+    featuresAr: ["أتمتة سير العمل", "روبوتات الدردشة والمساعدين الافتراضيين", "معالجة المستندات", "أتمتة العمليات التجارية"],
+    color: "orange",
   },
 ];
