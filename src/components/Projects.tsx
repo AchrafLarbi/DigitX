@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ChevronRight, ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import { projects } from "../data";
+import { FloatingElements } from "./ui/FloatingElements";
 
 interface ProjectsProps {
   isArabic: boolean;
@@ -14,12 +15,8 @@ const categories = ["All", "Web", "Mobile", "UI/UX", "AI"];
 
 export function Projects({ isArabic }: ProjectsProps) {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
-  const [expandedProjects, setExpandedProjects] = useState<
-    Record<string, boolean>
-  >({});
 
   // Filter projects based on selected category
   const filteredProjects =
@@ -28,16 +25,13 @@ export function Projects({ isArabic }: ProjectsProps) {
       : projects.filter((project) => project.category === selectedCategory);
 
   useEffect(() => {
-    // Simulate loading delay for animation purposes
     const timer = setTimeout(() => {
       setIsLoaded(true);
     }, 300);
-
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    // Smooth scroll to top of projects section when toggling view
     if (!showAllProjects) {
       document
         .getElementById("projects")
@@ -50,26 +44,19 @@ export function Projects({ isArabic }: ProjectsProps) {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
+        staggerChildren: 0.12,
+        delayChildren: 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
+    hidden: { y: 40, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: { type: "spring", stiffness: 100 },
     },
-  };
-
-  const toggleExpanded = (projectId: string) => {
-    setExpandedProjects((prev) => ({
-      ...prev,
-      [projectId]: !prev[projectId],
-    }));
   };
 
   // Function to determine which links to show based on project ID
@@ -81,199 +68,163 @@ export function Projects({ isArabic }: ProjectsProps) {
     return projectId === 3 || projectId === 4 || projectId === 5;
   };
 
+  // Dot grid decorator
+  const DotGrid = ({ className = "" }: { className?: string }) => (
+    <svg width="24" height="24" viewBox="0 0 24 24" className={className}>
+      {[0, 1, 2, 3].map((row) =>
+        [0, 1, 2, 3].map((col) => (
+          <circle
+            key={`${row}-${col}`}
+            cx={3 + col * 6}
+            cy={3 + row * 6}
+            r="2"
+            className="fill-current"
+          />
+        )),
+      )}
+    </svg>
+  );
+
   return (
-    <section
-      id="projects"
-      className="py-20 relative overflow-hidden bg-gradient-to-b from-blue-50 to-white"
-    >
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-200 rounded-full opacity-20 blur-3xl"></div>
-        <div className="absolute top-1/2 -left-24 w-64 h-64 bg-purple-200 rounded-full opacity-20 blur-3xl"></div>
-        <div className="absolute -bottom-32 right-1/4 w-80 h-80 bg-cyan-200 rounded-full opacity-20 blur-3xl"></div>
+    <section id="projects" className="py-20 md:py-28 relative overflow-hidden">
+      {/* Subtle background accents */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 -left-24 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl"></div>
+        {/* White glow elements */}
+        <div className="absolute bottom-1/3 right-1/4 w-[350px] h-[350px] bg-white/[0.02] rounded-full blur-[90px]"></div>
       </div>
 
+      {/* Floating elements */}
+      <FloatingElements variant="default" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Header row */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className={`flex flex-col md:flex-row md:items-end md:justify-between mb-14 gap-6`}
         >
-          <h2 className="text-5xl font-bold text-blue-900 mb-10 relative inline-block">
-            {isArabic ? "مشاريعنا" : "Our Projects"}
-            <span className="absolute -bottom-3 left-0 right-0 h-1.5 bg-gradient-to-r from-teal-400 via-purple-500 to-pink-500 rounded-full"></span>
-          </h2>
-          <p className="text-xl text-blue-700 max-w-2xl mx-auto">
-            {isArabic
-              ? "استكشف أحدث وأفضل المشاريع التي قمنا بتطويرها لعملائنا"
-              : "Explore our latest and greatest projects we've developed for our clients"}
-          </p>
+          <div className={isArabic ? "text-right" : "text-left"}>
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+              {isArabic ? "مشاريعنا" : "Our Projects"}
+              <DotGrid className="text-blue-400/50" />
+            </h2>
+            <p className="text-base md:text-lg text-slate-500 max-w-xl leading-relaxed">
+              {isArabic
+                ? "استكشف أحدث وأفضل المشاريع التي قمنا بتطويرها لعملائنا"
+                : "Explore our latest and greatest projects we've developed for our clients"}
+            </p>
+          </div>
+
+          {/* Category filters as pills */}
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 border filter-pill ${
+                  selectedCategory === category
+                    ? "accent-pill-btn border-transparent filter-pill-active"
+                    : "text-slate-500 border-slate-200"
+                }`}
+              >
+                {isArabic ? (category === "All" ? "الكل" : category) : category}
+              </button>
+            ))}
+          </div>
         </motion.div>
 
-        {/* Category filters */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((category) => (
-            <motion.button
-              key={category}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                selectedCategory === category
-                  ? "bg-blue-600 text-white shadow-lg shadow-blue-300/50"
-                  : "bg-white text-blue-700 border border-blue-200 hover:border-blue-300"
-              }`}
-            >
-              {isArabic ? (category === "All" ? "الكل" : category) : category}
-            </motion.button>
-          ))}
-        </div>
-
-        {/* Project grid */}
+        {/* Project grid — 2 columns */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={isLoaded ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
           {filteredProjects
-            .slice(0, showAllProjects ? filteredProjects.length : 6)
+            .slice(0, showAllProjects ? filteredProjects.length : 4)
             .map((project) => (
               <motion.div
                 key={project.id}
                 variants={itemVariants}
-                onHoverStart={() => setHoveredProject(String(project.id))}
-                onHoverEnd={() => setHoveredProject(null)}
-                className="relative bg-white rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+                className="project-card-hover relative group rounded-2xl overflow-hidden bg-surface cursor-pointer"
               >
-                <div className="relative overflow-hidden h-56">
+                {/* Project image */}
+                <div className="relative overflow-hidden aspect-[16/10]">
+                  {/* Shimmer overlay */}
+                  <div className="project-shimmer"></div>
                   <img
                     src={
                       project.image || "/placeholder.svg?height=400&width=600"
                     }
                     alt={project.title}
-                    className="object-top transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
-                  {/* Hover overlay with buttons */}
-                  <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  {/* Hover action overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-400 bg-black/30">
                     {shouldShowExternalLink(project.id) && (
-                      <motion.a
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
+                      <a
                         href={project.link || "#"}
-                        className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-blue-600 hover:text-blue-800 transition-colors"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-11 h-11 rounded-full bg-white/90 flex items-center justify-center text-background hover:bg-white transition-colors"
                       >
                         <ExternalLink className="w-5 h-5" />
-                      </motion.a>
+                      </a>
                     )}
                     {shouldShowGithubLink(project.id) && project.github && (
-                      <motion.a
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
+                      <a
                         href={project.github}
-                        className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-blue-600 hover:text-blue-800 transition-colors"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-11 h-11 rounded-full bg-white/90 flex items-center justify-center text-background hover:bg-white transition-colors"
                       >
                         <Github className="w-5 h-5" />
-                      </motion.a>
+                      </a>
                     )}
                   </div>
-                </div>
 
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-3">
-                    <h3 className="text-xl font-bold text-blue-900 group-hover:text-blue-600 transition-colors">
+                  {/* Title overlay at bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <h3 className="text-xl font-bold text-white mb-1">
                       {isArabic ? project.titleAr : project.title}
                     </h3>
-                    <span className="text-xs font-medium px-2 py-1 bg-blue-100 text-blue-700 rounded-full">
+                    <span className="text-xs font-medium text-white/60">
                       {project.category}
                     </span>
                   </div>
-                  <p className={`text-blue-700 mb-4`}>
-                    {isArabic ? project.descriptionAr : project.description}
-                  </p>
-
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-2 mt-auto mb-4">
-                    {(expandedProjects[String(project.id)]
-                      ? project.technologies
-                      : project.technologies?.slice(0, 3)
-                    )?.map((tech, i) => (
-                      <span
-                        key={i}
-                        className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                    {!expandedProjects[String(project.id)] &&
-                      (project.technologies?.length || 0) > 3 && (
-                        <span className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full">
-                          +{(project.technologies?.length || 0) - 3}
-                        </span>
-                      )}
-                  </div>
-
-                  {/* Expand/Collapse button */}
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      toggleExpanded(String(project.id));
-                    }}
-                    className="text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1 transition-colors"
-                  >
-                    {expandedProjects[String(project.id)]
-                      ? isArabic
-                        ? "عرض أقل"
-                        : "Show Less"
-                      : isArabic
-                      ? "عرض المزيد"
-                      : "Show More"}
-                    <ChevronRight
-                      className={`w-4 h-4 transition-transform ${
-                        expandedProjects[String(project.id)] ? "rotate-90" : ""
-                      }`}
-                    />
-                  </button>
                 </div>
-
-                {/* Animated border on hover */}
-                <div
-                  className={`absolute inset-0 border-2 border-transparent rounded-xl transition-all duration-500 pointer-events-none ${
-                    hoveredProject === String(project.id)
-                      ? "border-blue-400"
-                      : ""
-                  }`}
-                ></div>
               </motion.div>
             ))}
         </motion.div>
 
-        {/* View more button */}
-        {filteredProjects.length > 6 && (
+        {/* View more / Show less button */}
+        {filteredProjects.length > 4 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="mt-12 text-center"
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+            className="mt-10 text-center"
           >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={() => setShowAllProjects(!showAllProjects)}
-              className="inline-flex items-center gap-2 bg-white border border-blue-200 hover:border-blue-300 text-blue-700 px-6 py-3 rounded-full font-medium transition-all duration-300 shadow-sm hover:shadow"
+              className="px-8 py-3 rounded-full text-sm font-medium text-slate-600 border border-slate-200 filter-pill transition-all duration-300"
             >
               {isArabic
                 ? showAllProjects
                   ? "عرض أقل"
-                  : "عرض المزيد من المشاريع"
+                  : "عرض الكل"
                 : showAllProjects
-                ? "Show Less"
-                : "View More Projects"}
-              <ChevronRight className="w-4 h-4" />
-            </motion.button>
+                  ? "Show Less"
+                  : "Show All"}
+            </button>
           </motion.div>
         )}
       </div>

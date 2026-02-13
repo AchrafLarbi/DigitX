@@ -26,61 +26,82 @@ export function Navbar({
     }
     setIsMenuOpen(false);
   };
+
+  const navItems = ["services", "projects", "team", "contact"];
+
+  const getLabel = (item: string) => {
+    if (isArabic) {
+      switch (item) {
+        case "services":
+          return "خدماتنا";
+        case "projects":
+          return "المشاريع";
+        case "team":
+          return "الفريق";
+        case "contact":
+          return "اتصل بنا";
+        default:
+          return item;
+      }
+    }
+    return item.charAt(0).toUpperCase() + item.slice(1);
+  };
+
   return (
-    <nav className="bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900  text-white fixed w-full z-50 transition-all duration-300 shadow-lg">
+    <nav className="fixed w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-slate-200/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <div
-              className="flex items-center space-x-3 hover:scale-105 transition-transform cursor-pointer"
+          {/* Logo */}
+          <div
+            className="flex items-center space-x-3 hover:scale-105 transition-transform cursor-pointer"
+            onClick={() => handleNavigation("home")}
+          >
+            <img
+              src={logo}
+              alt="DIGITX Logo"
+              className="h-9 w-9 rounded-full object-cover logo-hover"
+            />
+            <span className="text-lg font-bold text-slate-900">
+              {isArabic ? "ديجيت اكس" : "DIGITX"}
+            </span>
+          </div>
+
+          {/* Desktop nav */}
+          <div className="hidden md:flex items-center gap-1">
+            {navItems.map((item) => (
+              <a
+                key={item}
+                href={`#${item}`}
+                className="nav-link-hover px-4 py-2 text-sm font-medium text-slate-600 rounded-lg"
+                onClick={() => handleNavigation("home")}
+              >
+                {getLabel(item)}
+              </a>
+            ))}
+
+            <button
+              onClick={() => setIsArabic(!isArabic)}
+              className="nav-link-hover flex items-center px-3 py-2 text-sm font-medium text-slate-600 rounded-lg mx-1"
+            >
+              <Languages className="w-4 h-4 mr-1.5" />
+              {isArabic ? "EN" : "عربي"}
+            </button>
+
+            {/* CTA Button */}
+            <a
+              href="#contact"
+              className="accent-pill-btn cta-pulse text-white text-sm font-semibold px-6 py-2.5 ml-2"
               onClick={() => handleNavigation("home")}
             >
-              <img
-                src={logo}
-                alt="DIGITX Logo"
-                className="h-10 w-10 rounded-full object-cover"
-              />
-              <span className="text-xl font-bold">
-                {isArabic ? "ديجيت اكس" : "DIGITX"}
-              </span>
-            </div>
+              {isArabic ? "تواصل معنا" : "Get in Touch"}
+            </a>
           </div>
 
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              {["services", "projects", "team", "contact"].map((item) => (
-                <a
-                  key={item}
-                  href={`#${item}`}
-                  className="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-500 transition-colors duration-300 hover:scale-105 transform"
-                  onClick={() => handleNavigation("home")}
-                >
-                  {isArabic
-                    ? item === "services"
-                      ? "خدماتنا"
-                      : item === "projects"
-                      ? "المشاريع"
-                      : item === "team"
-                      ? "الفريق"
-                      : "اتصل بنا"
-                    : item.charAt(0).toUpperCase() + item.slice(1)}
-                </a>
-              ))}
-
-              <button
-                onClick={() => setIsArabic(!isArabic)}
-                className="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-500 transition-all duration-300 hover:scale-105 transform"
-              >
-                <Languages className="w-5 h-5 mr-1" />
-                {isArabic ? "English" : "عربي"}
-              </button>
-            </div>
-          </div>
-
+          {/* Mobile hamburger */}
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md hover:bg-blue-500 focus:outline-none transition-colors duration-300"
+              className="inline-flex items-center justify-center p-2 rounded-lg text-slate-700 hover:bg-blue-50 transition-colors duration-300"
             >
               {isMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -94,27 +115,19 @@ export function Navbar({
 
       {/* Mobile menu */}
       <div
-        className={`md:hidden transition-all duration-300 ${
-          isMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+        className={`md:hidden transition-all duration-300 bg-white/95 backdrop-blur-lg ${
+          isMenuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
         } overflow-hidden`}
       >
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          {["services", "projects", "team", "contact"].map((item) => (
+        <div className="px-4 pt-2 pb-4 space-y-1">
+          {navItems.map((item) => (
             <a
               key={item}
               href={`#${item}`}
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-blue-500 transition-colors duration-300"
+              className="block px-4 py-3 rounded-lg text-base font-medium text-slate-600 hover:text-slate-900 hover:bg-blue-50 transition-colors duration-300"
               onClick={() => handleNavigation("home")}
             >
-              {isArabic
-                ? item === "services"
-                  ? "خدماتنا"
-                  : item === "projects"
-                  ? "المشاريع"
-                  : item === "team"
-                  ? "الفريق"
-                  : "اتصل بنا"
-                : item.charAt(0).toUpperCase() + item.slice(1)}
+              {getLabel(item)}
             </a>
           ))}
 
@@ -123,11 +136,19 @@ export function Navbar({
               setIsArabic(!isArabic);
               setIsMenuOpen(false);
             }}
-            className="flex items-center w-full px-3 py-2 rounded-md text-base font-medium hover:bg-blue-500 transition-colors duration-300"
+            className="flex items-center w-full px-4 py-3 rounded-lg text-base font-medium text-slate-600 hover:text-slate-900 hover:bg-blue-50 transition-colors duration-300"
           >
-            <Languages className="w-5 h-5 mr-1" />
+            <Languages className="w-5 h-5 mr-2" />
             {isArabic ? "English" : "عربي"}
           </button>
+
+          <a
+            href="#contact"
+            className="block text-center accent-pill-btn text-white text-sm font-semibold px-6 py-3 mt-2"
+            onClick={() => handleNavigation("home")}
+          >
+            {isArabic ? "تواصل معنا" : "Get in Touch"}
+          </a>
         </div>
       </div>
     </nav>

@@ -11,8 +11,12 @@ import {
   User,
   MessageSquare,
   FileText,
+  ArrowRight,
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
+import { FloatingElements } from "./ui/FloatingElements";
+
+import heroChar from "../assets/hero/girl-Photoroom.png";
 
 interface ContactProps {
   isArabic: boolean;
@@ -32,16 +36,16 @@ export function Contact({ isArabic }: ContactProps) {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
+  const [showFullForm, setShowFullForm] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setFormState((prev) => ({ ...prev, [name]: value }));
 
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => {
         const newErrors = { ...prev };
@@ -86,36 +90,33 @@ export function Contact({ isArabic }: ContactProps) {
     setIsSubmitting(true);
 
     try {
-      // EmailJS configuration
       const serviceId = import.meta.env.VITE_EMAIL_SERVICE_ID!;
       const templateId = import.meta.env.VITE_EMAIL_TEMPLATE_ID!;
       const publicKey = import.meta.env.VITE_EMAIL_PUBLIC_KEY!;
 
-      // Send email using EmailJS
       const result = await emailjs.sendForm(
         serviceId,
         templateId,
         formRef.current!,
-        publicKey
+        publicKey,
       );
 
       console.log("Email sent successfully:", result.text);
       setSubmitStatus("success");
 
-      // Reset form
       setFormState({
         name: "",
         email: "",
         subject: "",
         message: "",
       });
+      setShowFullForm(false);
     } catch (error) {
       console.error("Error sending email:", error);
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
 
-      // Reset status after 5 seconds
       setTimeout(() => {
         setSubmitStatus("idle");
       }, 5000);
@@ -125,239 +126,272 @@ export function Contact({ isArabic }: ContactProps) {
   return (
     <section
       id="contact"
-      className="py-24 relative overflow-hidden"
-      style={{
-        background: "linear-gradient(135deg, #f5f7ff 0%, #ffffff 100%)",
-      }}
+      dir={isArabic ? "rtl" : "ltr"}
+      className="py-20 md:py-28 relative overflow-hidden"
     >
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-100 to-purple-50 rounded-full opacity-60 blur-3xl transform translate-x-1/3 -translate-y-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-teal-100 to-teal-50 rounded-full opacity-60 blur-3xl transform -translate-x-1/3 translate-y-1/3"></div>
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-gradient-to-r from-pink-100 to-pink-50 rounded-full opacity-40 blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
+      {/* Subtle background accents */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-600/5 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3"></div>
+        {/* White glow elements */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-white/[0.02] rounded-full blur-[100px]"></div>
       </div>
 
+      {/* Floating elements */}
+      <FloatingElements variant="sparse" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* CTA glass card */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          className="cta-glass p-8 md:p-12 lg:p-16 relative overflow-hidden"
         >
-          <h2 className="text-5xl font-bold text-blue-900 mb-6 relative inline-block">
-            {isArabic ? "اتصل بنا" : "Contact Us"}
-            <span className="absolute -bottom-3 left-0 right-0 h-1.5 bg-gradient-to-r from-teal-400 via-purple-500 to-pink-500 rounded-full"></span>
-          </h2>
-          <p className="text-xl text-blue-700 max-w-2xl mx-auto">
-            {isArabic
-              ? "نحن هنا للإجابة على أسئلتك ومساعدتك في تحقيق رؤيتك الرقمية"
-              : "We're here to answer your questions and help you achieve your digital vision"}
-          </p>
-        </motion.div>
-
-        <div className="flex flex-col items-center w-full max-w-3xl mx-auto">
-          {/* Contact form */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="w-full"
+          {/* Side decorative — character on top of outlined text */}
+          <div
+            className={`absolute top-0 ${isArabic ? "left-0" : "right-0"} w-1/2 h-full hidden lg:flex items-center justify-center pointer-events-none`}
           >
-            <div className="bg-white/80 backdrop-blur-lg rounded-3xl w-full shadow-xl p-8 border border-gray-100">
-              <h3 className="text-2xl font-bold text-blue-700 mb-6 flex items-center gap-3">
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-                  <Mail className="w-5 h-5" />
-                </span>
-                {isArabic ? "أرسل لنا رسالة" : "Send Us a Message"}
-              </h3>
+            <div className="relative inline-flex items-center justify-center">
+              <img
+                src={heroChar}
+                alt="3D Character"
+                className="w-40 xl:w-52 h-auto object-contain drop-shadow-xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+              />
+              <span
+                className="leading-none select-none"
+                style={{
+                  fontFamily: "'SN Pro', sans-serif",
+                  fontSize: "clamp(10rem, 18vw, 22rem)",
+                  fontWeight: 200,
+                  color: "transparent",
+                  WebkitTextStroke: "2px rgba(30, 64, 175, 0.12)",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                DX
+              </span>
+            </div>
+          </div>
 
-              <AnimatePresence>
-                {submitStatus === "success" && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="mb-6 p-4 bg-gradient-to-r from-teal-50 to-green-50 border border-teal-200 rounded-xl flex items-center gap-3 text-teal-700"
-                  >
-                    <div className="bg-teal-100 rounded-full p-1.5">
-                      <CheckCircle className="w-5 h-5 text-teal-600" />
-                    </div>
-                    <p className="font-medium">
-                      {isArabic
-                        ? "تم إرسال رسالتك بنجاح! سنتواصل معك قريبًا."
-                        : "Your message has been sent successfully! We'll get back to you soon."}
-                    </p>
-                  </motion.div>
-                )}
+          <div
+            className={`relative max-w-xl ${isArabic ? "text-right" : "text-left"}`}
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-2 leading-tight">
+              {isArabic ? (
+                <>
+                  لنبنِ شيئًا
+                  <br />
+                  <span className="gradient-text">مذهلاً</span>
+                </>
+              ) : (
+                <>
+                  Let's Build
+                  <br />
+                  Something <span className="gradient-text">Amazing</span>
+                </>
+              )}
+            </h2>
 
-                {submitStatus === "error" && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="mb-6 p-4 bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl flex items-center gap-3 text-red-700"
-                  >
-                    <div className="bg-red-100 rounded-full p-1.5">
-                      <AlertCircle className="w-5 h-5 text-red-600" />
-                    </div>
-                    <p className="font-medium">
-                      {isArabic
-                        ? "حدث خطأ أثناء إرسال رسالتك. يرجى المحاولة مرة أخرى."
-                        : "An error occurred while sending your message. Please try again."}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+            <p className="text-slate-500 text-sm md:text-base mb-8 max-w-md leading-relaxed">
+              {isArabic
+                ? "نحن هنا للإجابة على أسئلتك ومساعدتك في تحقيق رؤيتك الرقمية"
+                : "We're here to answer your questions and help you achieve your digital vision"}
+            </p>
 
-              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="relative">
-                    <label className=" text-gray-700 text-sm font-medium mb-2 flex items-center gap-1.5">
-                      <User className="w-4 h-4 text-gray-500" />
-                      {isArabic ? "الاسم" : "Name"}*
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formState.name}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3.5 border rounded-xl focus:outline-none focus:ring-2 transition-all duration-300 ${
-                        errors.name
-                          ? "border-red-300 focus:border-red-500 focus:ring-red-200 bg-red-50"
-                          : "border-gray-200 focus:border-teal-500 focus:ring-teal-200 bg-white/80"
-                      }`}
-                      placeholder={isArabic ? "أدخل اسمك" : "Enter your name"}
-                    />
-                    <AnimatePresence>
-                      {errors.name && (
-                        <motion.p
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          className="mt-1.5 text-sm text-red-600 flex items-center gap-1"
-                        >
-                          <AlertCircle className="w-3.5 h-3.5" />
-                          {errors.name}
-                        </motion.p>
-                      )}
-                    </AnimatePresence>
-                  </div>
+            {/* Status messages */}
+            <AnimatePresence>
+              {submitStatus === "success" && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mb-6 p-4 glass-card rounded-xl flex items-center gap-3 text-green-600"
+                >
+                  <CheckCircle className="w-5 h-5" />
+                  <p className="text-sm font-medium">
+                    {isArabic
+                      ? "تم إرسال رسالتك بنجاح! سنتواصل معك قريبًا."
+                      : "Your message has been sent successfully! We'll get back to you soon."}
+                  </p>
+                </motion.div>
+              )}
 
-                  <div className="relative">
-                    <label className=" text-gray-700 text-sm font-medium mb-2 flex items-center gap-1.5">
-                      <Mail className="w-4 h-4 text-gray-500" />
-                      {isArabic ? "البريد الإلكتروني" : "Email"}*
-                    </label>
+              {submitStatus === "error" && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mb-6 p-4 glass-card rounded-xl flex items-center gap-3 text-red-500"
+                >
+                  <AlertCircle className="w-5 h-5" />
+                  <p className="text-sm font-medium">
+                    {isArabic
+                      ? "حدث خطأ أثناء إرسال رسالتك. يرجى المحاولة مرة أخرى."
+                      : "An error occurred while sending your message. Please try again."}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Form */}
+            <form ref={formRef} onSubmit={handleSubmit}>
+              {!showFullForm ? (
+                /* Compact: email input + send button */
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 relative">
                     <input
                       type="email"
                       name="email"
                       value={formState.email}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3.5 border rounded-xl focus:outline-none focus:ring-2 transition-all duration-300 ${
-                        errors.email
-                          ? "border-red-300 focus:border-red-500 focus:ring-red-200 bg-red-50"
-                          : "border-gray-200 focus:border-teal-500 focus:ring-teal-200 bg-white/80"
+                      onClick={() => setShowFullForm(true)}
+                      className="input-focus-glow w-full px-5 py-4 rounded-full bg-white/60 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-300/30 transition-all text-sm"
+                      placeholder={isArabic ? "بريدك الإلكتروني" : "Email"}
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setShowFullForm(true)}
+                    className="accent-pill-btn cta-pulse text-white w-12 h-12 flex items-center justify-center flex-shrink-0"
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+                </div>
+              ) : (
+                /* Expanded full form */
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-4"
+                >
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-slate-600 text-xs font-medium mb-1.5 flex items-center gap-1">
+                        <User className="w-3 h-3" />
+                        {isArabic ? "الاسم" : "Name"}*
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formState.name}
+                        onChange={handleChange}
+                        className={`input-focus-glow w-full px-4 py-3 rounded-xl bg-white/60 border text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-1 transition-all ${
+                          errors.name
+                            ? "border-red-400/50 focus:border-red-400 focus:ring-red-400/20"
+                            : "border-slate-200 focus:border-blue-400 focus:ring-blue-300/30"
+                        }`}
+                        placeholder={isArabic ? "أدخل اسمك" : "Your name"}
+                      />
+                      {errors.name && (
+                        <p className="mt-1 text-xs text-red-400 flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {errors.name}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="text-slate-600 text-xs font-medium mb-1.5 flex items-center gap-1">
+                        <Mail className="w-3 h-3" />
+                        {isArabic ? "البريد الإلكتروني" : "Email"}*
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formState.email}
+                        onChange={handleChange}
+                        className={`input-focus-glow w-full px-4 py-3 rounded-xl bg-white/60 border text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-1 transition-all ${
+                          errors.email
+                            ? "border-red-400/50 focus:border-red-400 focus:ring-red-400/20"
+                            : "border-slate-200 focus:border-blue-400 focus:ring-blue-300/30"
+                        }`}
+                        placeholder={
+                          isArabic ? "بريدك الإلكتروني" : "Your email"
+                        }
+                      />
+                      {errors.email && (
+                        <p className="mt-1 text-xs text-red-400 flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {errors.email}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-slate-600 text-xs font-medium mb-1.5 flex items-center gap-1">
+                      <FileText className="w-3 h-3" />
+                      {isArabic ? "الموضوع" : "Subject"}
+                    </label>
+                    <input
+                      type="text"
+                      name="subject"
+                      value={formState.subject}
+                      onChange={handleChange}
+                      className="input-focus-glow w-full px-4 py-3 rounded-xl bg-white/60 border border-slate-200 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-300/30 transition-all"
+                      placeholder={isArabic ? "موضوع رسالتك" : "Subject"}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-slate-600 text-xs font-medium mb-1.5 flex items-center gap-1">
+                      <MessageSquare className="w-3 h-3" />
+                      {isArabic ? "الرسالة" : "Message"}*
+                    </label>
+                    <textarea
+                      name="message"
+                      value={formState.message}
+                      onChange={handleChange}
+                      className={`input-focus-glow w-full px-4 py-3 rounded-xl bg-white/60 border text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:ring-1 transition-all min-h-[120px] resize-y ${
+                        errors.message
+                          ? "border-red-400/50 focus:border-red-400 focus:ring-red-400/20"
+                          : "border-slate-200 focus:border-blue-400 focus:ring-blue-300/30"
                       }`}
                       placeholder={
-                        isArabic ? "أدخل بريدك الإلكتروني" : "Enter your email"
+                        isArabic ? "اكتب رسالتك هنا" : "Your message"
                       }
-                    />
-                    <AnimatePresence>
-                      {errors.email && (
-                        <motion.p
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          className="mt-1.5 text-sm text-red-600 flex items-center gap-1"
-                        >
-                          <AlertCircle className="w-3.5 h-3.5" />
-                          {errors.email}
-                        </motion.p>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <label className=" text-gray-700 text-sm font-medium mb-2 flex items-center gap-1.5">
-                    <FileText className="w-4 h-4 text-gray-500" />
-                    {isArabic ? "الموضوع" : "Subject"}
-                  </label>
-                  <input
-                    type="text"
-                    name="subject"
-                    value={formState.subject}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all duration-300 bg-white/80"
-                    placeholder={
-                      isArabic ? "موضوع رسالتك" : "Subject of your message"
-                    }
-                  />
-                </div>
-
-                <div className="relative">
-                  <label className=" text-gray-700 text-sm font-medium mb-2 flex items-center gap-1.5">
-                    <MessageSquare className="w-4 h-4 text-gray-500" />
-                    {isArabic ? "الرسالة" : "Message"}*
-                  </label>
-                  <textarea
-                    name="message"
-                    value={formState.message}
-                    onChange={handleChange}
-                    className={`w-full px-4 py-3.5 border rounded-xl focus:outline-none focus:ring-2 transition-all duration-300 min-h-[180px] resize-y ${
-                      errors.message
-                        ? "border-red-300 focus:border-red-500 focus:ring-red-200 bg-red-50"
-                        : "border-gray-200 focus:border-teal-500 focus:ring-teal-200 bg-white/80"
-                    }`}
-                    placeholder={
-                      isArabic ? "اكتب رسالتك هنا" : "Write your message here"
-                    }
-                  ></textarea>
-                  <AnimatePresence>
+                    ></textarea>
                     {errors.message && (
-                      <motion.p
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="mt-1.5 text-sm text-red-600 flex items-center gap-1"
-                      >
-                        <AlertCircle className="w-3.5 h-3.5" />
+                      <p className="mt-1 text-xs text-red-400 flex items-center gap-1">
+                        <AlertCircle className="w-3 h-3" />
                         {errors.message}
-                      </motion.p>
+                      </p>
                     )}
-                  </AnimatePresence>
-                </div>
+                  </div>
 
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  whileHover={{
-                    scale: 1.02,
-                    boxShadow: "0 10px 25px -5px rgba(79, 70, 229, 0.2)",
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 font-medium text-base ${
-                    isSubmitting ? "opacity-70 cursor-not-allowed" : ""
-                  }`}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>{isArabic ? "جاري الإرسال..." : "Sending..."}</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-5 h-5" />
-                      <span>{isArabic ? "إرسال الرسالة" : "Send Message"}</span>
-                    </>
-                  )}
-                </motion.button>
-              </form>
-            </div>
-          </motion.div>
-        </div>
+                  <motion.button
+                    type="submit"
+                    disabled={isSubmitting}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`w-full accent-pill-btn cta-pulse text-white px-6 py-3.5 flex items-center justify-center gap-2 font-medium text-sm ${
+                      isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+                    }`}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span>
+                          {isArabic ? "جاري الإرسال..." : "Sending..."}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>
+                          {isArabic ? "إرسال الرسالة" : "Send Message"}
+                        </span>
+                      </>
+                    )}
+                  </motion.button>
+                </motion.div>
+              )}
+            </form>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

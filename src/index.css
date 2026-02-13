@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: "Poppins", "Tajawal", sans-serif;
+  font-family: "SN Pro", "Roboto", "Tajawal", sans-serif;
 }
 
 /* Custom animations for portfolio landing */
@@ -12,6 +12,7 @@ body {
   100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -23,66 +24,72 @@ body {
 
 /* Custom styles for portfolio component */
 .geist-font {
-  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .inter-font {
-  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
+/* Glass button for light-blue theme */
 .glass-button {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(30, 64, 175, 0.08);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(30, 64, 175, 0.15);
   transition: all 0.3s ease;
 }
 
 .glass-button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(30, 64, 175, 0.14);
+  border-color: rgba(30, 64, 175, 0.25);
 }
 
+/* Glass card for light-blue theme */
 .glass-card {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(30, 64, 175, 0.12);
   transition: all 0.3s ease;
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
-  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(30, 64, 175, 0.2);
 }
 
+/* Primary gradient button */
 .primary-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2b5aed 0%, #1a3fd0 100%);
+  color: #ffffff;
   transition: all 0.3s ease;
 }
 
 .primary-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 10px 25px rgba(43, 90, 237, 0.35);
 }
 
+/* Gradient text utility */
 .gradient-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #6366f1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
+/* Divider line */
 .divider {
   height: 1px;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.1),
+    rgba(30, 64, 175, 0.12),
     transparent
   );
   margin: 2rem 0;
 }
 
+/* Project image container */
 .project-image {
   background: linear-gradient(
     135deg,
@@ -93,6 +100,498 @@ body {
 }
 
 .skill-badge {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(30, 64, 175, 0.06);
+  border: 1px solid rgba(30, 64, 175, 0.12);
+}
+
+/* Stats bar glass */
+.stats-bar {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(30, 64, 175, 0.1);
+}
+
+/* CTA glass card (contact section) */
+.cta-glass {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(30, 64, 175, 0.12);
+  border-radius: 24px;
+}
+
+/* Dashed connector line for journey */
+.dashed-connector {
+  stroke-dasharray: 8 6;
+  stroke: rgba(30, 64, 175, 0.25);
+  fill: none;
+  stroke-width: 2;
+}
+
+/* Journey dashed path */
+.journey-dashed-path {
+  stroke-dasharray: 10 8;
+  stroke: rgba(30, 64, 175, 0.2);
+  fill: none;
+  stroke-width: 2;
+}
+
+/* Journey step box */
+.journey-step-icon {
+  border: 2px solid rgba(30, 64, 175, 0.25);
+  background: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.journey-step-icon:hover {
+  border-color: rgba(30, 64, 175, 0.4);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* Journey number box (new design) */
+.journey-number-box {
+  border: 1px solid rgba(30, 64, 175, 0.2);
+  background: rgba(255, 255, 255, 0.45);
+  transition: all 0.3s ease;
+}
+
+.journey-number-box:hover {
+  border-color: rgba(30, 64, 175, 0.35);
+  background: rgba(255, 255, 255, 0.65);
+}
+
+/* Achievement number box */
+.achievement-number-box {
+  border: 1px solid rgba(30, 64, 175, 0.15);
+  background: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.achievement-number-box:hover {
+  border-color: rgba(30, 64, 175, 0.3);
+}
+
+/* Achievement number box filled (last item) */
+.achievement-number-box-filled {
+  border: 1px solid rgba(30, 64, 175, 0.2);
+  background: rgba(30, 64, 175, 0.08);
+  transition: all 0.3s ease;
+}
+
+.achievement-number-box-filled:hover {
+  background: rgba(30, 64, 175, 0.14);
+  border-color: rgba(30, 64, 175, 0.3);
+}
+
+/* Accent pill button */
+.accent-pill-btn {
+  background: linear-gradient(135deg, #2b5aed 0%, #1e40af 100%);
+  color: #ffffff !important;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.accent-pill-btn:hover {
+  box-shadow: 0 8px 24px rgba(43, 90, 237, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Outline text effect for team section */
+.text-outline {
+  -webkit-text-stroke: 1px rgba(30, 64, 175, 0.2);
+  color: transparent;
+}
+
+.text-outline-active {
+  -webkit-text-stroke: 0;
+  color: #0f172a;
+}
+
+/* Dashed border for footer */
+.dashed-border-top {
+  border-top: 2px dashed rgba(30, 64, 175, 0.15);
+}
+
+/* Testimonial card styles */
+.testimonial-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonial-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.06) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+}
+
+.testimonial-card-preview {
+  backdrop-filter: blur(8px);
+}
+
+/* Enhanced background — white to blue gradient */
+.bg-background {
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #eef4ff 25%,
+    #d6e4ff 50%,
+    #a5c0ff 75%,
+    #3b6ef6 100%
+  );
+}
+
+/* White gradient overlays */
+.white-glow {
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.06) 0%,
+    transparent 70%
+  );
+}
+
+.white-glow-subtle {
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.03) 0%,
+    transparent 60%
+  );
+}
+
+/* Animated gradient border */
+.gradient-border {
+  position: relative;
+  background:
+    linear-gradient(#ffffff, #f0f4ff) padding-box,
+    linear-gradient(135deg, #3b82f6, #1e40af, #3b82f6) border-box;
+  border: 2px solid transparent;
+  background-size:
+    100% 100%,
+    200% 200%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+/* Floating particles effect (CSS only) */
+.floating-particles::before,
+.floating-particles::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(30, 64, 175, 0.15);
+  border-radius: 50%;
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.floating-particles::before {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.floating-particles::after {
+  top: 60%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+/* Section divider with gradient */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(30, 64, 175, 0.1) 20%,
+    rgba(30, 64, 175, 0.15) 50%,
+    rgba(30, 64, 175, 0.1) 80%,
+    transparent 100%
+  );
+}
+
+/* Subtle noise texture overlay */
+.noise-overlay {
+  position: relative;
+}
+
+.noise-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+}
+
+/* Enhanced glass effect */
+.glass-enhanced {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(30, 64, 175, 0.1);
+  box-shadow:
+    0 8px 32px rgba(30, 64, 175, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Spotlight effect */
+.spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.03) 0%,
+    transparent 30%
+  );
+  transform: rotate(0deg);
+  animation: rotate-slow 30s linear infinite;
+  pointer-events: none;
+}
+
+/* Text reveal animation */
+.text-reveal {
+  overflow: hidden;
+}
+
+.text-reveal > * {
+  animation: slideUp 0.8s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+/* Card hover effect with light */
+.card-light-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-light-effect::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.card-light-effect:hover::before {
+  left: 100%;
+}
+
+/* ===== Dynamic hover & transition effects ===== */
+
+/* Smooth color shift on nav links */
+.nav-link-hover {
+  position: relative;
+  transition:
+    color 0.3s ease,
+    transform 0.2s ease;
+}
+.nav-link-hover::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+  transition:
+    width 0.3s ease,
+    left 0.3s ease;
+  border-radius: 2px;
+}
+.nav-link-hover:hover::after {
+  width: 100%;
+  left: 0;
+}
+.nav-link-hover:hover {
+  color: #1e40af;
+}
+
+/* Stats bar item hover pulse */
+.stat-item {
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+.stat-item:hover {
+  transform: scale(1.05);
+  background: rgba(30, 64, 175, 0.04);
+}
+.stat-item:hover .stat-value {
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Service step card hover glow */
+.service-step-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 16px;
+  padding: 16px;
+  margin: -16px;
+}
+.service-step-hover:hover {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 8px 32px rgba(30, 64, 175, 0.08),
+    0 0 0 1px rgba(30, 64, 175, 0.06);
+}
+
+/* Project card dynamic hover */
+.project-card-hover {
+  transition:
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.5s ease;
+}
+.project-card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 20px 40px rgba(30, 64, 175, 0.12),
+    0 0 0 1px rgba(30, 64, 175, 0.08);
+}
+
+/* Project overlay shimmer on hover */
+.project-card-hover .project-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.project-card-hover:hover .project-shimmer {
+  transform: translateX(100%);
+}
+
+/* Team member button active glow ring */
+.team-btn-active {
+  box-shadow:
+    0 0 0 2px rgba(59, 130, 246, 0.2),
+    0 4px 16px rgba(30, 64, 175, 0.1);
+}
+
+/* Achievement item hover lift */
+.achievement-hover {
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  padding: 12px;
+  margin: -12px;
+}
+.achievement-hover:hover {
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 4px 20px rgba(30, 64, 175, 0.06);
+}
+
+/* CTA button pulse animation */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(43, 90, 237, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(43, 90, 237, 0);
+  }
+}
+.cta-pulse {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+.cta-pulse:hover {
+  animation: none;
+  box-shadow: 0 10px 30px rgba(43, 90, 237, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Smooth color transition on text hover */
+.text-color-shift {
+  transition:
+    color 0.4s ease,
+    transform 0.3s ease;
+}
+.text-color-shift:hover {
+  color: #1e40af;
+}
+
+/* Category filter pill hover */
+.filter-pill {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.filter-pill:hover:not(.filter-pill-active) {
+  background: rgba(30, 64, 175, 0.06);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
+}
+.filter-pill-active {
+  box-shadow: 0 4px 14px rgba(43, 90, 237, 0.25);
+}
+
+/* Social icon hover scale + color */
+.social-icon-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.social-icon-hover:hover {
+  transform: translateY(-3px) scale(1.1);
+  background: rgba(30, 64, 175, 0.1);
+  border-color: rgba(59, 130, 246, 0.4);
+  color: #2563eb;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.12);
+}
+
+/* Input focus glow */
+.input-focus-glow {
+  transition: all 0.3s ease;
+}
+.input-focus-glow:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+/* Gradient border animation on hover */
+@keyframes gradient-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Logo hover glow */
+.logo-hover {
+  transition: all 0.3s ease;
+}
+.logo-hover:hover {
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.3));
 }

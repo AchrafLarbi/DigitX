@@ -1,100 +1,39 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Code2,
-  Smartphone,
-  Globe,
-  Palette,
-  Video,
-  TrendingUp,
-  ChevronRight,
-  CheckCircle,
-  Brain,
-  Search,
-} from "lucide-react";
 import { services as serviceData } from "../data";
+import { FloatingElements } from "./ui/FloatingElements";
 
 interface ServicesProps {
   isArabic: boolean;
 }
 
-// Extended services data with video editing and marketing
+// Dot grid decorator
+const DotGrid = ({ className = "" }: { className?: string }) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" className={className}>
+    {[0, 1, 2, 3].map((row) =>
+      [0, 1, 2, 3].map((col) => (
+        <circle
+          key={`${row}-${col}`}
+          cx={3 + col * 6}
+          cy={3 + row * 6}
+          r="2"
+          className="fill-current"
+        />
+      )),
+    )}
+  </svg>
+);
 
 export function Services({ isArabic }: ServicesProps) {
-  const [activeService, setActiveService] = useState<string | null>(null);
-
-  const getIcon = (iconName: string) => {
-    switch (iconName) {
-      case "Code2":
-        return Code2;
-      case "Smartphone":
-        return Smartphone;
-      case "Globe":
-        return Globe;
-      case "Palette":
-        return Palette;
-      case "Video":
-        return Video;
-      case "TrendingUp":
-        return TrendingUp;
-      case "Brain":
-        return Brain;
-      case "Search":
-        return Search;
-      default:
-        return Code2;
-    }
-  };
-
-  const getBgColor = (color: string, isActive: boolean) => {
-    const colorMap: Record<string, { light: string; gradient: string }> = {
-      blue: {
-        light: "bg-blue-50",
-        gradient: "bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200",
-      },
-      green: {
-        light: "bg-emerald-50",
-        gradient:
-          "bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200",
-      },
-      purple: {
-        light: "bg-purple-50",
-        gradient:
-          "bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200",
-      },
-      pink: {
-        light: "bg-pink-50",
-        gradient: "bg-gradient-to-br from-pink-50 to-pink-100 border-pink-200",
-      },
-      orange: {
-        light: "bg-orange-50",
-        gradient:
-          "bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200",
-      },
-      cyan: {
-        light: "bg-cyan-50",
-        gradient: "bg-gradient-to-br from-cyan-50 to-cyan-100 border-cyan-200",
-      },
-      indigo: {
-        light: "bg-indigo-50",
-        gradient:
-          "bg-gradient-to-br from-indigo-50 to-indigo-100 border-indigo-200",
-      },
-    };
-
-    return isActive
-      ? colorMap[color]?.gradient || colorMap.blue.gradient
-      : colorMap[color]?.light || colorMap.blue.light;
-  };
+  const journeySteps = serviceData.slice(0, 4);
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.2,
         delayChildren: 0.3,
       },
     },
@@ -109,132 +48,163 @@ export function Services({ isArabic }: ServicesProps) {
     },
   };
 
+  // Positions for the white dot trail (percentage-based for responsive)
+  // These sit between the steps to visually connect them
+  const dotTrails = [
+    // Trail from step 1 → step 2 (arc across the top)
+    { cx: "34%", cy: "14%" },
+    { cx: "40%", cy: "9%" },
+    { cx: "46%", cy: "7%" },
+    { cx: "52%", cy: "7%" },
+    { cx: "58%", cy: "9%" },
+    { cx: "64%", cy: "14%" },
+    // Trail from step 2 → step 3 (sweeping down-left)
+    { cx: "68%", cy: "30%" },
+    { cx: "66%", cy: "37%" },
+    { cx: "62%", cy: "43%" },
+    { cx: "57%", cy: "48%" },
+    { cx: "52%", cy: "52%" },
+    // Trail from step 3 → step 4 (curving down-right)
+    { cx: "38%", cy: "62%" },
+    { cx: "33%", cy: "66%" },
+    { cx: "30%", cy: "70%" },
+    { cx: "30%", cy: "75%" },
+    { cx: "32%", cy: "79%" },
+    // Trail from step 4 trailing off
+    { cx: "42%", cy: "85%" },
+    { cx: "50%", cy: "88%" },
+    { cx: "58%", cy: "88%" },
+    { cx: "66%", cy: "86%" },
+    { cx: "74%", cy: "83%" },
+  ];
+
   return (
-    <section id="services" className="py-24 relative overflow-hidden bg-white">
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-blue-50 to-transparent"></div>
-        <div className="absolute -top-64 -right-64 w-[500px] h-[500px] rounded-full bg-blue-50 opacity-70"></div>
-        <div className="absolute -bottom-32 -left-32 w-64 h-64 rounded-full bg-purple-50 opacity-70"></div>
+    <section id="services" className="py-20 md:py-28 relative overflow-hidden">
+      {/* Subtle background accents */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-600/5 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-600/5 rounded-full blur-[100px]"></div>
+        {/* White glow elements */}
+        <div className="absolute top-1/2 left-1/4 w-[300px] h-[300px] bg-white/[0.02] rounded-full blur-[80px]"></div>
       </div>
 
+      {/* Floating elements */}
+      <FloatingElements variant="sparse" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          className={`mb-20 ${isArabic ? "text-right" : "text-left"}`}
         >
-          <h2 className="text-5xl font-bold text-blue-900 mb-4 relative inline-block">
-            {isArabic ? "خدماتنا" : "Our Services"}
-            <span className="absolute -bottom-2 left-1/4 right-1/4 h-1 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"></span>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-5 flex items-center gap-3">
+            {isArabic ? "مسارنا" : "Our Journey"}
+            <DotGrid className="text-blue-400/50" />
           </h2>
-          <p className="text-xl text-blue-700 max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-slate-500 max-w-2xl leading-relaxed">
             {isArabic
-              ? "نقدم مجموعة متكاملة من الخدمات الرقمية لتلبية احتياجات عملك"
-              : "We offer a comprehensive suite of digital services to meet your business needs"}
+              ? "نقدم مجموعة متكاملة من الخدمات الرقمية لتلبية احتياجات عملك. خبرتنا تمتد عبر تطوير الويب والجوال والذكاء الاصطناعي."
+              : "We offer a comprehensive suite of digital services to meet your business needs. Our expertise spans web development, mobile apps, and AI solutions."}
           </p>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="mb-16"
-        ></motion.div>
+        {/* Journey steps with dashed connectors */}
+        <div className="relative">
+          {/* SVG dashed connectors + white dots (desktop only) */}
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none hidden lg:block"
+            preserveAspectRatio="none"
+          >
+            {/* Dashed path curves */}
+            <path
+              d="M 28% 18% Q 50% 0%, 72% 18%"
+              className="journey-dashed-path"
+              vectorEffect="non-scaling-stroke"
+            />
+            <path
+              d="M 68% 26% Q 78% 48%, 52% 56%"
+              className="journey-dashed-path"
+              vectorEffect="non-scaling-stroke"
+            />
+            <path
+              d="M 40% 60% Q 18% 56%, 28% 78%"
+              className="journey-dashed-path"
+              vectorEffect="non-scaling-stroke"
+            />
+            <path
+              d="M 38% 82% Q 55% 100%, 80% 82%"
+              className="journey-dashed-path"
+              vectorEffect="non-scaling-stroke"
+            />
 
-        {/* Original grid view for feature details */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {serviceData.map((service) => (
-            <motion.div
-              key={service.id}
-              variants={itemVariants}
-              onHoverStart={() => setActiveService(service.id)}
-              onHoverEnd={() => setActiveService(null)}
-              className={`relative p-8 rounded-2xl border transition-all duration-500 shadow-sm hover:shadow-xl ${getBgColor(
-                service.color,
-                activeService === service.id
-              )}`}
-            >
-              <div className="absolute top-0 right-0 w-24 h-24 opacity-10 rounded-bl-full overflow-hidden">
-                <div className={`w-full h-full bg-${service.color}-500`}></div>
-              </div>
+            {/* White dot trail along the path */}
+            {dotTrails.map((dot, i) => (
+              <motion.circle
+                key={i}
+                cx={dot.cx}
+                cy={dot.cy}
+                r="2.5"
+                fill="#1e40af"
+                initial={{ opacity: 0, scale: 0 }}
+                whileInView={{ opacity: [0, 0.4, 0.2], scale: 1 }}
+                viewport={{ once: true }}
+                transition={{
+                  delay: 0.8 + i * 0.06,
+                  duration: 0.5,
+                  opacity: { duration: 1.2 },
+                }}
+              />
+            ))}
+          </svg>
 
-              <div className="mb-6 flex justify-center items-center">
-                <motion.div
-                  whileHover={{ rotate: 12, scale: 1.1 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  className={`p-4 rounded-2xl bg-white shadow-sm`}
-                >
-                  {(() => {
-                    const IconComponent = getIcon(service.icon);
-                    return (
-                      <IconComponent
-                        className={`w-12 h-12 text-${service.color}-500`}
-                      />
-                    );
-                  })()}
-                </motion.div>
-              </div>
-
-              <h3
-                className={`text-2xl font-bold mb-4 text-center text-${service.color}-700`}
+          {/* Steps grid */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-x-32 gap-y-20 md:gap-y-28"
+          >
+            {journeySteps.map((step, index) => (
+              <motion.div
+                key={step.id}
+                variants={itemVariants}
+                whileHover={{ x: 6 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className={`service-step-hover flex items-start gap-6 group cursor-default ${
+                  index % 2 === 1 ? "md:mt-12" : ""
+                } ${index >= 2 ? "md:mt-8" : ""}`}
               >
-                {isArabic ? service.titleAr : service.title}
-              </h3>
+                {/* Step number box */}
+                <motion.div
+                  className="journey-number-box w-16 h-16 flex-shrink-0 flex items-center justify-center relative"
+                  whileHover={{ scale: 1.1, rotate: 3 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  {/* Corner accents */}
+                  <span className="absolute -top-[3px] -left-[3px] w-3 h-3 border-t-2 border-l-2 border-blue-400/30 rounded-tl-sm"></span>
+                  <span className="absolute -bottom-[3px] -right-[3px] w-3 h-3 border-b-2 border-r-2 border-blue-400/30 rounded-br-sm"></span>
+                  <span className="text-xl font-bold gradient-text">
+                    {index + 1}
+                  </span>
+                </motion.div>
 
-              <p className="text-gray-600 mb-6 text-center">
-                {isArabic ? service.descriptionAr : service.description}
-              </p>
-
-              <div className="space-y-2 mb-6">
-                {(isArabic ? service.featuresAr : service.features).map(
-                  (feature, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <CheckCircle
-                        className={`w-4 h-4 text-${service.color}-500`}
-                      />
-                      <span className="text-sm text-gray-600">{feature}</span>
-                    </div>
-                  )
-                )}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Call to action */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          className="mt-20 text-center"
-        >
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-10 shadow-xl">
-            <h3 className="text-3xl font-bold text-white mb-4">
-              {isArabic ? "هل تحتاج إلى حل مخصص؟" : "Need a custom solution?"}
-            </h3>
-            <p className="text-white/90 mb-8 max-w-2xl mx-auto">
-              {isArabic
-                ? "نحن نقدم حلولًا مخصصة تناسب احتياجاتك الفريدة. دعنا نناقش مشروعك ونجد الحل المثالي لك."
-                : "We offer tailored solutions to fit your unique needs. Let's discuss your project and find the perfect solution for you."}
-            </p>
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href="#contact"
-              className="inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors shadow-lg"
-            >
-              {isArabic ? "تحدث إلى خبير" : "Talk to an Expert"}
-              <ChevronRight className="w-5 h-5" />
-            </motion.a>
-          </div>
-        </motion.div>
+                {/* Step content */}
+                <div className="pt-1">
+                  <h3 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300">
+                    {isArabic ? step.titleAr : step.title}
+                  </h3>
+                  <p className="text-sm text-slate-500 leading-relaxed max-w-sm group-hover:text-slate-600 transition-colors duration-300">
+                    {isArabic ? step.descriptionAr : step.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,303 +1,202 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Github,
-  Instagram,
-  Linkedin,
-  Mail,
-} from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import { teamMembers } from "../data";
+import { FloatingElements } from "./ui/FloatingElements";
 
 interface TeamProps {
   isArabic: boolean;
 }
 
+// Dot grid decorator
+const DotGrid = ({ className = "" }: { className?: string }) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" className={className}>
+    {[0, 1, 2, 3].map((row) =>
+      [0, 1, 2, 3].map((col) => (
+        <circle
+          key={`${row}-${col}`}
+          cx={3 + col * 6}
+          cy={3 + row * 6}
+          r="2"
+          className="fill-current"
+        />
+      )),
+    )}
+  </svg>
+);
+
 export function Team({ isArabic }: TeamProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [hoveredMember, setHoveredMember] = useState<string | null>(null);
-  const [visibleMembers, setVisibleMembers] = useState(3);
-  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Update visible members based on screen size
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setVisibleMembers(1); // Mobile: 1 member at a time
-      }
-      if (window.innerWidth < 1024) {
-        setVisibleMembers(2); // Tablet: 2 members at a time
-      } else {
-        setVisibleMembers(3); // Desktop: 3 members at a time
-      }
-    };
-
-    // Set initial value
-    handleResize();
-
-    // Add event listener
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const maxIndex = teamMembers.length - visibleMembers + 1;
-
-  const scrollPrev = () => {
-    setActiveIndex((prev) => Math.max(prev - 1, 0));
-  };
-
-  const scrollNext = () => {
-    setActiveIndex((prev) => Math.min(prev + 1, maxIndex));
-  };
-
-  const getSocialIcon = (platform: string) => {
-    switch (platform) {
-      case "github":
-        return <Github className="w-4 h-4" />;
-      case "instagram":
-        return <Instagram className="w-4 h-4" />;
-      case "linkedin":
-        return <Linkedin className="w-4 h-4" />;
-      case "email":
-        return <Mail className="w-4 h-4" />;
-      default:
-        return null;
-    }
-  };
+  const activeMember = teamMembers[activeIndex];
 
   return (
-    <section
-      id="team"
-      className="py-8 md:py-24 relative overflow-hidden bg-gradient-to-b from-white bg-black to-blue-50"
-    >
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -right-20 w-40 h-40 rounded-full bg-blue-100 opacity-50"></div>
-        <div className="absolute bottom-1/4 -left-20 w-40 h-40 rounded-full bg-purple-100 opacity-50"></div>
+    <section id="team" className="py-20 md:py-28 relative overflow-hidden">
+      {/* Subtle background accents */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/4 -right-20 w-60 h-60 bg-purple-600/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 -left-20 w-60 h-60 bg-blue-600/5 rounded-full blur-3xl"></div>
+        {/* White glow elements */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/[0.015] rounded-full blur-[100px]"></div>
       </div>
 
+      {/* Floating elements */}
+      <FloatingElements variant="sparse" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-6 md:mb-16"
+          className={`mb-14 ${isArabic ? "text-right" : "text-left"}`}
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-blue-900 mb-2 md:mb-4 relative inline-block">
-            {isArabic ? "فريقنا" : "Our Team"}
-            <span className="absolute -bottom-2 left-1/4 right-1/4 h-1 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"></span>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-2 flex items-center gap-3">
+            {isArabic ? "أعضاء فريقنا" : "Our Team Members"}
+            <DotGrid className="text-blue-400/50" />
           </h2>
-          <p className="text-base md:text-xl text-blue-700 max-w-2xl mx-auto">
-            {isArabic
-              ? "تعرف على الخبراء المتخصصين الذين يجعلون الأمور تحدث"
-              : "Meet the talented specialists who make things happen"}
-          </p>
         </motion.div>
 
-        <div className="relative">
-          {/* Navigation buttons - mobile-friendly positioning */}
-          <div
-            className={`absolute top-1/2 ${
-              isArabic ? "-right-1 sm:-right-4" : "-left-1 sm:-left-4"
-            } -translate-y-1/2 z-10`}
-          >
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={isArabic ? scrollNext : scrollPrev}
-              disabled={isArabic ? activeIndex === maxIndex : activeIndex === 0}
-              className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center shadow-md ${
-                (isArabic ? activeIndex === maxIndex : activeIndex === 0)
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white text-blue-600 hover:bg-blue-50"
-              }`}
-            >
-              <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
-            </motion.button>
-          </div>
-
-          <div
-            className={`absolute top-1/2 ${
-              isArabic ? "-left-1 sm:-left-4" : "-right-1 sm:-right-4"
-            } -translate-y-1/2 z-10`}
-          >
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={isArabic ? scrollPrev : scrollNext}
-              disabled={isArabic ? activeIndex === 0 : activeIndex === maxIndex}
-              className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center shadow-md ${
-                (isArabic ? activeIndex === 0 : activeIndex === maxIndex)
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white text-blue-600 hover:bg-blue-50"
-              }`}
-            >
-              <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
-            </motion.button>
-          </div>
-
-          {/* Team members carousel */}
-          <div className="overflow-hidden mx-2 md:mx-4" ref={containerRef}>
-            <motion.div
-              className="flex md:gap-8"
-              initial={false}
-              animate={{
-                x: isArabic
-                  ? `${activeIndex * (100 / visibleMembers)}%`
-                  : `-${activeIndex * (100 / visibleMembers)}%`,
-              }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              style={{
-                width: `${(teamMembers.length / visibleMembers) * 100}%`,
-                flexDirection: isArabic ? "row" : "row",
-              }}
-            >
-              {teamMembers.map((member) => (
-                <motion.div
-                  key={member.id}
-                  className="w-full"
-                  style={{ flex: `0 0 ${100 / visibleMembers}%` }}
-                  onHoverStart={() => setHoveredMember(member.id)}
-                  onHoverEnd={() => setHoveredMember(null)}
-                >
-                  <motion.div
-                    className="bg-white rounded-xl md:rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-full flex flex-col"
-                    whileHover={{ y: -5 }}
-                  >
-                    {/* Image container - made to match second example */}
-                    <div className="flex justify-center items-center py-4 px-2">
-                      <div className="relative overflow-hidden w-32 h-48 md:w-full md:h-64">
-                        <img
-                          src={member.image || "/placeholder.svg"}
-                          alt={member.name}
-                          className="w-full h-full mx-auto object-contain"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="p-4 md:p-6 flex-grow flex flex-col">
-                      <h3 className="text-xl md:text-2xl font-bold text-blue-900 mb-1">
-                        {isArabic ? member.nameAr : member.name}
-                      </h3>
-                      <p className="text-sm md:text-base text-blue-600 font-medium mb-2 md:mb-3">
-                        {isArabic ? member.roleAr : member.role}
-                      </p>
-                      <p className="text-xs md:text-base text-gray-600 mb-4 line-clamp-3">
-                        {isArabic ? member.bioAr : member.bio}
-                      </p>
-
-                      {/* Social links - positioned at bottom with proper spacing */}
-                      <div className="flex items-center gap-2 md:gap-3 mt-auto">
-                        {Object.entries(member)
-                          .filter(([key]) =>
-                            ["github", "linkedin"].includes(key)
-                          )
-                          .map(([platform, url]) => (
-                            <motion.a
-                              key={platform}
-                              href={
-                                member.name === "Ourred Islem Charaf Eddine" &&
-                                platform === "github"
-                                  ? undefined
-                                  : (url as string)
-                              }
-                              target={
-                                member.name === "Ourred Islem Charaf Eddine" &&
-                                platform === "github"
-                                  ? undefined
-                                  : "_blank"
-                              }
-                              rel={
-                                member.name === "Ourred Islem Charaf Eddine" &&
-                                platform === "github"
-                                  ? undefined
-                                  : "noopener noreferrer"
-                              }
-                              whileHover={{
-                                y:
-                                  member.name ===
-                                    "Ourred Islem Charaf Eddine" &&
-                                  platform === "github"
-                                    ? 0
-                                    : -2,
-                              }}
-                              className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                                hoveredMember === member.id
-                                  ? "bg-blue-600 text-white"
-                                  : "bg-blue-100 text-blue-600"
-                              } transition-colors duration-300 ${
-                                member.name === "Ourred Islem Charaf Eddine" &&
-                                platform === "github"
-                                  ? "cursor-not-allowed"
-                                  : ""
-                              }`}
-                            >
-                              {getSocialIcon(platform)}
-                            </motion.a>
-                          ))}
-                        {Object.entries(member)
-                          .filter(([key]) => ["email"].includes(key))
-                          .map(([platform, email]) => (
-                            <motion.div
-                              key={platform}
-                              className="flex items-center gap-2"
-                            >
-                              <motion.button
-                                whileHover={{ y: -2 }}
-                                onClick={() =>
-                                  setHoveredMember((prev) =>
-                                    prev === email ? null : email
-                                  )
-                                }
-                                className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                                  hoveredMember === email
-                                    ? "bg-blue-600 text-white"
-                                    : "bg-blue-100 text-blue-600"
-                                } transition-colors duration-300`}
-                              >
-                                {getSocialIcon(platform)}
-                              </motion.button>
-                              {hoveredMember === email && (
-                                <span className="text-sm md:text-base text-blue-600">
-                                  {email}
-                                </span>
-                              )}
-                            </motion.div>
-                          ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* Pagination indicators - Matching second example style */}
-          <div
-            className="flex justify-center gap-3 mt-4 md:mt-8"
-            style={{ flexDirection: isArabic ? "row-reverse" : "row" }}
-          >
-            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-              <button
-                key={index}
+        {/* Main content: left list + right role text */}
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start">
+          {/* Left column — member list */}
+          <div className="flex-shrink-0 w-full lg:w-auto space-y-5">
+            {teamMembers.map((member, index) => (
+              <motion.button
+                key={member.id}
                 onClick={() => setActiveIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`flex items-center gap-4 w-full lg:w-80 p-3 rounded-xl transition-all duration-300 group ${
                   activeIndex === index
-                    ? "bg-blue-600"
-                    : "bg-blue-200 hover:bg-blue-300"
+                    ? "glass-card border-blue-400/30 team-btn-active"
+                    : "hover:bg-blue-50/50"
                 }`}
-                style={{
-                  width: activeIndex === index ? "24px" : "8px",
-                }}
-                aria-label={`Go to slide ${index + 1}`}
-              />
+                whileHover={{ x: isArabic ? -4 : 4 }}
+              >
+                {/* Avatar */}
+                <div
+                  className={`w-14 h-14 rounded-full overflow-hidden flex-shrink-0 ring-2 transition-all duration-300 ${
+                    activeIndex === index
+                      ? "ring-blue-400/60"
+                      : "ring-slate-300 group-hover:ring-blue-300"
+                  }`}
+                >
+                  <img
+                    src={member.image || "/placeholder.svg"}
+                    alt={member.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                {/* Name */}
+                <span
+                  className={`text-base font-medium transition-colors duration-300 ${
+                    activeIndex === index
+                      ? "text-slate-900"
+                      : "text-slate-500 group-hover:text-slate-700"
+                  }`}
+                >
+                  {isArabic ? member.nameAr : member.name}
+                </span>
+              </motion.button>
             ))}
           </div>
+
+          {/* Right column — large role title + bio + socials */}
+          <motion.div
+            key={activeMember.id}
+            initial={{ opacity: 0, x: isArabic ? -20 : 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4 }}
+            className="flex-1 flex flex-col justify-center min-h-[300px]"
+          >
+            {/* Large role text display */}
+            <div className="space-y-2 mb-8">
+              {teamMembers.map((member, index) => (
+                <h3
+                  key={member.id}
+                  className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-wide transition-all duration-500 ${
+                    activeIndex === index
+                      ? "text-slate-900"
+                      : "text-outline opacity-60"
+                  }`}
+                >
+                  {isArabic ? member.roleAr : member.role}
+                </h3>
+              ))}
+            </div>
+
+            {/* Bio */}
+            <p className="text-slate-500 text-sm md:text-base leading-relaxed max-w-lg mb-6">
+              {isArabic ? activeMember.bioAr : activeMember.bio}
+            </p>
+
+            {/* Social links */}
+            <div className="flex items-center gap-3">
+              {activeMember.github && (
+                <a
+                  href={
+                    activeMember.name === "Ourred Islem Charaf Eddine"
+                      ? undefined
+                      : activeMember.github
+                  }
+                  target={
+                    activeMember.name === "Ourred Islem Charaf Eddine"
+                      ? undefined
+                      : "_blank"
+                  }
+                  rel={
+                    activeMember.name === "Ourred Islem Charaf Eddine"
+                      ? undefined
+                      : "noopener noreferrer"
+                  }
+                  className={`social-icon-hover w-9 h-9 rounded-full glass-card flex items-center justify-center text-slate-500 ${
+                    activeMember.name === "Ourred Islem Charaf Eddine"
+                      ? "cursor-not-allowed opacity-40"
+                      : ""
+                  }`}
+                >
+                  <Github className="w-4 h-4" />
+                </a>
+              )}
+              {activeMember.linkedin && (
+                <a
+                  href={activeMember.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-icon-hover w-9 h-9 rounded-full glass-card flex items-center justify-center text-slate-500"
+                >
+                  <Linkedin className="w-4 h-4" />
+                </a>
+              )}
+              {activeMember.email && (
+                <a
+                  href={`mailto:${activeMember.email}`}
+                  className="social-icon-hover w-9 h-9 rounded-full glass-card flex items-center justify-center text-slate-500"
+                >
+                  <Mail className="w-4 h-4" />
+                </a>
+              )}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Pagination dots */}
+        <div className="flex justify-center gap-3 mt-10">
+          {teamMembers.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveIndex(index)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                activeIndex === index
+                  ? "bg-blue-500 w-6"
+                  : "bg-slate-300 w-2 hover:bg-blue-300"
+              }`}
+              aria-label={`Go to member ${index + 1}`}
+            />
+          ))}
         </div>
       </div>
     </section>

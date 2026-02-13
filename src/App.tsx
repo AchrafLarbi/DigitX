@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { Services } from "./components/Services";
+import { Achievements } from "./components/Achievements";
 import { Projects } from "./components/Projects";
 import { Team } from "./components/Team";
+import { Testimonials } from "./components/Testimonials";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { WhatsAppPolicy } from "./components/WhatsAppPolicy";
@@ -53,7 +55,7 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen bg-white ${isArabic ? "font-arabic" : ""}`}
+      className={`min-h-screen bg-background ${isArabic ? "font-arabic" : ""}`}
       dir={isArabic ? "rtl" : "ltr"}
     >
       <Navbar
@@ -70,8 +72,10 @@ function App() {
         <>
           <Hero isArabic={isArabic} />
           <Services isArabic={isArabic} />
+          <Achievements isArabic={isArabic} />
           <Projects isArabic={isArabic} />
           <Team isArabic={isArabic} />
+          <Testimonials isArabic={isArabic} />
           <Contact isArabic={isArabic} />
         </>
       )}

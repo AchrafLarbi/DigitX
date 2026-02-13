@@ -1,13 +1,14 @@
 "use client";
+
+import { motion } from "framer-motion";
 import {
-  Facebook,
-  Instagram,
-  Mail,
-  Phone,
-  MapPin,
   ArrowUp,
-  Globe,
+  Send as TelegramIcon,
+  Linkedin,
+  Instagram,
+  Youtube,
 } from "lucide-react";
+import logo from "../assets/logo.jpg";
 
 interface FooterProps {
   isArabic: boolean;
@@ -18,236 +19,173 @@ export function Footer({ isArabic }: FooterProps) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const serviceLinks = isArabic
+    ? ["تطوير الويب", "تطوير الموبايل", "الحضور الرقمي", "تصميم UI/UX"]
+    : [
+        "Web Development",
+        "Mobile Development",
+        "Digital Presence",
+        "UI/UX Design",
+      ];
+
+  const companyLinks = isArabic
+    ? [
+        { label: "من نحن", href: "#team" },
+        { label: "أعمالنا", href: "#projects" },
+        { label: "تواصل معنا", href: "#contact" },
+      ]
+    : [
+        { label: "About Us", href: "#team" },
+        { label: "Portfolio", href: "#projects" },
+        { label: "Contact", href: "#contact" },
+      ];
+
+  const socialLinks = [
+    {
+      icon: TelegramIcon,
+      href: "https://t.me/DIGITX",
+      label: "Telegram",
+    },
+    {
+      icon: Linkedin,
+      href: "https://www.linkedin.com/in/achraf-larbi/",
+      label: "LinkedIn",
+    },
+    {
+      icon: Instagram,
+      href: "https://www.instagram.com/digit_x__/?hl=fr",
+      label: "Instagram",
+    },
+    {
+      icon: Youtube,
+      href: "https://youtube.com",
+      label: "YouTube",
+    },
+  ];
+
   return (
-    <footer className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
-        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-blue-400 blur-3xl"></div>
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-purple-400 blur-3xl"></div>
+    <footer className="relative">
+      {/* Dashed border top */}
+      <div className="dashed-border-top" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
+        {/* Main footer grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+          {/* Column 1: Logo + description + contact */}
+          <div className="lg:col-span-2 space-y-5">
+            {/* Logo */}
+            <div
+              className="flex items-center gap-3 cursor-pointer"
+              onClick={scrollToTop}
+            >
+              <img
+                src={logo}
+                alt="DIGITX Logo"
+                className="h-9 w-9 rounded-full object-cover"
+              />
+              <span className="text-xl font-bold text-white">DIGITX</span>
+            </div>
+
+            {/* Description */}
+            <p className="text-white/70 text-sm leading-relaxed max-w-md">
+              {isArabic
+                ? "وكالة رقمية متخصصة في تطوير الويب والموبايل والحلول الرقمية. نساعدك في بناء حضور رقمي قوي ومستدام."
+                : "A digital agency specializing in web and mobile development, and digital solutions. We help you build a strong and sustainable digital presence."}
+            </p>
+
+            {/* Contact details */}
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/60">
+              <span>digitx.agency@gmail.com</span>
+              <span>•</span>
+              <span>Algeria</span>
+            </div>
+
+            {/* Social links */}
+            <div className="flex items-center gap-2 pt-1">
+              <div className="flex items-center gap-1 glass-card rounded-full px-3 py-2">
+                {socialLinks.map((social, i) => (
+                  <a
+                    key={i}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="w-8 h-8 flex items-center justify-center text-white/70 hover:text-blue-400 transition-colors"
+                  >
+                    <social.icon className="w-4 h-4" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Column 2: Services */}
+          <div>
+            <h4 className="text-white font-semibold text-sm mb-5">
+              {isArabic ? "خدماتنا" : "Services"}
+            </h4>
+            <ul className="space-y-3">
+              {serviceLinks.map((link, i) => (
+                <li key={i}>
+                  <a
+                    href="#services"
+                    className="text-sm text-white/60 hover:text-blue-400 transition-colors"
+                  >
+                    {link}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: Company */}
+          <div>
+            <h4 className="text-white font-semibold text-sm mb-5">
+              {isArabic ? "الشركة" : "Company"}
+            </h4>
+            <ul className="space-y-3">
+              {companyLinks.map((link, i) => (
+                <li key={i}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-white/60 hover:text-blue-400 transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="dashed-border-top pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4 text-xs text-white/50">
+            <span>{isArabic ? "سياسة الخصوصية" : "Privacy Policy"}</span>
+            <span>•</span>
+            <span>{isArabic ? "إخلاء المسؤولية" : "Disclaimer"}</span>
+          </div>
+
+          <p className="text-xs text-white/50">
+            {isArabic
+              ? `حقوق الطبع والنشر © DIGITX جميع الحقوق محفوظة ${new Date().getFullYear()}`
+              : `Copyright © DIGITX All right Reserved ${new Date().getFullYear()}`}
+          </p>
+        </div>
       </div>
 
       {/* Back to top button */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="absolute right-4 -top-7 sm:right-6 lg:right-8">
-          <button
-            onClick={scrollToTop}
-            className="bg-gradient-to-r from-teal-500 to-blue-600 p-3 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
-            aria-label={isArabic ? "العودة إلى الأعلى" : "Back to top"}
-          >
-            <ArrowUp className="w-5 h-5" />
-          </button>
-        </div>
-      </div>
-
-      <div className="relative pt-16 pb-12" dir={isArabic ? "rtl" : "ltr"}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
-            {/* Company Info */}
-            <div className={isArabic ? "text-right" : "text-left"}>
-              <div
-                className={`flex items-center gap-2 mb-4 ${
-                  isArabic ? "justify-start" : "justify-start"
-                }`}
-              >
-                <h3 className="text-xl font-bold bg-gradient-to-r from-teal-400 to-blue-400 bg-clip-text text-transparent">
-                  {isArabic ? "شركتنا" : "Digitx"}
-                </h3>
-                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-                  <Globe className="w-6 h-6 text-blue-600" />
-                </div>
-              </div>
-              <p
-                className={`text-gray-300 mb-6 ${
-                  isArabic ? "ml-auto" : "mr-auto"
-                } max-w-xs`}
-              >
-                {isArabic
-                  ? "نحن شركة ناشئة مبتكرة تهدف إلى تغيير العالم من خلال التكنولوجيا المتطورة والأفكار الإبداعية."
-                  : "We're an innovative startup aiming to change the world through cutting-edge technology and creative ideas."}
-              </p>
-              <div
-                className={`flex gap-3 ${
-                  isArabic ? "justify-start" : "justify-start"
-                }`}
-              >
-                <a
-                  href="https://www.facebook.com/anistyledz"
-                  className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
-                >
-                  <Facebook className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://www.instagram.com/digitx_dz?igsh=MXhicGkzdjJyZ3dsaw%3D%3D"
-                  className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
-                >
-                  <Instagram className="w-4 h-4" />
-                </a>
-              </div>
-            </div>
-
-            {/* Quick Links */}
-            <div className={isArabic ? "text-right" : "text-left"}>
-              <h3 className="text-lg font-semibold mb-6 w-full">
-                {isArabic ? "روابط سريعة" : "Quick Links"}
-              </h3>
-              <ul className="space-y-3 w-full">
-                <li>
-                  <a
-                    href="#home"
-                    className="text-gray-300 hover:text-white transition-colors duration-300 block"
-                  >
-                    {isArabic ? "الرئيسية" : "Home"}
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#services"
-                    className="text-gray-300 hover:text-white transition-colors duration-300 block"
-                  >
-                    {isArabic ? "خدماتنا" : "Services"}
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#projects"
-                    className="text-gray-300 hover:text-white transition-colors duration-300 block"
-                  >
-                    {isArabic ? "المشاريع" : "Projects"}
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#team"
-                    className="text-gray-300 hover:text-white transition-colors duration-300 block"
-                  >
-                    {isArabic ? "فريقنا" : "Teams"}
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#contact"
-                    className="text-gray-300 hover:text-white transition-colors duration-300 block"
-                  >
-                    {isArabic ? "اتصل بنا" : "Contact Us"}
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Services */}
-            <div className={isArabic ? "text-right" : "text-left"}>
-              <h3 className="text-lg font-semibold mb-6 w-full">
-                {isArabic ? "خدماتنا" : "Our Services"}
-              </h3>
-              <ul className="space-y-3 w-full">
-                <li>
-                  <p className="text-gray-300 hover:text-white transition-colors duration-300 block">
-                    {isArabic ? "تطوير الويب" : "Web Development"}
-                  </p>
-                </li>
-                <li>
-                  <p className="text-gray-300 hover:text-white transition-colors duration-300 block">
-                    {isArabic ? "تطوير التطبيقات" : "App Development"}
-                  </p>
-                </li>
-                <li>
-                  <p className="text-gray-300 hover:text-white transition-colors duration-300 block">
-                    {isArabic ? "تصميم واجهة المستخدم" : "UI/UX Design"}
-                  </p>
-                </li>
-                <li>
-                  <p className="text-gray-300 hover:text-white transition-colors duration-300 block">
-                    {isArabic ? "التسويق الرقمي" : "Digital Marketing"}
-                  </p>
-                </li>
-                <li>
-                  <p className="text-gray-300 hover:text-white transition-colors duration-300 block">
-                    {isArabic ? "تقنية تحرير الفيديو" : "Video Editing"}
-                  </p>
-                </li>
-              </ul>
-            </div>
-
-            {/* Contact Info */}
-            <div className={isArabic ? "text-right" : "text-left"}>
-              <h3 className="text-lg font-semibold mb-6 w-full">
-                {isArabic ? "معلومات الاتصال" : "Contact Info"}
-              </h3>
-              <ul className="space-y-4 w-full">
-                <li>
-                  <a
-                    href="mailto:digitxcontact22@gmail.com"
-                    className={`text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-3 ${
-                      isArabic ? "flex-row-reverse justify-start" : ""
-                    }`}
-                  >
-                    <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
-                      <Mail className="w-4 h-4" />
-                    </div>
-                    <span>digitxcontact22@gmail.com</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="tel:+1234567890"
-                    className={`text-gray-300 hover:text-white transition-colors duration-300 flex items-center gap-3 ${
-                      isArabic ? "flex-row-reverse justify-start" : ""
-                    }`}
-                  >
-                    <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
-                      <Phone className="w-4 h-4" />
-                    </div>
-                    <span>+213 542 5274 08</span>
-                  </a>
-                </li>
-                <li
-                  className={`flex items-center gap-3 text-gray-300 ${
-                    isArabic ? "flex-row-reverse justify-start" : ""
-                  }`}
-                >
-                  <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
-                    <MapPin className="w-4 h-4" />
-                  </div>
-                  <span>
-                    Sidi Bel Abbés 22000
-                    <br />
-                    Université Djillali Liabés de Sidi Bel Abbés
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Copyright */}
-          <div className="border-t border-white/10 pt-8 mt-8 text-center">
-            <div
-              className={`flex flex-col md:flex-row ${
-                isArabic ? "md:flex-row-reverse" : ""
-              } justify-between items-center gap-4`}
-            >
-              <p className="text-gray-400 text-sm">
-                © {new Date().getFullYear()}{" "}
-                {isArabic
-                  ? "فريق Digitx. جميع الحقوق محفوظة"
-                  : "Digitx Team. All rights reserved."}
-              </p>
-              <div
-                className={`flex gap-6 ${isArabic ? "flex-row-reverse" : ""}`}
-              >
-                <p className="text-gray-400 hover:text-white text-sm transition-colors duration-300">
-                  {isArabic ? "سياسة الخصوصية" : "Privacy Policy"}
-                </p>
-                <p className="text-gray-400 hover:text-white text-sm transition-colors duration-300">
-                  {isArabic ? "شروط الاستخدام" : "Terms of Service"}
-                </p>
-                <p className="text-gray-400 hover:text-white text-sm transition-colors duration-300">
-                  {isArabic ? "سياسة ملفات تعريف الارتباط" : "Cookie Policy"}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <motion.button
+        onClick={scrollToTop}
+        className="fixed bottom-8 right-8 w-10 h-10 rounded-full accent-pill-btn text-white flex items-center justify-center z-50 shadow-lg"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        aria-label="Scroll to top"
+      >
+        <ArrowUp className="w-5 h-5" />
+      </motion.button>
     </footer>
   );
 }

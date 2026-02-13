@@ -1,138 +1,164 @@
-import { useEffect, useRef } from "react";
-import * as THREE from "three";
+import heroChar from "../assets/hero/girl-Photoroom.png";
 
 interface HeroProps {
   isArabic: boolean;
-  showAnimatedBackground?: boolean;
 }
 
-// Aurora Background Component
-const AuroraBackground = () => {
-  const mountRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!mountRef.current) return;
-    const currentMount = mountRef.current;
-    const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.domElement.style.position = "fixed";
-    renderer.domElement.style.top = "0";
-    renderer.domElement.style.left = "0";
-    renderer.domElement.style.zIndex = "0";
-    renderer.domElement.style.display = "block";
-    currentMount.appendChild(renderer.domElement);
-    const material = new THREE.ShaderMaterial({
-      uniforms: {
-        iTime: { value: 0 },
-        iResolution: {
-          value: new THREE.Vector2(window.innerWidth, window.innerHeight),
-        },
-      },
-      vertexShader: `void main() { gl_Position = vec4(position, 1.0); }`,
-      fragmentShader: `
-                uniform float iTime; uniform vec2 iResolution;
-                #define NUM_OCTAVES 3
-                float rand(vec2 n) { return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453); }
-                float noise(vec2 p){ vec2 ip=floor(p);vec2 u=fract(p);u=u*u*(3.0-2.0*u);float res=mix(mix(rand(ip),rand(ip+vec2(1.0,0.0)),u.x),mix(rand(ip+vec2(0.0,1.0)),rand(ip+vec2(1.0,1.0)),u.x),u.y);return res*res; }
-                float fbm(vec2 x) { float v=0.0;float a=0.3;vec2 shift=vec2(100);mat2 rot=mat2(cos(0.5),sin(0.5),-sin(0.5),cos(0.50));for(int i=0;i<NUM_OCTAVES;++i){v+=a*noise(x);x=rot*x*2.0+shift;a*=0.4;}return v;}
-                void main() {
-                    vec2 p=((gl_FragCoord.xy)-iResolution.xy*0.5)/iResolution.y*mat2(6.,-4.,4.,6.);vec4 o=vec4(0.);float f=2.+fbm(p+vec2(iTime*5.,0.))*.5;
-                    for(float i=0.;i++<35.;){vec2 v=p+cos(i*i+(iTime+p.x*.08)*.025+i*vec2(13.,11.))*3.5;float tailNoise=fbm(v+vec2(iTime*.5,i))*.3*(1.-(i/35.));vec4 auroraColors=vec4(.1+.3*sin(i*.2+iTime*.4),.3+.5*cos(i*.3+iTime*.5),.7+.3*sin(i*.4+iTime*.3),1.);vec4 currentContribution=auroraColors*exp(sin(i*i+iTime*.8))/length(max(v,vec2(v.x*f*.015,v.y*1.5)));float thinnessFactor=smoothstep(0.,1.,i/35.)*.6;o+=currentContribution*(1.+tailNoise*.8)*thinnessFactor;}
-                    o=tanh(pow(o/100.,vec4(1.6)));gl_FragColor=o*1.5;
-                }`,
-    });
-    const geometry = new THREE.PlaneGeometry(2, 2);
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
-    let animationFrameId: number;
-    const animate = () => {
-      animationFrameId = requestAnimationFrame(animate);
-      material.uniforms.iTime.value += 0.016;
-      renderer.render(scene, camera);
-    };
-    const handleResize = () => {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      material.uniforms.iResolution.value.set(
-        window.innerWidth,
-        window.innerHeight
-      );
-    };
-    window.addEventListener("resize", handleResize);
-    animate();
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", handleResize);
-      if (currentMount.contains(renderer.domElement))
-        currentMount.removeChild(renderer.domElement);
-      renderer.dispose();
-      material.dispose();
-      geometry.dispose();
-    };
-  }, []);
-  return <div ref={mountRef} />;
-};
+// Dot grid decorator (matching template's red dot pattern)
+const DotGrid = ({ className = "" }: { className?: string }) => (
+  <svg width="28" height="28" viewBox="0 0 28 28" className={className}>
+    {[0, 1, 2, 3].map((row) =>
+      [0, 1, 2, 3].map((col) => (
+        <circle
+          key={`${row}-${col}`}
+          cx={4 + col * 7}
+          cy={4 + row * 7}
+          r="2.2"
+          className="fill-current"
+        />
+      )),
+    )}
+  </svg>
+);
 
-export function Hero({
-  isArabic = true,
-  showAnimatedBackground = true,
-}: HeroProps) {
+const stats = [
+  { value: "10+", labelEn: "Project\nCompleted", labelAr: "مشروع\nمكتمل" },
+  { value: "98%", labelEn: "Client\nSatisfaction", labelAr: "رضا\nالعملاء" },
+  { value: "3+", labelEn: "Years of\nExperience", labelAr: "سنوات\nالخبرة" },
+  { value: "24/7", labelEn: "Support\nAvailable", labelAr: "الدعم\nمتاح" },
+];
+
+export function Hero({ isArabic = true }: HeroProps) {
   return (
     <section
       id="home"
-      className="bg-[#1e3a8a] min-h-[100vh] relative overflow-hidden flex items-center"
+      className="min-h-[100vh] relative overflow-hidden flex flex-col"
     >
-      {/* Aurora Background Animation */}
-      {showAnimatedBackground && <AuroraBackground />}
-
-      {/* Fallback Background circles/gradients */}
-      {!showAnimatedBackground && (
-        <>
-          <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-blue-800/30 -translate-x-1/3 translate-y-1/3"></div>
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-blue-800/30 translate-x-1/3 -translate-y-1/3"></div>
-        </>
-      )}
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 w-full relative z-10">
-        <div className="flex flex-col gap-8 items-center">
-          {/* Center content */}
-          <div className="text-center flex flex-col items-center">
-            <h3 className="text-3xl mb-4 font-bold float-animation">
-              <span className="gradient-text">DIGITX</span>
-            </h3>
-
-            <h1
-              className={`font-bold text-white mb-6 leading-tight ${
-                isArabic ? "text-6xl" : "text-5xl"
-              }`}
+      {/* Main hero content */}
+      <div className="flex-1 flex items-center relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-20">
+          <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-16">
+            {/* Left content */}
+            <div
+              className={`flex-1 ${
+                isArabic ? "text-right" : "text-left"
+              } max-w-2xl`}
             >
-              {isArabic
-                ? "تحول أفكارك إلى واقع رقمي"
-                : "Transform Your Ideas Into Digital Reality"}
-            </h1>
-
-            <p className="text-xl text-white/90 mb-10 max-w-3xl">
-              {isArabic
-                ? "وكالة رقمية متخصصة في تطوير الويب والموبايل والحلول الذكية والأتمتة بالذكاء الاصطناعي في الجزائر"
-                : "A digital agency specialized in web, mobile development, AI automation and AI solutions in Algeria"}
-            </p>
-
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              {/* Contact Us Button */}
-              <a
-                href="#contact"
-                className="primary-button text-white px-8 py-3 rounded-full font-medium transition-all duration-300 hover:shadow-lg"
+              <h1
+                className={`font-bold text-slate-900 leading-[1.1] mb-6 ${
+                  isArabic
+                    ? "text-4xl sm:text-5xl md:text-6xl"
+                    : "text-4xl sm:text-5xl md:text-[3.5rem] lg:text-[4rem]"
+                }`}
               >
-                {isArabic ? "تواصل معنا" : "Contact Us"}
-              </a>
+                {isArabic ? (
+                  <>
+                    تحوّل <span className="gradient-text">أفكارك</span> إلى
+                    <br />
+                    واقع رقمي
+                  </>
+                ) : (
+                  <>
+                    Turning <span className="gradient-text">Ideas</span> Into
+                    <br />
+                    Digital Reality
+                  </>
+                )}
+              </h1>
 
-              {/* Our Projects Button */}
-              <a
-                href="#projects"
-                className="glass-button text-white px-8 py-3 rounded-full font-medium transition-all duration-300"
+              <p className="text-base sm:text-lg text-slate-600 mb-10 max-w-lg leading-relaxed">
+                {isArabic
+                  ? "وكالة رقمية متخصصة في تطوير الويب والموبايل والحلول الذكية والأتمتة بالذكاء الاصطناعي في الجزائر"
+                  : "A digital agency specialized in web, mobile development, AI automation and AI solutions in Algeria"}
+              </p>
+
+              <div
+                className={`flex items-center gap-6 ${
+                  isArabic ? "flex-row-reverse" : ""
+                }`}
               >
-                {isArabic ? "مشاريعنا" : "Our Projects"}
-              </a>
+                {/* Primary CTA */}
+                <a
+                  href="#contact"
+                  className="accent-pill-btn cta-pulse text-white px-8 py-3.5 font-semibold text-sm"
+                >
+                  {isArabic ? "ابدأ مشروعك" : "Start a Project"}
+                </a>
+
+                {/* Secondary link */}
+                <a
+                  href="#projects"
+                  className="text-slate-500 hover:text-slate-800 font-medium text-sm flex items-center gap-2 transition-colors group"
+                >
+                  {isArabic ? "شاهد أعمالنا" : "See Our Work"}
+                  <span className="inline-block transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
+                </a>
+              </div>
+            </div>
+
+            {/* Right decorative area — character on top of outlined brand text */}
+            <div className="hidden md:flex flex-1 items-center justify-center relative">
+              <div className="relative inline-flex items-center justify-center">
+                <img
+                  src={heroChar}
+                  alt="3D Character"
+                  className="w-48 lg:w-64 xl:w-72 h-auto object-contain drop-shadow-2xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+                />
+                <div
+                  className="leading-none select-none tracking-tight"
+                  style={{
+                    fontFamily: "'SN Pro', sans-serif",
+                    fontSize: "clamp(5rem, 10vw, 14rem)",
+                    fontWeight: 200,
+                    color: "transparent",
+                    WebkitTextStroke: "1.5px rgba(30, 64, 175, 0.12)",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  DIGITX
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Stats bar at bottom */}
+      <div className="relative z-10 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12">
+          <div className="stats-bar rounded-2xl px-4 sm:px-8 py-5 sm:py-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
+              {stats.map((stat, i) => (
+                <div
+                  key={i}
+                  className={`stat-item flex items-center gap-3 sm:gap-4 ${
+                    i === 0
+                      ? isArabic
+                        ? "justify-end"
+                        : "justify-start"
+                      : i === stats.length - 1
+                        ? isArabic
+                          ? "justify-start"
+                          : "justify-end"
+                        : "justify-center"
+                  }`}
+                >
+                  {i === 0 && !isArabic && (
+                    <DotGrid className="text-blue-400/50 hidden sm:block" />
+                  )}
+                  <span className="stat-value text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900">
+                    {stat.value}
+                  </span>
+                  <span className="text-xs sm:text-sm text-slate-500 whitespace-pre-line leading-tight">
+                    {isArabic ? stat.labelAr : stat.labelEn}
+                  </span>
+                  {i === stats.length - 1 && !isArabic && (
+                    <DotGrid className="text-blue-400/50 hidden sm:block" />
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
