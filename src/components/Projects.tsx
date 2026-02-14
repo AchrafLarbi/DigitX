@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { projects } from "../data";
 import { FloatingElements } from "./ui/FloatingElements";
 
@@ -10,19 +10,9 @@ interface ProjectsProps {
   isArabic: boolean;
 }
 
-// Define categories for filtering
-const categories = ["All", "Web", "Mobile", "UI/UX", "AI"];
-
 export function Projects({ isArabic }: ProjectsProps) {
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const [isLoaded, setIsLoaded] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
-
-  // Filter projects based on selected category
-  const filteredProjects =
-    selectedCategory === "All"
-      ? projects
-      : projects.filter((project) => project.category === selectedCategory);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -57,15 +47,6 @@ export function Projects({ isArabic }: ProjectsProps) {
       opacity: 1,
       transition: { type: "spring", stiffness: 100 },
     },
-  };
-
-  // Function to determine which links to show based on project ID
-  const shouldShowExternalLink = (projectId: number) => {
-    return projectId === 1 || projectId === 2 || projectId === 6;
-  };
-
-  const shouldShowGithubLink = (projectId: number) => {
-    return projectId === 3 || projectId === 4 || projectId === 5;
   };
 
   // Dot grid decorator
@@ -118,23 +99,6 @@ export function Projects({ isArabic }: ProjectsProps) {
                 : "Explore our latest and greatest projects we've developed for our clients"}
             </p>
           </div>
-
-          {/* Category filters as pills */}
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 border filter-pill ${
-                  selectedCategory === category
-                    ? "accent-pill-btn border-transparent filter-pill-active"
-                    : "text-slate-500 border-slate-200"
-                }`}
-              >
-                {isArabic ? (category === "All" ? "الكل" : category) : category}
-              </button>
-            ))}
-          </div>
         </motion.div>
 
         {/* Project grid — 2 columns */}
@@ -144,68 +108,80 @@ export function Projects({ isArabic }: ProjectsProps) {
           animate={isLoaded ? "visible" : "hidden"}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
-          {filteredProjects
-            .slice(0, showAllProjects ? filteredProjects.length : 4)
+          {projects
+            .slice(0, showAllProjects ? projects.length : 4)
             .map((project) => (
               <motion.div
                 key={project.id}
                 variants={itemVariants}
                 className="project-card-hover relative group rounded-2xl overflow-hidden bg-surface cursor-pointer"
               >
-                {/* Project image */}
-                <div className="relative overflow-hidden aspect-[16/10]">
-                  {/* Shimmer overlay */}
-                  <div className="project-shimmer"></div>
-                  <img
-                    src={
-                      project.image || "/placeholder.svg?height=400&width=600"
-                    }
-                    alt={project.title}
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                  />
-                  {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                {/* Wrap entire card in a link if github exists */}
+                <a
+                  href={project.github || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  {/* Project image */}
+                  <div className="relative overflow-hidden aspect-[16/10]">
+                    {/* Shimmer overlay */}
+                    <div className="project-shimmer"></div>
+                    <img
+                      src={
+                        project.image || "/placeholder.svg?height=400&width=600"
+                      }
+                      alt={project.title}
+                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    />
+                    {/* Default gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-400 group-hover:opacity-0"></div>
 
-                  {/* Hover action overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-400 bg-black/30">
-                    {shouldShowExternalLink(project.id) && (
-                      <a
-                        href={project.link || "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-11 h-11 rounded-full bg-white/90 flex items-center justify-center text-background hover:bg-white transition-colors"
-                      >
-                        <ExternalLink className="w-5 h-5" />
-                      </a>
-                    )}
-                    {shouldShowGithubLink(project.id) && project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-11 h-11 rounded-full bg-white/90 flex items-center justify-center text-background hover:bg-white transition-colors"
-                      >
-                        <Github className="w-5 h-5" />
-                      </a>
-                    )}
-                  </div>
+                    {/* Hover description overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/40 flex flex-col justify-end p-5 opacity-0 group-hover:opacity-100 transition-all duration-400">
+                      <p className="text-sm text-white/90 leading-relaxed mb-3 line-clamp-3">
+                        {isArabic ? project.descriptionAr : project.description}
+                      </p>
+                      {/* Tech tags */}
+                      <div className="flex flex-wrap gap-1.5 mb-3">
+                        {project.technologies.slice(0, 4).map((tech) => (
+                          <span
+                            key={tech}
+                            className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/15 text-white/80 backdrop-blur-sm"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                        {project.technologies.length > 4 && (
+                          <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/15 text-white/80">
+                            +{project.technologies.length - 4}
+                          </span>
+                        )}
+                      </div>
+                      {/* View link */}
+                      <div className="flex items-center gap-1.5 text-blue-300 text-xs font-medium">
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        {isArabic ? "عرض المشروع" : "View Project"}
+                      </div>
+                    </div>
 
-                  {/* Title overlay at bottom */}
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <h3 className="text-xl font-bold text-white mb-1">
-                      {isArabic ? project.titleAr : project.title}
-                    </h3>
-                    <span className="text-xs font-medium text-white/60">
-                      {project.category}
-                    </span>
+                    {/* Title overlay at bottom (visible by default, hides on hover) */}
+                    <div className="absolute bottom-0 left-0 right-0 p-5 transition-opacity duration-400 group-hover:opacity-0">
+                      <h3 className="text-xl font-bold text-white mb-1">
+                        {isArabic ? project.titleAr : project.title}
+                      </h3>
+                      <span className="text-xs font-medium text-white/60">
+                        {project.category}
+                      </span>
+                    </div>
                   </div>
-                </div>
+                </a>
               </motion.div>
             ))}
         </motion.div>
 
         {/* View more / Show less button */}
-        {filteredProjects.length > 4 && (
+        {projects.length > 4 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

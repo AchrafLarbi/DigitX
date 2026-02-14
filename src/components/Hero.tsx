@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import heroChar from "../assets/hero/girl-Photoroom.png";
 
 interface HeroProps {
@@ -99,18 +100,26 @@ export function Hero({ isArabic = true }: HeroProps) {
             </div>
 
             {/* Right decorative area — character on top of outlined brand text */}
-            <div className="hidden md:flex flex-1 items-center justify-center relative">
+            <div className="flex flex-1 items-center justify-center relative mt-8 lg:mt-0">
               <div className="relative inline-flex items-center justify-center">
-                <img
+                <motion.img
                   src={heroChar}
                   alt="3D Character"
-                  className="w-48 lg:w-64 xl:w-72 h-auto object-contain drop-shadow-2xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+                  className="w-40 sm:w-48 lg:w-64 xl:w-72 h-auto object-contain drop-shadow-2xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+                  animate={{
+                    y: [0, -12, 0],
+                  }}
+                  transition={{
+                    duration: 3.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                 />
                 <div
                   className="leading-none select-none tracking-tight"
                   style={{
                     fontFamily: "'SN Pro', sans-serif",
-                    fontSize: "clamp(5rem, 10vw, 14rem)",
+                    fontSize: "clamp(4rem, 10vw, 14rem)",
                     fontWeight: 200,
                     color: "transparent",
                     WebkitTextStroke: "1.5px rgba(30, 64, 175, 0.12)",

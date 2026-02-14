@@ -22,7 +22,6 @@ export interface Project {
   image: string;
   category: string;
   technologies: string[];
-  link: string;
   github: string | null;
   date: string;
 }

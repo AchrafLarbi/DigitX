@@ -4,9 +4,9 @@ import { Hero } from "./components/Hero";
 import { Services } from "./components/Services";
 import { Achievements } from "./components/Achievements";
 import { Projects } from "./components/Projects";
-import { Team } from "./components/Team";
 import { Testimonials } from "./components/Testimonials";
 import { Contact } from "./components/Contact";
+import { Process } from "./components/Process";
 import { Footer } from "./components/Footer";
 import { WhatsAppPolicy } from "./components/WhatsAppPolicy";
 import "./styles/animations.css";
@@ -74,8 +74,8 @@ function App() {
           <Services isArabic={isArabic} />
           <Achievements isArabic={isArabic} />
           <Projects isArabic={isArabic} />
-          <Team isArabic={isArabic} />
           <Testimonials isArabic={isArabic} />
+          <Process isArabic={isArabic} />
           <Contact isArabic={isArabic} />
         </>
       )}

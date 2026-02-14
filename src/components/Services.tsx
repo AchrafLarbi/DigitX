@@ -26,7 +26,7 @@ const DotGrid = ({ className = "" }: { className?: string }) => (
 );
 
 export function Services({ isArabic }: ServicesProps) {
-  const journeySteps = serviceData.slice(0, 4);
+  const journeySteps = serviceData;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -52,30 +52,40 @@ export function Services({ isArabic }: ServicesProps) {
   // These sit between the steps to visually connect them
   const dotTrails = [
     // Trail from step 1 → step 2 (arc across the top)
-    { cx: "34%", cy: "14%" },
-    { cx: "40%", cy: "9%" },
-    { cx: "46%", cy: "7%" },
-    { cx: "52%", cy: "7%" },
-    { cx: "58%", cy: "9%" },
-    { cx: "64%", cy: "14%" },
+    { cx: "34%", cy: "10%" },
+    { cx: "40%", cy: "6%" },
+    { cx: "46%", cy: "4%" },
+    { cx: "52%", cy: "4%" },
+    { cx: "58%", cy: "6%" },
+    { cx: "64%", cy: "10%" },
     // Trail from step 2 → step 3 (sweeping down-left)
-    { cx: "68%", cy: "30%" },
-    { cx: "66%", cy: "37%" },
-    { cx: "62%", cy: "43%" },
-    { cx: "57%", cy: "48%" },
-    { cx: "52%", cy: "52%" },
+    { cx: "68%", cy: "22%" },
+    { cx: "66%", cy: "27%" },
+    { cx: "62%", cy: "31%" },
+    { cx: "57%", cy: "34%" },
+    { cx: "52%", cy: "37%" },
     // Trail from step 3 → step 4 (curving down-right)
-    { cx: "38%", cy: "62%" },
-    { cx: "33%", cy: "66%" },
-    { cx: "30%", cy: "70%" },
-    { cx: "30%", cy: "75%" },
-    { cx: "32%", cy: "79%" },
-    // Trail from step 4 trailing off
-    { cx: "42%", cy: "85%" },
-    { cx: "50%", cy: "88%" },
-    { cx: "58%", cy: "88%" },
-    { cx: "66%", cy: "86%" },
-    { cx: "74%", cy: "83%" },
+    { cx: "38%", cy: "44%" },
+    { cx: "33%", cy: "47%" },
+    { cx: "30%", cy: "50%" },
+    { cx: "30%", cy: "53%" },
+    { cx: "32%", cy: "56%" },
+    // Trail from step 4 → step 5 (arc across)
+    { cx: "42%", cy: "60%" },
+    { cx: "48%", cy: "58%" },
+    { cx: "54%", cy: "57%" },
+    { cx: "60%", cy: "58%" },
+    { cx: "66%", cy: "60%" },
+    // Trail from step 5 → step 6 (curving down-left)
+    { cx: "68%", cy: "72%" },
+    { cx: "66%", cy: "76%" },
+    { cx: "62%", cy: "80%" },
+    { cx: "57%", cy: "83%" },
+    { cx: "52%", cy: "86%" },
+    // Trail from step 6 trailing off
+    { cx: "38%", cy: "90%" },
+    { cx: "32%", cy: "92%" },
+    { cx: "26%", cy: "93%" },
   ];
 
   return (
@@ -120,22 +130,32 @@ export function Services({ isArabic }: ServicesProps) {
           >
             {/* Dashed path curves */}
             <path
-              d="M 28% 18% Q 50% 0%, 72% 18%"
+              d="M 28% 12% Q 50% -2%, 72% 12%"
               className="journey-dashed-path"
               vectorEffect="non-scaling-stroke"
             />
             <path
-              d="M 68% 26% Q 78% 48%, 52% 56%"
+              d="M 68% 20% Q 78% 36%, 52% 40%"
               className="journey-dashed-path"
               vectorEffect="non-scaling-stroke"
             />
             <path
-              d="M 40% 60% Q 18% 56%, 28% 78%"
+              d="M 40% 42% Q 18% 40%, 28% 56%"
               className="journey-dashed-path"
               vectorEffect="non-scaling-stroke"
             />
             <path
-              d="M 38% 82% Q 55% 100%, 80% 82%"
+              d="M 38% 58% Q 55% 54%, 72% 62%"
+              className="journey-dashed-path"
+              vectorEffect="non-scaling-stroke"
+            />
+            <path
+              d="M 68% 70% Q 78% 84%, 52% 88%"
+              className="journey-dashed-path"
+              vectorEffect="non-scaling-stroke"
+            />
+            <path
+              d="M 40% 90% Q 20% 96%, 18% 98%"
               className="journey-dashed-path"
               vectorEffect="non-scaling-stroke"
             />
