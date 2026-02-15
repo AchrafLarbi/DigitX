@@ -147,29 +147,21 @@ export function Hero({ isArabic = true }: HeroProps) {
               {stats.map((stat, i) => (
                 <div
                   key={i}
-                  className={`stat-item flex items-center gap-3 sm:gap-4 ${
-                    i === 0
-                      ? isArabic
-                        ? "justify-end"
-                        : "justify-start"
-                      : i === stats.length - 1
-                        ? isArabic
-                          ? "justify-start"
-                          : "justify-end"
-                        : "justify-center"
-                  }`}
+                  className={`stat-item flex items-center gap-2 sm:gap-4 ${
+                    isArabic ? "flex-row-reverse" : ""
+                  } justify-center`}
                 >
                   {i === 0 && !isArabic && (
-                    <DotGrid className="text-blue-400/50 hidden sm:block" />
+                    <DotGrid className="text-blue-400/50 hidden md:block" />
                   )}
-                  <span className="stat-value text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900">
+                  <span className="stat-value text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 shrink-0">
                     {stat.value}
                   </span>
-                  <span className="text-xs sm:text-sm text-slate-500 whitespace-pre-line leading-tight">
+                  <span className="text-[11px] sm:text-sm text-slate-500 whitespace-pre-line leading-tight">
                     {isArabic ? stat.labelAr : stat.labelEn}
                   </span>
                   {i === stats.length - 1 && !isArabic && (
-                    <DotGrid className="text-blue-400/50 hidden sm:block" />
+                    <DotGrid className="text-blue-400/50 hidden md:block" />
                   )}
                 </div>
               ))}
