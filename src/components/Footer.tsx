@@ -20,23 +20,32 @@ export function Footer({ isArabic }: FooterProps) {
   };
 
   const serviceLinks = isArabic
-    ? ["تطوير الويب", "تطوير الموبايل", "الحضور الرقمي", "تصميم UI/UX"]
+    ? [
+        "تطوير مواقع الويب",
+        "تطوير تطبيقات الجوال",
+        "التواجد الرقمي",
+        "تصميم واجهات المستخدم",
+        "حلول الذكاء الاصطناعي",
+      ]
     : [
         "Web Development",
         "Mobile Development",
         "Digital Presence",
         "UI/UX Design",
+        "AI Solutions",
       ];
 
   const companyLinks = isArabic
     ? [
         { label: "من نحن", href: "#team" },
         { label: "أعمالنا", href: "#projects" },
+        { label: "منهجيتنا", href: "#process" },
         { label: "تواصل معنا", href: "#contact" },
       ]
     : [
         { label: "About Us", href: "#team" },
         { label: "Portfolio", href: "#projects" },
+        { label: "Our Process", href: "#process" },
         { label: "Contact", href: "#contact" },
       ];
 
@@ -89,8 +98,8 @@ export function Footer({ isArabic }: FooterProps) {
             {/* Description */}
             <p className="text-white/70 text-sm leading-relaxed max-w-md">
               {isArabic
-                ? "وكالة رقمية متخصصة في تطوير الويب والموبايل والحلول الرقمية. نساعدك في بناء حضور رقمي قوي ومستدام."
-                : "A digital agency specializing in web and mobile development, and digital solutions. We help you build a strong and sustainable digital presence."}
+                ? "وكالة رقمية متخصصة في بناء منصات رقمية عالية الأداء وقابلة للتوسع. من الفكرة إلى الإطلاق، نحوّل رؤيتك إلى واقع رقمي."
+                : "A digital agency specializing in building high-performance, scalable digital platforms. From concept to launch, we turn your vision into digital reality."}
             </p>
 
             {/* Contact details */}

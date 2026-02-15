@@ -90,13 +90,13 @@ export function Projects({ isArabic }: ProjectsProps) {
         >
           <div className={isArabic ? "text-right" : "text-left"}>
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 flex items-center gap-3">
-              {isArabic ? "مشاريعنا" : "Our Projects"}
+              {isArabic ? "أعمالنا" : "Featured Work"}
               <DotGrid className="text-blue-400/50" />
             </h2>
             <p className="text-base md:text-lg text-slate-500 max-w-xl leading-relaxed">
               {isArabic
-                ? "استكشف أحدث وأفضل المشاريع التي قمنا بتطويرها لعملائنا"
-                : "Explore our latest and greatest projects we've developed for our clients"}
+                ? "مشاريع مختارة تعكس التزامنا بالجودة والابتكار والتأثير الحقيقي على أعمال عملائنا"
+                : "Selected projects that reflect our commitment to quality, innovation, and real business impact"}
             </p>
           </div>
         </motion.div>
@@ -196,10 +196,10 @@ export function Projects({ isArabic }: ProjectsProps) {
               {isArabic
                 ? showAllProjects
                   ? "عرض أقل"
-                  : "عرض الكل"
+                  : "عرض المزيد"
                 : showAllProjects
                   ? "Show Less"
-                  : "Show All"}
+                  : "View All Projects"}
             </button>
           </motion.div>
         )}

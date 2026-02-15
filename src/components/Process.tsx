@@ -43,13 +43,13 @@ const DotGrid = ({ className = "" }: { className?: string }) => (
 const steps = [
   {
     icon: Compass,
-    title: "First Contact",
-    titleAr: "التواصل الأول",
+    title: "Discovery",
+    titleAr: "الاكتشاف",
   },
   {
     icon: ClipboardList,
-    title: "Creating\na Backlog",
-    titleAr: "إنشاء\nقائمة المهام",
+    title: "Strategy &\nPlanning",
+    titleAr: "الاستراتيجية\nوالتخطيط",
   },
   {
     icon: PenTool,
@@ -58,23 +58,23 @@ const steps = [
   },
   {
     icon: Terminal,
-    title: "Sprint 0",
-    titleAr: "سبرنت 0",
+    title: "Architecture",
+    titleAr: "البنية التقنية",
   },
   {
     icon: Code2,
-    title: "Development",
-    titleAr: "التطوير",
+    title: "Engineering",
+    titleAr: "الهندسة",
   },
   {
     icon: Send,
-    title: "Release",
-    titleAr: "الإطلاق",
+    title: "Launch &\nOptimize",
+    titleAr: "الإطلاق\nوالتحسين",
   },
   {
     icon: LifeBuoy,
-    title: "Project\nSupport",
-    titleAr: "دعم\nالمشروع",
+    title: "Ongoing\nPartnership",
+    titleAr: "شراكة\nمستمرة",
   },
 ];
 
@@ -125,13 +125,13 @@ export function Process({ isArabic }: ProcessProps) {
           className={`mb-16 md:mb-20 ${isArabic ? "text-right" : "text-left"}`}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-5 flex items-center gap-3">
-            {isArabic ? "كيف نعمل" : "How We Work"}
+            {isArabic ? "منهجيتنا" : "Our Process"}
             <DotGrid className="text-blue-400/50" />
           </h2>
           <p className="text-base md:text-lg text-slate-500 max-w-2xl leading-relaxed">
             {isArabic
-              ? "نتبع عملية مجرّبة ومنظّمة لتحويل أفكارك إلى واقع رقمي بسلاسة وكفاءة."
-              : "We follow a proven, structured process to turn your ideas into digital reality — smoothly and efficiently."}
+              ? "نتبع منهجية أجايل مجرّبة تضمن الشفافية والكفاءة والتسليم في الوقت المحدد — من الاكتشاف إلى الإطلاق وما بعده."
+              : "A proven agile methodology that ensures transparency, efficiency, and on-time delivery — from discovery through launch and beyond."}
           </p>
         </motion.div>
 

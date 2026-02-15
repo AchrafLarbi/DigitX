@@ -28,52 +28,52 @@ const DotGrid = ({ className = "" }: { className?: string }) => (
 
 const faqs = [
   {
-    question: "How long does a project take?",
-    questionAr: "كم يستغرق المشروع من وقت؟",
+    question: "What does a typical project timeline look like?",
+    questionAr: "كيف يبدو الجدول الزمني النموذجي للمشروع؟",
     answer:
-      "Project timelines vary based on scope and complexity. A simple landing page can be delivered in 1–2 weeks, while a full web or mobile application typically takes 4–12 weeks. During the discovery phase, we'll provide a detailed timeline tailored to your project.",
+      "Timelines are scoped to your project's complexity. A landing page or marketing site ships in 1–2 weeks. Full-stack web or mobile applications typically require 4–12 weeks. During our discovery phase, we deliver a detailed roadmap with milestones tailored to your goals.",
     answerAr:
-      "تختلف الجداول الزمنية للمشاريع حسب النطاق والتعقيد. يمكن تسليم صفحة هبوط بسيطة في 1-2 أسبوع، بينما يستغرق تطبيق ويب أو هاتف كامل عادةً من 4 إلى 12 أسبوعًا. خلال مرحلة الاكتشاف، سنقدم جدولًا زمنيًا مفصلًا مخصصًا لمشروعك.",
+      "تُحدد الجداول الزمنية حسب تعقيد مشروعك. يمكن تسليم صفحة هبوط في 1-2 أسبوع. التطبيقات المتكاملة تتطلب عادةً 4 إلى 12 أسبوعاً. خلال مرحلة الاكتشاف، نقدم خارطة طريق مفصلة بمراحل مصممة لأهدافك.",
   },
   {
-    question: "What technologies do you use?",
-    questionAr: "ما هي التقنيات التي تستخدمونها؟",
+    question: "What technologies power your solutions?",
+    questionAr: "ما التقنيات التي تعتمدون عليها؟",
     answer:
-      "We work with modern, industry-leading technologies including React, Next.js, Node.js, Django, Flutter, Tailwind CSS, PostgreSQL, Firebase, and more. We choose the tech stack that best fits your project's requirements and ensures scalability.",
+      "We leverage industry-leading frameworks and tools including React, Next.js, Node.js, Django, Flutter, Tailwind CSS, PostgreSQL, Firebase, and more. We select the optimal tech stack for each project to ensure performance, scalability, and maintainability.",
     answerAr:
-      "نعمل بأحدث التقنيات الرائدة في الصناعة بما في ذلك React و Next.js و Node.js و Django و Flutter و Tailwind CSS و PostgreSQL و Firebase وغيرها. نختار مجموعة التقنيات الأنسب لمتطلبات مشروعك لضمان قابلية التوسع.",
+      "نستخدم أطر عمل وأدوات رائدة في الصناعة تشمل React و Next.js و Node.js و Django و Flutter و Tailwind CSS و PostgreSQL و Firebase وغيرها. نختار البنية التقنية المثلى لكل مشروع لضمان الأداء وقابلية التوسع وسهولة الصيانة.",
   },
   {
-    question: "How much does it cost?",
-    questionAr: "كم تكلفة المشروع؟",
+    question: "How is pricing structured?",
+    questionAr: "كيف يتم تحديد الأسعار؟",
     answer:
-      "Costs depend on the project's scope, features, and complexity. We offer flexible pricing models — fixed-price for well-defined projects and milestone-based billing for larger ones. Contact us for a free consultation and custom quote.",
+      "Pricing is tailored to scope, features, and complexity. We offer transparent fixed-price engagements for well-defined projects and milestone-based billing for larger initiatives. Reach out for a complimentary consultation and detailed proposal.",
     answerAr:
-      "تعتمد التكاليف على نطاق المشروع وميزاته وتعقيده. نقدم نماذج تسعير مرنة — سعر ثابت للمشاريع المحددة جيدًا وفوترة قائمة على المراحل للمشاريع الأكبر. تواصل معنا للحصول على استشارة مجانية وعرض أسعار مخصص.",
+      "يُحدد التسعير حسب النطاق والميزات والتعقيد. نقدم عقوداً بسعر ثابت شفافة للمشاريع المحددة وفوترة قائمة على المراحل للمبادرات الأكبر. تواصل معنا للحصول على استشارة مجانية وعرض مفصل.",
   },
   {
-    question: "Do you provide ongoing support?",
-    questionAr: "هل تقدمون دعمًا مستمرًا؟",
+    question: "Do you provide post-launch support?",
+    questionAr: "هل تقدمون دعماً بعد الإطلاق؟",
     answer:
-      "Absolutely! We provide post-launch support and maintenance packages to ensure your product stays up-to-date, secure, and running smoothly. We're here for bug fixes, feature updates, and performance optimization.",
+      "Absolutely. We offer dedicated post-launch support and maintenance plans to keep your product secure, up-to-date, and performing at its best. This includes bug fixes, feature iterations, performance monitoring, and security updates.",
     answerAr:
-      "بالتأكيد! نقدم حزم دعم وصيانة بعد الإطلاق لضمان بقاء منتجك محدثًا وآمنًا ويعمل بسلاسة. نحن هنا لإصلاح الأخطاء وتحديث الميزات وتحسين الأداء.",
+      "بالتأكيد. نقدم خطط دعم وصيانة مخصصة بعد الإطلاق للحفاظ على منتجك آمناً ومحدثاً وبأفضل أداء. يشمل ذلك إصلاح الأخطاء وتحديث الميزات ومراقبة الأداء والتحديثات الأمنية.",
   },
   {
-    question: "Can you work with our existing team?",
-    questionAr: "هل يمكنكم العمل مع فريقنا الحالي؟",
+    question: "Can you integrate with our existing team?",
+    questionAr: "هل يمكنكم التكامل مع فريقنا الحالي؟",
     answer:
-      "Yes! We seamlessly integrate with your in-house team. Whether you need extra hands for development, design expertise, or technical guidance, we adapt to your workflow and tools.",
+      "Yes. We seamlessly embed with your in-house team as an extension of your organization. Whether you need engineering capacity, design leadership, or technical consulting, we adapt to your workflow, tools, and culture.",
     answerAr:
-      "نعم! نندمج بسلاسة مع فريقك الداخلي. سواء كنت بحاجة إلى أيادٍ إضافية للتطوير أو خبرة في التصميم أو إرشاد تقني، نتكيف مع سير عملك وأدواتك.",
+      "نعم. نندمج بسلاسة مع فريقك الداخلي كامتداد لمؤسستك. سواء كنت بحاجة إلى قدرات هندسية أو قيادة تصميم أو استشارات تقنية، نتكيف مع سير عملك وأدواتك وثقافتك.",
   },
   {
-    question: "What is your development process?",
-    questionAr: "ما هي عملية التطوير لديكم؟",
+    question: "What does your development process look like?",
+    questionAr: "كيف تبدو عملية التطوير لديكم؟",
     answer:
-      "We follow an agile methodology with iterative sprints. Our process includes Discovery, Planning, Design, Development, Testing, Launch, and ongoing Support — keeping you involved and informed at every stage.",
+      "We run a structured agile workflow with iterative sprints. Our process spans Discovery, Strategy, Design, Architecture, Engineering, Launch, and Ongoing Partnership — keeping you fully involved and informed at every milestone.",
     answerAr:
-      "نتبع منهجية أجايل مع دورات تطوير متكررة. تشمل عمليتنا الاكتشاف والتخطيط والتصميم والتطوير والاختبار والإطلاق والدعم المستمر — مع إبقائك مشاركًا ومطّلعًا في كل مرحلة.",
+      "نعتمد سير عمل أجايل منظم بدورات تطوير متكررة. تشمل عمليتنا الاكتشاف والاستراتيجية والتصميم والبنية التقنية والهندسة والإطلاق والشراكة المستمرة — مع إبقائك مشاركاً ومطلعاً عند كل مرحلة.",
   },
 ];
 
@@ -106,13 +106,13 @@ export function FAQ({ isArabic }: FAQProps) {
           className={`mb-16 md:mb-20 ${isArabic ? "text-right" : "text-left"}`}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-5 flex items-center gap-3">
-            {isArabic ? "أسئلة متكررة" : "Frequently Asked Questions"}
+            {isArabic ? "أسئلة شائعة" : "Common Questions"}
             <DotGrid className="text-blue-400/50" />
           </h2>
           <p className="text-base md:text-lg text-slate-500 max-w-2xl leading-relaxed">
             {isArabic
-              ? "إجابات على الأسئلة الأكثر شيوعًا حول خدماتنا وطريقة عملنا."
-              : "Answers to the most common questions about our services and how we work."}
+              ? "كل ما تحتاج معرفته حول خدماتنا ومنهجيتنا وتسعيرنا — في مكان واحد."
+              : "Everything you need to know about our services, process, and pricing — all in one place."}
           </p>
         </motion.div>
 

@@ -35,11 +35,11 @@ export function Navbar({
         case "services":
           return "خدماتنا";
         case "projects":
-          return "المشاريع";
+          return "أعمالنا";
         case "team":
           return "الفريق";
         case "contact":
-          return "اتصل بنا";
+          return "تواصل معنا";
         default:
           return item;
       }
@@ -147,7 +147,7 @@ export function Navbar({
             className="block text-center accent-pill-btn text-white text-sm font-semibold px-6 py-3 mt-2"
             onClick={() => handleNavigation("home")}
           >
-            {isArabic ? "تواصل معنا" : "Get in Touch"}
+            {isArabic ? "تواصل معنا" : "Let's Talk"}
           </a>
         </div>
       </div>

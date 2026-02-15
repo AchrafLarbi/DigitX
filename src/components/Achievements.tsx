@@ -68,27 +68,26 @@ function AnimatedCounter({
 const achievements = [
   {
     id: 1,
-    title: "Best Digital Agency",
-    titleAr: "أفضل وكالة رقمية",
+    title: "Top-Rated Digital Agency",
+    titleAr: "وكالة رقمية رائدة",
   },
   {
     id: 2,
-    title: "Innovation Design",
-    titleAr: "تصميم مبتكر",
+    title: "Award-Winning Design",
+    titleAr: "تصميم حائز على جوائز",
   },
   {
     id: 3,
-    title: "Client Satisfaction Leader",
-    titleAr: "رائد رضا العملاء",
+    title: "98% Client Retention Rate",
+    titleAr: "98% معدل احتفاظ بالعملاء",
   },
   {
     id: 4,
-    title: "Growth Company of the Year",
-    titleAr: "شركة النمو لهذا العام",
+    title: "Fastest-Growing Tech Partner",
+    titleAr: "أسرع شريك تقني نمواً",
     description:
-      "We offer a comprehensive suite of digital services to meet your business needs.",
-    descriptionAr:
-      "نقدم مجموعة متكاملة من الخدمات الرقمية لتلبية احتياجات عملك.",
+      "Delivering end-to-end digital solutions that scale with your ambition.",
+    descriptionAr: "نقدم حلولاً رقمية متكاملة تنمو مع طموحاتك.",
   },
 ];
 
@@ -136,7 +135,7 @@ export function Achievements({ isArabic }: AchievementsProps) {
           >
             {/* Section title */}
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-              {isArabic ? "إنجازاتنا" : "Our Achievements"}
+              {isArabic ? "إنجازاتنا" : "Why Choose Us"}
               <DotGrid className="text-blue-400/50" />
             </h2>
 
@@ -172,8 +171,8 @@ export function Achievements({ isArabic }: AchievementsProps) {
             {/* Description text */}
             <p className="text-base text-slate-500 mb-12 max-w-md leading-relaxed">
               {isArabic
-                ? "نقدم مجموعة متكاملة من الخدمات الرقمية لتلبية احتياجات عملك. خبرتنا تمتد عبر تطوير الويب والجوال والذكاء الاصطناعي."
-                : "We offer a comprehensive suite of digital services to meet your business needs. Our expertise spans web development, mobile apps, and AI solutions."}
+                ? "نجمع بين الخبرة التقنية العميقة والرؤية الاستراتيجية لتقديم نتائج استثنائية عبر الويب والجوال والذكاء الاصطناعي."
+                : "We combine deep technical expertise with strategic vision to deliver exceptional results across web, mobile, and AI."}
             </p>
 
             {/* Achievement items */}

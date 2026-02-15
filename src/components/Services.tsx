@@ -111,13 +111,13 @@ export function Services({ isArabic }: ServicesProps) {
           className={`mb-20 ${isArabic ? "text-right" : "text-left"}`}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-5 flex items-center gap-3">
-            {isArabic ? "مسارنا" : "Our Journey"}
+            {isArabic ? "خدماتنا" : "What We Do"}
             <DotGrid className="text-blue-400/50" />
           </h2>
           <p className="text-base md:text-lg text-slate-500 max-w-2xl leading-relaxed">
             {isArabic
-              ? "نقدم مجموعة متكاملة من الخدمات الرقمية لتلبية احتياجات عملك. خبرتنا تمتد عبر تطوير الويب والجوال والذكاء الاصطناعي."
-              : "We offer a comprehensive suite of digital services to meet your business needs. Our expertise spans web development, mobile apps, and AI solutions."}
+              ? "نقدم مجموعة متكاملة من الحلول الرقمية المصممة لتسريع نمو أعمالك. خبرتنا تمتد عبر الويب والجوال والذكاء الاصطناعي والتصميم."
+              : "A comprehensive suite of digital services engineered to accelerate your growth. Our expertise spans web, mobile, AI, and design."}
           </p>
         </motion.div>
 

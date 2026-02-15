@@ -181,23 +181,23 @@ export function Contact({ isArabic }: ContactProps) {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-2 leading-tight">
               {isArabic ? (
                 <>
-                  لنبنِ شيئًا
+                  لنبنِ شيئاً
                   <br />
-                  <span className="gradient-text">مذهلاً</span>
+                  <span className="gradient-text">استثنائياً</span>
                 </>
               ) : (
                 <>
-                  Let's Build
+                  Let's Build Something
                   <br />
-                  Something <span className="gradient-text">Amazing</span>
+                  <span className="gradient-text">Extraordinary</span>
                 </>
               )}
             </h2>
 
             <p className="text-slate-500 text-sm md:text-base mb-8 max-w-md leading-relaxed">
               {isArabic
-                ? "نحن هنا للإجابة على أسئلتك ومساعدتك في تحقيق رؤيتك الرقمية"
-                : "We're here to answer your questions and help you achieve your digital vision"}
+                ? "أخبرنا عن مشروعك وسنتواصل معك خلال 24 ساعة بخطة عمل مخصصة."
+                : "Tell us about your project and we'll get back to you within 24 hours with a tailored action plan."}
             </p>
 
             {/* Status messages */}

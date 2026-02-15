@@ -23,10 +23,14 @@ const DotGrid = ({ className = "" }: { className?: string }) => (
 );
 
 const stats = [
-  { value: "10+", labelEn: "Project\nCompleted", labelAr: "مشروع\nمكتمل" },
-  { value: "98%", labelEn: "Client\nSatisfaction", labelAr: "رضا\nالعملاء" },
-  { value: "3+", labelEn: "Years of\nExperience", labelAr: "سنوات\nالخبرة" },
-  { value: "24/7", labelEn: "Support\nAvailable", labelAr: "الدعم\nمتاح" },
+  { value: "10+", labelEn: "Projects\nDelivered", labelAr: "مشروع\nتم تسليمه" },
+  {
+    value: "98%",
+    labelEn: "Client\nRetention",
+    labelAr: "معدل\nالاحتفاظ بالعملاء",
+  },
+  { value: "3+", labelEn: "Years of\nExcellence", labelAr: "سنوات\nمن التميز" },
+  { value: "24/7", labelEn: "Dedicated\nSupport", labelAr: "دعم\nمتواصل" },
 ];
 
 export function Hero({ isArabic = true }: HeroProps) {
@@ -54,23 +58,24 @@ export function Hero({ isArabic = true }: HeroProps) {
               >
                 {isArabic ? (
                   <>
-                    تحوّل <span className="gradient-text">أفكارك</span> إلى
+                    نبني <span className="gradient-text">حلولاً رقمية</span>{" "}
+                    قوية
                     <br />
-                    واقع رقمي
+                    للشركات الطموحة
                   </>
                 ) : (
                   <>
-                    Turning <span className="gradient-text">Ideas</span> Into
+                    We Build <span className="gradient-text">Powerful</span>
                     <br />
-                    Digital Reality
+                    Digital Solutions
                   </>
                 )}
               </h1>
 
               <p className="text-base sm:text-lg text-slate-600 mb-10 max-w-lg leading-relaxed">
                 {isArabic
-                  ? "وكالة رقمية متخصصة في تطوير الويب والموبايل والحلول الذكية والأتمتة بالذكاء الاصطناعي في الجزائر"
-                  : "A digital agency specialized in web, mobile development, AI automation and AI solutions in Algeria"}
+                  ? "نحوّل أفكارك إلى تطبيقات حديثة وقابلة للتوسع. من التصميم إلى الإطلاق، نقدم حلولاً رقمية متكاملة عالية الأداء."
+                  : "From concept to production, we design and engineer scalable, high-performance web and mobile platforms that drive real business growth."}
               </p>
 
               <div
@@ -83,7 +88,7 @@ export function Hero({ isArabic = true }: HeroProps) {
                   href="#contact"
                   className="accent-pill-btn cta-pulse text-white px-8 py-3.5 font-semibold text-sm"
                 >
-                  {isArabic ? "ابدأ مشروعك" : "Start a Project"}
+                  {isArabic ? "ابدأ مشروعك" : "Start Your Project"}
                 </a>
 
                 {/* Secondary link */}
@@ -91,7 +96,7 @@ export function Hero({ isArabic = true }: HeroProps) {
                   href="#projects"
                   className="text-slate-500 hover:text-slate-800 font-medium text-sm flex items-center gap-2 transition-colors group"
                 >
-                  {isArabic ? "شاهد أعمالنا" : "See Our Work"}
+                  {isArabic ? "استكشف أعمالنا" : "Explore Our Work"}
                   <span className="inline-block transition-transform group-hover:translate-x-1">
                     →
                   </span>

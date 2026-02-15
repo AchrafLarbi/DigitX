@@ -55,7 +55,7 @@ export function Team({ isArabic }: TeamProps) {
           className={`mb-14 ${isArabic ? "text-right" : "text-left"}`}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-2 flex items-center gap-3">
-            {isArabic ? "أعضاء فريقنا" : "Our Team Members"}
+            {isArabic ? "فريقنا" : "Meet the Team"}
             <DotGrid className="text-blue-400/50" />
           </h2>
         </motion.div>
