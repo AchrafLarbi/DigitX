@@ -12,7 +12,7 @@ import { WhatsAppPolicy } from "./components/WhatsAppPolicy";
 import "./styles/animations.css";
 
 function App() {
-  const [isArabic, setIsArabic] = useState(false);
+  const [isArabic, setIsArabic] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState("home");
 
