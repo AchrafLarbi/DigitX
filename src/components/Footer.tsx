@@ -89,10 +89,10 @@ export function Footer({ isArabic }: FooterProps) {
             >
               <img
                 src={logo}
-                alt="DIGITX Logo"
+                alt="DigitX Logo"
                 className="h-9 w-9 rounded-full object-cover"
               />
-              <span className="text-xl font-bold text-white">DIGITX</span>
+              <span className="text-xl font-bold text-white">DigitX</span>
             </div>
 
             {/* Description */}
@@ -177,8 +177,8 @@ export function Footer({ isArabic }: FooterProps) {
 
           <p className="text-xs text-white/50">
             {isArabic
-              ? `حقوق الطبع والنشر © DIGITX جميع الحقوق محفوظة ${new Date().getFullYear()}`
-              : `Copyright © DIGITX All right Reserved ${new Date().getFullYear()}`}
+              ? `حقوق الطبع والنشر © DigitX جميع الحقوق محفوظة ${new Date().getFullYear()}`
+              : `Copyright © DigitX All right Reserved ${new Date().getFullYear()}`}
           </p>
         </div>
       </div>

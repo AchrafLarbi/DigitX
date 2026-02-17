@@ -131,7 +131,7 @@ export function Hero({ isArabic = true }: HeroProps) {
                     letterSpacing: "-0.02em",
                   }}
                 >
-                  DIGITX
+                  DigitX
                 </div>
               </div>
             </div>

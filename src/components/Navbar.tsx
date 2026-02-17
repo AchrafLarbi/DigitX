@@ -58,11 +58,11 @@ export function Navbar({
           >
             <img
               src={logo}
-              alt="DIGITX Logo"
+              alt="DigitX Logo"
               className="h-9 w-9 rounded-full object-cover logo-hover"
             />
-            <span className="text-lg font-bold text-slate-900">
-              {isArabic ? "ديجيت اكس" : "DIGITX"}
+            <span className="text-lg font-bold text-slate-900 font-sans">
+              DigitX
             </span>
           </div>
 
