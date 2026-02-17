@@ -24,6 +24,20 @@ export interface Project {
   technologies: string[];
   github: string | null;
   date: string;
+  // Storytelling fields
+  clientStory?: string;
+  clientStoryAr?: string;
+  challenge?: string;
+  challengeAr?: string;
+  solution?: string;
+  solutionAr?: string;
+  results?: string[];
+  resultsAr?: string[];
+  timeline?: string;
+  timelineAr?: string;
+  clientName?: string;
+  clientIndustry?: string;
+  clientIndustryAr?: string;
 }
 
 export interface Service {

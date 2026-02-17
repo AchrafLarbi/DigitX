@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { projects } from "../data";
 import { FloatingElements } from "./ui/FloatingElements";
+import { ProjectDialog } from "./ProjectDialog";
+import { Project } from "../types";
 
 interface ProjectsProps {
   isArabic: boolean;
@@ -13,6 +15,8 @@ interface ProjectsProps {
 export function Projects({ isArabic }: ProjectsProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -28,6 +32,16 @@ export function Projects({ isArabic }: ProjectsProps) {
         ?.scrollIntoView({ behavior: "smooth" });
     }
   }, [showAllProjects]);
+
+  const handleProjectClick = (project: Project) => {
+    setSelectedProject(project);
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+    setTimeout(() => setSelectedProject(null), 300);
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -115,67 +129,60 @@ export function Projects({ isArabic }: ProjectsProps) {
                 key={project.id}
                 variants={itemVariants}
                 className="project-card-hover relative group rounded-2xl overflow-hidden bg-surface cursor-pointer"
+                onClick={() => handleProjectClick(project)}
               >
-                {/* Wrap entire card in a link if github exists */}
-                <a
-                  href={project.github || "#"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  {/* Project image */}
-                  <div className="relative overflow-hidden aspect-[16/10]">
-                    {/* Shimmer overlay */}
-                    <div className="project-shimmer"></div>
-                    <img
-                      src={
-                        project.image || "/placeholder.svg?height=400&width=600"
-                      }
-                      alt={project.title}
-                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                    />
-                    {/* Default gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-400 group-hover:opacity-0"></div>
+                {/* Project image */}
+                <div className="relative overflow-hidden aspect-[16/10]">
+                  {/* Shimmer overlay */}
+                  <div className="project-shimmer"></div>
+                  <img
+                    src={
+                      project.image || "/placeholder.svg?height=400&width=600"
+                    }
+                    alt={project.title}
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  />
+                  {/* Default gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-400 group-hover:opacity-0"></div>
 
-                    {/* Hover description overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/40 flex flex-col justify-end p-5 opacity-0 group-hover:opacity-100 transition-all duration-400">
-                      <p className="text-sm text-white/90 leading-relaxed mb-3 line-clamp-3">
-                        {isArabic ? project.descriptionAr : project.description}
-                      </p>
-                      {/* Tech tags */}
-                      <div className="flex flex-wrap gap-1.5 mb-3">
-                        {project.technologies.slice(0, 4).map((tech) => (
-                          <span
-                            key={tech}
-                            className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/15 text-white/80 backdrop-blur-sm"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                        {project.technologies.length > 4 && (
-                          <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/15 text-white/80">
-                            +{project.technologies.length - 4}
-                          </span>
-                        )}
-                      </div>
-                      {/* View link */}
-                      <div className="flex items-center gap-1.5 text-blue-300 text-xs font-medium">
-                        <ExternalLink className="w-3.5 h-3.5" />
-                        {isArabic ? "عرض المشروع" : "View Project"}
-                      </div>
+                  {/* Hover description overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/40 flex flex-col justify-end p-5 opacity-0 group-hover:opacity-100 transition-all duration-400">
+                    <p className="text-sm text-white/90 leading-relaxed mb-3 line-clamp-3">
+                      {isArabic ? project.descriptionAr : project.description}
+                    </p>
+                    {/* Tech tags */}
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {project.technologies.slice(0, 4).map((tech) => (
+                        <span
+                          key={tech}
+                          className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/15 text-white/80 backdrop-blur-sm"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.technologies.length > 4 && (
+                        <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/15 text-white/80">
+                          +{project.technologies.length - 4}
+                        </span>
+                      )}
                     </div>
-
-                    {/* Title overlay at bottom (visible by default, hides on hover) */}
-                    <div className="absolute bottom-0 left-0 right-0 p-5 transition-opacity duration-400 group-hover:opacity-0">
-                      <h3 className="text-xl font-bold text-white mb-1">
-                        {isArabic ? project.titleAr : project.title}
-                      </h3>
-                      <span className="text-xs font-medium text-white/60">
-                        {project.category}
-                      </span>
+                    {/* View link */}
+                    <div className="flex items-center gap-1.5 text-blue-300 text-xs font-medium">
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      {isArabic ? "شاهد قصة النجاح" : "View Success Story"}
                     </div>
                   </div>
-                </a>
+
+                  {/* Title overlay at bottom (visible by default, hides on hover) */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5 transition-opacity duration-400 group-hover:opacity-0">
+                    <h3 className="text-xl font-bold text-white mb-1">
+                      {isArabic ? project.titleAr : project.title}
+                    </h3>
+                    <span className="text-xs font-medium text-white/60">
+                      {project.category}
+                    </span>
+                  </div>
+                </div>
               </motion.div>
             ))}
         </motion.div>
@@ -204,6 +211,14 @@ export function Projects({ isArabic }: ProjectsProps) {
           </motion.div>
         )}
       </div>
+
+      {/* Project Dialog */}
+      <ProjectDialog
+        project={selectedProject}
+        isOpen={isDialogOpen}
+        onClose={handleCloseDialog}
+        isArabic={isArabic}
+      />
     </section>
   );
 }
