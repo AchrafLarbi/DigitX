@@ -38,6 +38,8 @@ export interface Project {
   clientName?: string;
   clientIndustry?: string;
   clientIndustryAr?: string;
+  // Gallery images from project folders
+  galleryImages?: string[];
 }
 
 export interface Service {

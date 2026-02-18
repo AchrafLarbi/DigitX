@@ -10,6 +10,26 @@ import Anonyto from "./assets/projects/Anonyto.png"
 import portfolioWork12 from "./assets/projects/harfan.png";
 import portfolioWork13 from "./assets/projects/syra.png"
 
+// Gamesooq gallery images
+import Gamesooq3 from "./assets/projects/gamesooq/3.png"
+import Gamesooq4 from "./assets/projects/gamesooq/4.png"
+import Gamesooq5 from "./assets/projects/gamesooq/5.png"
+import Gamesooq6 from "./assets/projects/gamesooq/6.png"
+import Gamesooq7 from "./assets/projects/gamesooq/7.png"
+
+// Anonyto gallery images
+import Anonyto8 from "./assets/projects/Anonyto/8.png"
+import Anonyto9 from "./assets/projects/Anonyto/9.png"
+import Anonyto10 from "./assets/projects/Anonyto/10.png"
+import Anonyto11 from "./assets/projects/Anonyto/11.png"
+import Anonyto12 from "./assets/projects/Anonyto/12.png"
+
+// Studio Houari gallery images
+import Studio13 from "./assets/projects/Studio_houari/13.png"
+import Studio14 from "./assets/projects/Studio_houari/14.png"
+import Studio15 from "./assets/projects/Studio_houari/15.png"
+import Studio16 from "./assets/projects/Studio_houari/16.png"
+
 
 export const teamMembers: TeamMember[] = [
   {
@@ -66,6 +86,7 @@ export const projects: Project[] = [
     technologies: ["Flutter", "Dart", "Firebase", "Javascript", "NodeJs"],
     date: "2025",
     github: "https://www.gamesooq.com/",
+    galleryImages: [Gamesooq3, Gamesooq4, Gamesooq5, Gamesooq6, Gamesooq7],
     clientName: "Gamesooq Founders",
     clientIndustry: "Gaming Marketplace",
     clientIndustryAr: "سوق الألعاب",
@@ -145,6 +166,7 @@ export const projects: Project[] = [
     technologies: ["React", "Tailwind css", "Django","Python", "SQLite", "RESTful APIs"],
     github: "http://anonyto.com/",
     date: "2026",
+    galleryImages: [Anonyto8, Anonyto9, Anonyto10, Anonyto11, Anonyto12],
     clientName: "Tech Compliance Startup",
     clientIndustry: "Data Privacy & Security",
     clientIndustryAr: "خصوصية البيانات والأمن",
@@ -184,6 +206,7 @@ export const projects: Project[] = [
     technologies: ["React", "Tailwind css", "Javascript", "Supabase"],
     date: "2024",
     github: "https://studiohouari.netlify.app/",
+    galleryImages: [Studio13, Studio14, Studio15, Studio16],
     clientName: "Studio Houari",
     clientIndustry: "Professional Photography",
     clientIndustryAr: "التصوير الاحترافي",

@@ -23,6 +23,8 @@ function App() {
       setCurrentPage("whatsapp-policy");
     } else {
       setCurrentPage("home");
+      // Scroll to top when home page loads
+      window.scrollTo(0, 0);
     }
 
     // Add popstate event listener to handle browser back/forward navigation
@@ -32,6 +34,7 @@ function App() {
         setCurrentPage("whatsapp-policy");
       } else {
         setCurrentPage("home");
+        window.scrollTo(0, 0);
       }
     };
 

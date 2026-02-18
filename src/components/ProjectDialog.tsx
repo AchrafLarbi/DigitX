@@ -9,6 +9,8 @@ import {
   Clock,
   Users,
   TrendingUp,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Project } from "../types";
 
@@ -28,11 +30,29 @@ export function ProjectDialog({
   const [activeSection, setActiveSection] = useState<
     "story" | "solution" | "results"
   >("story");
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Use gallery images if available, otherwise use the main image
+  const displayImages =
+    project?.galleryImages && project.galleryImages.length > 0
+      ? project.galleryImages
+      : [project?.image || ""];
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
+  };
+
+  const previousImage = () => {
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? displayImages.length - 1 : prev - 1,
+    );
+  };
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
       setActiveSection("story");
+      setCurrentImageIndex(0);
     } else {
       document.body.style.overflow = "unset";
     }
@@ -40,6 +60,24 @@ export function ProjectDialog({
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
+
+  // Keyboard navigation for image carousel
+  useEffect(() => {
+    if (!isOpen || displayImages.length <= 1) return;
+
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        setCurrentImageIndex((prev) =>
+          prev === 0 ? displayImages.length - 1 : prev - 1,
+        );
+      } else if (e.key === "ArrowRight") {
+        setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [isOpen, displayImages.length]);
 
   if (!project) return null;
 
@@ -88,22 +126,70 @@ export function ProjectDialog({
               initial="hidden"
               animate="visible"
               exit="hidden"
-              className="bg-white rounded-3xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden pointer-events-auto"
+              className="bg-white rounded-3xl shadow-2xl max-w-5xl w-full max-h-[85vh] overflow-hidden pointer-events-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Header with Image */}
-              <div className="relative h-64 md:h-80 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover object-top"
-                />
+              {/* Header with Image Carousel */}
+              <div className="relative h-48 md:h-56 overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={currentImageIndex}
+                    src={displayImages[currentImageIndex]}
+                    alt={`${project.title} - ${currentImageIndex + 1}`}
+                    className="w-full h-full object-contain object-center bg-slate-100"
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </AnimatePresence>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+                {/* Navigation arrows - only show if there are multiple images */}
+                {displayImages.length > 1 && (
+                  <>
+                    <button
+                      onClick={previousImage}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/20 backdrop-blur-md text-white hover:bg-white/30 transition-all duration-300 border border-white/30 shadow-lg hover:shadow-xl z-10"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={nextImage}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/20 backdrop-blur-md text-white hover:bg-white/30 transition-all duration-300 border border-white/30 shadow-lg hover:shadow-xl z-10"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+
+                    {/* Image indicators */}
+                    <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                      {displayImages.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentImageIndex(index)}
+                          className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                            index === currentImageIndex
+                              ? "bg-white w-8"
+                              : "bg-white/50 hover:bg-white/75"
+                          }`}
+                          aria-label={`Go to image ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Image counter */}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md text-white text-sm font-medium border border-white/20">
+                      {currentImageIndex + 1} / {displayImages.length}
+                    </div>
+                  </>
+                )}
 
                 {/* Close button */}
                 <button
                   onClick={onClose}
-                  className="absolute top-4 right-4 p-2.5 rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white/20 hover:rotate-90 transition-all duration-300 border border-white/20 shadow-lg hover:shadow-xl"
+                  className="absolute top-4 right-4 p-2.5 rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white/20 hover:rotate-90 transition-all duration-300 border border-white/20 shadow-lg hover:shadow-xl z-10"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -131,7 +217,7 @@ export function ProjectDialog({
               </div>
 
               {/* Content */}
-              <div className="overflow-y-auto max-h-[calc(90vh-20rem)] md:max-h-[calc(90vh-22rem)]">
+              <div className="overflow-y-auto max-h-[calc(85vh-14rem)]">
                 {/* Navigation tabs */}
                 <div className="sticky top-0 z-10 bg-gradient-to-b from-white via-white to-white/95 backdrop-blur-sm border-b border-slate-200/80 px-6 pt-6 shadow-sm">
                   <div className="flex gap-2 overflow-x-auto pb-0.5">
