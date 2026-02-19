@@ -94,10 +94,28 @@ export function Contact({ isArabic }: ContactProps) {
       const templateId = import.meta.env.VITE_EMAIL_TEMPLATE_ID!;
       const publicKey = import.meta.env.VITE_EMAIL_PUBLIC_KEY!;
 
-      const result = await emailjs.sendForm(
+      // Format timestamp
+      const now = new Date();
+      const timeString = now.toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      });
+
+      // Send email with template parameters
+      const result = await emailjs.send(
         serviceId,
         templateId,
-        formRef.current!,
+        {
+          from_name: formState.name,
+          reply_to: formState.email,
+          subject: formState.subject || "No subject",
+          message: formState.message,
+          send_time: timeString,
+        },
         publicKey,
       );
 

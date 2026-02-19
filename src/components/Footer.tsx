@@ -1,14 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  ArrowUp,
-  Send as TelegramIcon,
-  Linkedin,
-  Instagram,
-  Youtube,
-} from "lucide-react";
+import { ArrowUp, Facebook, Instagram, Youtube } from "lucide-react";
 import logo from "../assets/logo.jpg";
+import { WhatsAppIcon } from "./ui/WhatsAppIcon";
 
 interface FooterProps {
   isArabic: boolean;
@@ -51,18 +46,18 @@ export function Footer({ isArabic }: FooterProps) {
 
   const socialLinks = [
     {
-      icon: TelegramIcon,
-      href: "https://t.me/DIGITX",
-      label: "Telegram",
+      icon: WhatsAppIcon,
+      href: "https://wa.me/0795394634",
+      label: "WhatsApp",
     },
     {
-      icon: Linkedin,
-      href: "https://www.linkedin.com/in/achraf-larbi/",
-      label: "LinkedIn",
+      icon: Facebook,
+      href: "https://facebook.com",
+      label: "Facebook",
     },
     {
       icon: Instagram,
-      href: "https://www.instagram.com/digit_x__/?hl=fr",
+      href: "https://www.instagram.com/digitx.team?igsh=NzZ0N3o5Y2Flczhh",
       label: "Instagram",
     },
     {
@@ -104,7 +99,7 @@ export function Footer({ isArabic }: FooterProps) {
 
             {/* Contact details */}
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/60">
-              <span>digitx.agency@gmail.com</span>
+              <span>Contact@digitx.site</span>
               <span>•</span>
               <span>Algeria</span>
             </div>
