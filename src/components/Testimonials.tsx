@@ -276,7 +276,7 @@ export function Testimonials({ isArabic }: TestimonialsProps) {
         </div>
 
         {/* Navigation + progress */}
-        <div className="flex justify-center items-center gap-6 mt-10">
+        <div className={`flex justify-center items-center gap-6 mt-10 ${isArabic ? "flex-row-reverse" : ""}`}>
           <button
             onClick={handlePrev}
             className="w-11 h-11 rounded-full bg-white/50 flex items-center justify-center text-slate-500 hover:bg-white/80 transition-all duration-300 group border border-slate-200"
