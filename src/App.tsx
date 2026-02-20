@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
-import { Services } from "./components/Services";
-import { Achievements } from "./components/Achievements";
-import { Projects } from "./components/Projects";
-import { Testimonials } from "./components/Testimonials";
-import { Contact } from "./components/Contact";
-import { Process } from "./components/Process";
-import { Footer } from "./components/Footer";
-import { WhatsAppPolicy } from "./components/WhatsAppPolicy";
 import "./styles/animations.css";
+
+// Lazy-load below-fold sections for faster initial page load
+const Services = React.lazy(() => import("./components/Services").then(m => ({ default: m.Services })));
+const Achievements = React.lazy(() => import("./components/Achievements").then(m => ({ default: m.Achievements })));
+const Projects = React.lazy(() => import("./components/Projects").then(m => ({ default: m.Projects })));
+const Testimonials = React.lazy(() => import("./components/Testimonials").then(m => ({ default: m.Testimonials })));
+const Process = React.lazy(() => import("./components/Process").then(m => ({ default: m.Process })));
+const Contact = React.lazy(() => import("./components/Contact").then(m => ({ default: m.Contact })));
+const Footer = React.lazy(() => import("./components/Footer").then(m => ({ default: m.Footer })));
+const WhatsAppPolicy = React.lazy(() => import("./components/WhatsAppPolicy").then(m => ({ default: m.WhatsAppPolicy })));
 
 function App() {
   const [isArabic, setIsArabic] = useState(true);
@@ -70,20 +72,26 @@ function App() {
       />
 
       {currentPage === "whatsapp-policy" ? (
-        <WhatsAppPolicy isArabic={isArabic} />
+        <Suspense fallback={<div className="min-h-screen" />}>
+          <WhatsAppPolicy isArabic={isArabic} />
+        </Suspense>
       ) : (
         <>
           <Hero isArabic={isArabic} />
-          <Services isArabic={isArabic} />
-          <Achievements isArabic={isArabic} />
-          <Projects isArabic={isArabic} />
-          <Testimonials isArabic={isArabic} />
-          <Process isArabic={isArabic} />
-          <Contact isArabic={isArabic} />
+          <Suspense fallback={<div className="min-h-[200px]" />}>
+            <Services isArabic={isArabic} />
+            <Achievements isArabic={isArabic} />
+            <Projects isArabic={isArabic} />
+            <Testimonials isArabic={isArabic} />
+            <Process isArabic={isArabic} />
+            <Contact isArabic={isArabic} />
+          </Suspense>
         </>
       )}
 
-      <Footer isArabic={isArabic} />
+      <Suspense fallback={null}>
+        <Footer isArabic={isArabic} />
+      </Suspense>
     </div>
   );
 }

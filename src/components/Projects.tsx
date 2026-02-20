@@ -140,6 +140,8 @@ export function Projects({ isArabic }: ProjectsProps) {
                       project.image || "/placeholder.svg?height=400&width=600"
                     }
                     alt={project.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
                   {/* Default gradient overlay */}

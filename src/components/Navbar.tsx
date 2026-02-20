@@ -64,7 +64,8 @@ export function Navbar({
               className="h-9 w-9 rounded-full object-cover logo-hover"
             />
             <span className="text-lg font-bold text-slate-900 font-sans">
-              DigitX
+              <span className="md:hidden">X</span>
+              <span className="hidden md:inline">DigitX</span>
             </span>
           </div>
 

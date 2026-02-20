@@ -85,6 +85,8 @@ export function Footer({ isArabic }: FooterProps) {
               <img
                 src={logo}
                 alt="DigitX Logo"
+                loading="lazy"
+                decoding="async"
                 className="h-9 w-9 rounded-full object-cover"
               />
               <span className="text-xl font-bold text-white">DigitX</span>

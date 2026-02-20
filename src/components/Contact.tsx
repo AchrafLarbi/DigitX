@@ -175,6 +175,8 @@ export function Contact({ isArabic }: ContactProps) {
               <img
                 src={heroChar}
                 alt="3D Character"
+                loading="lazy"
+                decoding="async"
                 className="w-40 xl:w-52 h-auto object-contain drop-shadow-xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
               />
               <span
