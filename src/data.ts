@@ -30,6 +30,14 @@ import Studio14 from "./assets/projects/Studio_houari/14.png"
 import Studio15 from "./assets/projects/Studio_houari/15.png"
 import Studio16 from "./assets/projects/Studio_houari/16.png"
 
+// MuscleUp gallery images
+import MuscleUp16 from "./assets/projects/MuscleUp/16.png"
+import MuscleUp17 from "./assets/projects/MuscleUp/17.png"
+import MuscleUp18 from "./assets/projects/MuscleUp/18.png"
+import MuscleUp19 from "./assets/projects/MuscleUp/19.png"
+import MuscleUp20 from "./assets/projects/MuscleUp/20.png"
+import MuscleUp21 from "./assets/projects/MuscleUp/21.png"
+
 
 export const teamMembers: TeamMember[] = [
   {
@@ -120,13 +128,14 @@ export const projects: Project[] = [
     title: "MuscleUp",
     titleAr: "MuscleUp",
     description:
-      "A customized e-commerce platform for the fitness industry — built around the client's brand identity and product catalog, featuring personalized workout plans, smart dietary recommendations, and comprehensive progress analytics.",
-    descriptionAr: "منصة تجارة إلكترونية مخصصة لقطاع اللياقة البدنية — مبنية حول هوية العميل التجارية وكتالوج منتجاته، مع خطط تمارين مخصصة وتوصيات غذائية ذكية وتحليلات تقدم شاملة.",
+      "A fully customizable e-commerce platform for fitness supplements — designed for complete self-management with an intuitive admin panel, automatic brand identity integration, and streamlined product management that eliminates the need for developer support.",
+    descriptionAr: "منصة تجارة إلكترونية قابلة للتخصيص بالكامل لمكملات اللياقة البدنية — مصممة للإدارة الذاتية الكاملة مع لوحة تحكم بديهية، وتكامل تلقائي للهوية التجارية، وإدارة منتجات مبسّطة تُلغي الحاجة لدعم المطورين.",
     image: MuscleUp,
     category: "Mobile",
     technologies: ["React", "Tailwind css", "Django","Python", "SQLite", "RESTful APIs"],
     date: "2025",
-    github: "https://gym-website-7avc.vercel.app/?store=youcefnut/",
+    github: "https://gym-website-7avc.vercel.app/?store=youcefnut",
+    galleryImages: [MuscleUp16, MuscleUp17, MuscleUp18, MuscleUp19, MuscleUp20, MuscleUp21],
     clientName: "MuscleUp Fitness",
     clientIndustry: "Fitness & Wellness",
     clientIndustryAr: "اللياقة البدنية والصحة",
@@ -137,20 +146,22 @@ export const projects: Project[] = [
     solution: "We built a comprehensive fitness platform using React for a dynamic, responsive frontend, Django and Python for powerful backend logic including workout algorithms, and SQLite for efficient data management. The platform features a full e-commerce system for supplement sales, personalized workout plan generator based on user profiles, smart nutrition tracking and meal recommendations, progress dashboard with charts and achievements, video exercise library with demonstrations, user community features for motivation, and mobile-optimized interface for gym use.",
     solutionAr: "بنينا منصة لياقة بدنية شاملة باستخدام React لواجهة أمامية ديناميكية ومتجاوبة، و Django و Python لمنطق خلفي قوي بما في ذلك خوارزميات التمارين، و SQLite لإدارة البيانات بكفاءة. تتميز المنصة بنظام تجارة إلكترونية كامل لمبيعات المكملات، ومولد خطط تمارين مخصصة بناءً على ملفات تعريف المستخدمين، وتتبع التغذية الذكي وتوصيات الوجبات، ولوحة تقدم مع رسوم بيانية وإنجازات، ومكتبة فيديو للتمارين مع عروض توضيحية، وميزات مجتمع المستخدمين للتحفيز، وواجهة محسّنة للجوال لاستخدام الصالة الرياضية.",
     results: [
-      "Grew user base to 3000+ active members within 6 months",
-      "Achieved $50K+ monthly revenue from supplement sales",
-      "Generated 5000+ personalized workout plans",
-      "Maintained 75% user retention rate for premium features",
-      "Reduced client support time by 50% with automated recommendations",
-      "Users reported average 25% improvement in fitness goals achievement"
+      "Successfully launched and operated the store in a short period without needing a developer after delivery",
+      "Managing dozens of products easily from the control panel instead of manual modification on the site",
+      "Reduced time to add products and update prices from hours to minutes",
+      "Automatically unified visual identity across all pages of the site after uploading the logo",
+      "Improved mobile user experience, which increased ease of browsing products",
+      "Facilitated order processing and tracking, significantly reducing manual management errors",
+      "Store owner can now focus on sales and marketing while the platform handles the technical side completely"
     ],
     resultsAr: [
-      "نمت قاعدة المستخدمين إلى أكثر من 3000 عضو نشط خلال 6 أشهر",
-      "تحقيق إيرادات شهرية تزيد عن 50 ألف دولار من مبيعات المكملات",
-      "إنشاء أكثر من 5000 خطة تمارين مخصصة",
-      "الحفاظ على معدل احتفاظ 75٪ للمستخدمين للميزات المميزة",
-      "تقليل وقت دعم العملاء بنسبة 50٪ مع التوصيات التلقائية",
-      "أبلغ المستخدمون عن تحسن بمتوسط 25٪ في تحقيق أهداف اللياقة البدنية"
+      "إطلاق المتجر وتشغيله بنجاح خلال فترة قصيرة بدون الحاجة لمطور بعد التسليم",
+      "إدارة عشرات المنتجات بسهولة من لوحة التحكم بدل التعديل اليدوي على الموقع",
+      "تقليل وقت إضافة المنتجات وتحديث الأسعار من ساعات إلى دقائق",
+      "توحيد الهوية البصرية تلقائياً عبر جميع صفحات الموقع بعد رفع الشعار",
+      "تحسين تجربة المستخدم على الهاتف مما زاد من سهولة تصفح المنتجات",
+      "تسهيل معالجة الطلبات ومتابعتها مما خفّض أخطاء الإدارة اليدوية بشكل واضح",
+      "أصبح بإمكان صاحب المتجر التركيز على البيع والتسويق بينما تتولى المنصة الجانب التقني بالكامل"
     ],
     timeline: "3 months",
     timelineAr: "3 أشهر",

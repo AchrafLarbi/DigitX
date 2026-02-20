@@ -53,7 +53,9 @@ export function Navbar({
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div
-            className="flex items-center space-x-3 hover:scale-105 transition-transform cursor-pointer"
+            className={`flex items-center hover:scale-105 transition-transform cursor-pointer ${
+              isArabic ? "space-x-reverse space-x-3" : "space-x-3"
+            }`}
             onClick={() => handleNavigation("home")}
           >
             <img
